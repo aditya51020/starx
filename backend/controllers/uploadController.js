@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
+
 import multer from 'multer';
 
 import {
@@ -19,19 +19,34 @@ cloudinary.config({
   api_secret: CLOUDINARY_SECRET,
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'ghaziabad_realestate',
-    allowed_formats: ['jpg', 'png', 'jpeg'],
-  },
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage });
 
 export const uploadImages = upload.array('images', 10);
 
-export const handleUpload = (req, res) => {
-  const urls = req.files.map((f) => f.path);
-  res.json({ urls });
+export const handleUpload = async (req, res) => {
+  try {
+    const uploadPromises = req.files.map((file) => {
+      return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: 'ghaziabad_realestate',
+            allowed_formats: ['jpg', 'png', 'jpeg'],
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result.secure_url);
+          }
+        );
+        uploadStream.end(file.buffer);
+      });
+    });
+
+    const urls = await Promise.all(uploadPromises);
+    res.json({ urls });
+  } catch (error) {
+    console.error('Upload error:', error);
+    res.status(500).json({ message: 'Image upload failed' });
+  }
 };
