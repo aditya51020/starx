@@ -1,8 +1,16 @@
 // src/axiosConfig.js
 import axios from "axios";
 
+const getBaseUrl = () => {
+  let url = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  if (!url.startsWith('http')) {
+    url = `https://${url}`;
+  }
+  return url;
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000",
+  baseURL: getBaseUrl(),
   withCredentials: true
 });
 
