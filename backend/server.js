@@ -19,14 +19,8 @@ const PORT = process.env.PORT || 5000;
 
 // -------- FIXED CORS 100% WORKING ----------
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://starx-nu.vercel.app"
-  ],
+  origin: "https://starx-nu.vercel.app",
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 }));
 
 // -------- FIX PRE-FLIGHT OPTIONS BLOCKING ----------
