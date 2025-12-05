@@ -17,24 +17,34 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// -------- FIXED CORS 100% WORKING ----------
 app.use(cors({
   origin: [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://starx-nu.vercel.app",
-    "https://starx-production.up.railway.app"
+    "https://starx-nu.vercel.app"
   ],
-
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 }));
 
+// -------- FIX PRE-FLIGHT OPTIONS BLOCKING ----------
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(express.json());
 app.use(cookieParser());
 
-// Debug Middleware
+// Debug
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
@@ -46,15 +56,14 @@ app.use('/api', publicRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 
-// Database Connection
+// MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .catch(err => console.error('MongoDB error:', err));
 
-// Serve static files from frontend/dist
+// Serve frontend
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-// Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });

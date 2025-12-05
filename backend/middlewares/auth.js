@@ -6,10 +6,9 @@ export const protect = (req, res, next) => {
   if (!token) return res.status(401).json({ msg: 'No token found' });
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
+    req.user = jwt.verify(token, JWT_SECRET);
     next();
-  } catch (e) {
-    return res.status(401).json({ msg: 'Invalid token' });
+  } catch (err) {
+    res.status(401).json({ msg: 'Invalid token' });
   }
 };
