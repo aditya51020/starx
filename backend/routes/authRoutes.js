@@ -1,36 +1,25 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config.js";
+import { login, signup, userLogin, me } from "../controllers/authController.js";
 
 const router = express.Router();
 
-const ADMIN_PASSWORD = "starx123";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "starx123";
 
 // ------------------------
 //        LOGIN
 // ------------------------
-router.post("/login", (req, res) => {
-  const { password } = req.body;
 
-  if (!password) {
-    return res.status(400).json({ message: "Password required" });
-  }
+// Admin Login (Legacy/Simple)
+router.post("/login", login);
 
-  if (password !== ADMIN_PASSWORD) {
-    return res.status(401).json({ message: "Invalid password" });
-  }
+// User Login
+router.post("/login/user", userLogin);
 
-  const token = jwt.sign({ role: "admin" }, JWT_SECRET, { expiresIn: "7d" });
+// User Signup
+router.post("/signup", signup);
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 7 * 24 * 60 * 60 * 1000
-  });
-
-  return res.json({ message: "Login successful", user: { role: "admin" } });
-});
 
 // ------------------------
 //        CHECK AUTH
@@ -43,8 +32,12 @@ router.get("/check-auth", (req, res) => {
   }
 
   try {
-    jwt.verify(token, JWT_SECRET);
-    return res.json({ isAuthenticated: true, user: { role: "admin" } });
+    const decoded = jwt.verify(token, JWT_SECRET);
+    // You could also fetch full user here if needed, or rely on 'me' endpoint
+    return res.json({
+      isAuthenticated: true,
+      user: { id: decoded.id, role: decoded.role || 'user' }
+    });
   } catch (err) {
     return res.status(401).json({ isAuthenticated: false });
   }

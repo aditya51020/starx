@@ -1,5 +1,5 @@
-import { v2 as cloudinary } from 'cloudinary';
 
+import { v2 as cloudinary } from 'cloudinary';
 import multer from 'multer';
 
 import {
@@ -7,7 +7,6 @@ import {
   CLOUDINARY_KEY,
   CLOUDINARY_SECRET,
 } from '../config.js';
-
 
 if (!CLOUDINARY_CLOUD || !CLOUDINARY_KEY || !CLOUDINARY_SECRET) {
   console.error('❌ Cloudinary config missing! Please check your .env file.');
@@ -20,7 +19,6 @@ cloudinary.config({
 });
 
 const storage = multer.memoryStorage();
-
 const upload = multer({ storage });
 
 export const uploadImages = upload.array('images', 10);
@@ -50,3 +48,4 @@ export const handleUpload = async (req, res) => {
     res.status(500).json({ message: 'Image upload failed' });
   }
 };
+

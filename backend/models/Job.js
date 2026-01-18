@@ -1,38 +1,44 @@
-import mongoose from 'mongoose';
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
 
-const jobSchema = new mongoose.Schema({
+const Job = sequelize.define('Job', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     title: {
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     department: {
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     location: {
-        type: String,
-        required: true,
-        default: 'Remote'
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'Remote'
     },
     type: {
-        type: String,
-        required: true,
-        enum: ['Full-time', 'Part-time', 'Contract', 'Internship'],
-        default: 'Full-time'
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'Full-time',
+        validate: {
+            isIn: [['Full-time', 'Part-time', 'Contract', 'Internship']]
+        }
     },
     description: {
-        type: String,
-        required: true
+        type: DataTypes.TEXT,
+        allowNull: false
     },
-    requirements: [{
-        type: String
-    }],
-    postedAt: {
-        type: Date,
-        default: Date.now
+    requirements: {
+        type: DataTypes.JSON,
+        defaultValue: []
     }
+}, {
+    timestamps: true, // adds createdAt and updatedAt
+    updatedAt: false // if you only wanted postedAt (createdAt), but standard timestamps are fine
 });
 
-export default mongoose.model('Job', jobSchema);
+export default Job;

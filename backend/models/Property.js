@@ -1,45 +1,115 @@
-import mongoose from 'mongoose';
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
 
-const amenityEnum = [
-  'Parking',
-  'Lift',
-  'Gym',
-  'Security',
-  'Power Backup',
-  'Swimming Pool',
-  'Garden',
-  'Club House',
-  'WiFi',
-  'AC',
-  'Modular Kitchen',
-  'Washing Machine'
-];
+const Property = sequelize.define('Property', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  slug: {
+    type: DataTypes.STRING,
+    unique: true
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  metaDescription: {
+    type: DataTypes.STRING
+  },
+  keywords: {
+    type: DataTypes.JSON, // Storing array as JSON string
+    defaultValue: []
+  },
+  region: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [['Vasundhara', 'Indirapuram', 'Sector 63']]
+    }
+  },
+  propertyType: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  transactionType: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [['Rent', 'Sell', 'Sold']]
+    }
+  },
+  price: {
+    type: DataTypes.FLOAT,
+    allowNull: false
+  },
+  area: {
+    type: DataTypes.FLOAT,
+    allowNull: false
+  },
+  bhk: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  floor: {
+    type: DataTypes.INTEGER
+  },
+  totalFloors: {
+    type: DataTypes.INTEGER
+  },
+  furnishing: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [['Furnished', 'Semi-Furnished', 'Unfurnished']]
+    }
+  },
+  amenities: {
+    type: DataTypes.JSON, // Storing array as JSON string
+    defaultValue: []
+  },
+  address: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  lat: {
+    type: DataTypes.FLOAT
+  },
+  lng: {
+    type: DataTypes.FLOAT
+  },
+  images: {
+    type: DataTypes.JSON, // Storing array as JSON string
+    allowNull: false,
+    defaultValue: []
+  },
+  contactName: {
+    type: DataTypes.STRING
+  },
+  contactPhone: {
+    type: DataTypes.STRING
+  },
+  contactEmail: {
+    type: DataTypes.STRING
+  },
+  featured: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: 'Active',
+    validate: {
+      isIn: [['Active', 'Inactive']]
+    }
+  }
+}, {
+  timestamps: true
+});
 
-const propertySchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  slug: { type: String, unique: true },
-  description: { type: String, required: true },
-  metaDescription: String,
-  keywords: [String],
-  region: { type: String, enum: ['Vasundhara', 'Indirapuram', 'Sector 63'], required: true },
-  propertyType: { type: String, required: true },
-  transactionType: { type: String, enum: ['Rent', 'Sell', 'Sold'], required: true },
-  price: { type: Number, required: true },
-  area: { type: Number, required: true },
-  bhk: { type: Number, required: true },
-  floor: Number,
-  totalFloors: Number,
-  furnishing: { type: String, enum: ['Furnished', 'Semi-Furnished', 'Unfurnished'], required: true },
-  amenities: [{ type: String, enum: amenityEnum }],
-  address: { type: String, required: true },
-  lat: Number,
-  lng: Number,
-  images: [{ type: String, required: true }],
-  contactName: String,
-  contactPhone: String,
-  contactEmail: String,
-  featured: { type: Boolean, default: false },
-  status: { type: String, enum: ['Active', 'Inactive'], default: 'Active' }
-}, { timestamps: true });
-
-export default mongoose.model('Property', propertySchema);
+export default Property;
