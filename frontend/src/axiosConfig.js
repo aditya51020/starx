@@ -2,11 +2,11 @@
 import axios from "axios";
 
 const getBaseUrl = () => {
-  let url = import.meta.env.VITE_API_URL || "http://localhost:5000";
-  if (!url.startsWith('http')) {
-    url = `https://${url}`;
+  // Hardcoded to switch to new Hostinger VPS (ignoring potential old Railway env var)
+  if (import.meta.env.MODE === 'development') {
+    return "http://localhost:5000";
   }
-  return url;
+  return "https://api.starxbuildtech.co.in";
 };
 
 const api = axios.create({
