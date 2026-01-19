@@ -1,20 +1,26 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import api from '../axiosConfig';
+import { createContext, useState, useEffect, useContext } from 'react';
+import axios from '../axiosConfig';
 
 const AuthContext = createContext();
 
+export const useAuth = () => useContext(AuthContext);
+
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check auth status on mount
+  // Check if user is logged in
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await api.get('/api/auth/check-auth');
-        setIsAuthenticated(true);
+        const res = await axios.get('/api/auth/check-auth');
+        if (res.data.isAuthenticated) {
+          setUser(res.data.user);
+        } else {
+          setUser(null);
+        }
       } catch (err) {
-        setIsAuthenticated(false);
+        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -22,26 +28,39 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = async (password) => {
-    await api.post('/api/auth/login', { password });
-    setIsAuthenticated(true);
-  };
-
-  const logout = async () => {
+  const login = async (email, password) => {
+    // Try user login first
     try {
-      await api.post('/api/auth/logout');
+      const res = await axios.post('/api/auth/login/user', { email, password });
+      setUser(res.data.user);
+      return { success: true };
     } catch (err) {
-      console.error("Logout failed", err);
-    } finally {
-      setIsAuthenticated(false);
+      throw err;
     }
   };
 
+  const adminLogin = async (email, password) => {
+    const res = await axios.post('/api/auth/login', { email, password });
+    setUser(res.data.user);
+    return { success: true };
+  };
+
+  const signup = async (name, email, password) => {
+    const res = await axios.post('/api/auth/signup', { name, email, password });
+    setUser(res.data.user);
+    return { success: true };
+  };
+
+  const logout = async () => {
+    await axios.post('/api/auth/logout');
+    setUser(null);
+    // Clear local storage items that might depend on user
+    localStorage.removeItem('wishlist');
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, loading }}>
-      {children}
+    <AuthContext.Provider value={{ user, login, adminLogin, signup, logout, loading }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

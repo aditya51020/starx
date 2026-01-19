@@ -14,7 +14,7 @@ export default function Wishlist() {
 
     // Fetch full property details
     if (saved.length > 0) {
-      fetch(`/api/properties?wishlist=${saved.join(',')}`)
+      fetch(`/api/properties?ids=${saved.join(',')}`)
         .then(res => res.json())
         .then(data => {
           const props = data.data || data || [];
@@ -31,7 +31,7 @@ export default function Wishlist() {
     const newWishlist = wishlist.filter(id => id !== propertyId);
     setWishlist(newWishlist);
     localStorage.setItem('wishlist', JSON.stringify(newWishlist));
-    setProperties(prev => prev.filter(p => p._id !== propertyId));
+    setProperties(prev => prev.filter(p => p.id !== propertyId));
   };
 
   const clearAll = () => {
@@ -87,10 +87,10 @@ export default function Wishlist() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties.map(property => (
             <div
-              key={property._id}
+              key={property.id}
               className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition group"
             >
-              <Link to={`/property/${property._id}`} className="block">
+              <Link to={`/property/${property.id}`} className="block">
                 <div className="relative h-64 overflow-hidden">
                   <img
                     src={property.images?.[0] || '/placeholder.jpg'}
@@ -131,7 +131,7 @@ export default function Wishlist() {
               {/* Remove Button */}
               <div className="px-6 pb-6">
                 <button
-                  onClick={() => removeFromWishlist(property._id)}
+                  onClick={() => removeFromWishlist(property.id)}
                   className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2"
                 >
                   <Heart className="w-5 h-5 fill-rose-500 text-rose-500" />

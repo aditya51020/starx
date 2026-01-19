@@ -24,7 +24,7 @@ export default function Listings() {
       </div>
 
       <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-3 gap-6' : 'space-y-6'}>
-        {properties.map(p => <PropertyCard key={p._id} property={p} view={view} />)}
+        {properties.map(p => <PropertyCard key={p.id} property={p} view={view} />)}
       </div>
     </div>
   );

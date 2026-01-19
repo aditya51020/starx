@@ -66,7 +66,7 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                             {allProperties.map((property) => {
                                 if (property.lat && property.lng) {
                                     return (
-                                        <Marker key={property._id} position={[property.lat, property.lng]}>
+                                        <Marker key={property.id} position={[property.lat, property.lng]}>
                                             <Popup className="custom-popup">
                                                 <div className="text-center p-2 min-w-[200px]">
                                                     <img
@@ -79,7 +79,7 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                                                         ₹{property.price?.toLocaleString('en-IN')}
                                                     </p>
                                                     <Link
-                                                        to={`/property/${property._id}`}
+                                                        to={`/property/${property.id}`}
                                                         className="block w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 transition"
                                                     >
                                                         View Details

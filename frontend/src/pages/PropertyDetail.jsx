@@ -13,6 +13,10 @@ import {
 } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import Meta from '../components/Meta'; // Import Meta component
+// eslint-disable-next-line no-unused-vars
+import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
 
 // Fix Leaflet icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -24,6 +28,7 @@ L.Icon.Default.mergeOptions({
 
 export default function PropertyDetail() {
   const { id } = useParams();
+  const { user } = useAuth(); // Get user from context
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [wishlist, setWishlist] = useState([]);
@@ -31,6 +36,39 @@ export default function PropertyDetail() {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
   const [showEMI, setShowEMI] = useState(false);
   const [emiResult, setEmiResult] = useState(null);
+
+  // Inquiry Form State
+  const [inquiryForm, setInquiryForm] = useState({ name: '', email: '', phone: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setInquiryForm(prev => ({
+        ...prev,
+        name: user.name || '',
+        email: user.email || '',
+        phone: user.phone || '' // Assuming we might add phone to user later
+      }));
+    }
+  }, [user]);
+
+  const handleInquirySubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await axios.post('/api/inquiries', {
+        ...inquiryForm,
+        propertyId: id
+      });
+      toast.success('Inquiry sent successfully! We will contact you soon.');
+      setInquiryForm({ name: user?.name || '', email: user?.email || '', phone: '', message: '' });
+    } catch (err) {
+      toast.error('Failed to send inquiry. Please try again.');
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   // Amenity icon mapping
   const amenityIcons = {
@@ -72,7 +110,7 @@ export default function PropertyDetail() {
 
         const similarData = similarRes.data?.data || similarRes.data || [];
         const filtered = Array.isArray(similarData)
-          ? similarData.filter(p => p._id !== id && p.region === data?.region)
+          ? similarData.filter(p => p.id !== id && p.region === data?.region)
           : [];
         setSimilar(filtered);
 
@@ -88,9 +126,9 @@ export default function PropertyDetail() {
 
   const toggleWishlist = () => {
     if (!property) return;
-    const newWishlist = wishlist.includes(property._id)
-      ? wishlist.filter(w => w !== property._id)
-      : [...wishlist, property._id];
+    const newWishlist = wishlist.includes(property.id)
+      ? wishlist.filter(w => w !== property.id)
+      : [...wishlist, property.id];
     setWishlist(newWishlist);
     localStorage.setItem('wishlist', JSON.stringify(newWishlist));
   };
@@ -157,6 +195,12 @@ export default function PropertyDetail() {
 
   return (
     <div className="min-h-screen bg-white pt-24">
+      <Meta
+        title={property.title}
+        description={property.description || `Beautiful ${property.bhk} BHK property via StarX Realty.`}
+        image={property.images?.[0]}
+        url={window.location.href}
+      />
       {/* Image Gallery */}
       <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-3xl overflow-hidden">
@@ -481,6 +525,51 @@ export default function PropertyDetail() {
                     Response within 5 minutes
                   </p>
                 </div>
+
+                {/* Inquiry Form */}
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <h3 className="font-bold text-gray-900 mb-4">Request a Call Back</h3>
+                  <form onSubmit={handleInquirySubmit} className="space-y-3">
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      required
+                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      value={inquiryForm.name}
+                      onChange={e => setInquiryForm({ ...inquiryForm, name: e.target.value })}
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      required
+                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      value={inquiryForm.email}
+                      onChange={e => setInquiryForm({ ...inquiryForm, email: e.target.value })}
+                    />
+                    <input
+                      type="tel"
+                      placeholder="Phone Number"
+                      required
+                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      value={inquiryForm.phone}
+                      onChange={e => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
+                    />
+                    <textarea
+                      placeholder="I'm interested in this property..."
+                      rows="3"
+                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      value={inquiryForm.message}
+                      onChange={e => setInquiryForm({ ...inquiryForm, message: e.target.value })}
+                    ></textarea>
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition disabled:bg-blue-400"
+                    >
+                      {submitting ? 'Sending...' : 'Send Enquiry'}
+                    </button>
+                  </form>
+                </div>
               </div>
 
               {/* Agent Card */}
@@ -519,8 +608,8 @@ export default function PropertyDetail() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {similar.slice(0, 3).map(p => (
                 <Link
-                  key={p._id}
-                  to={`/property/${p._id}`}
+                  key={p.id}
+                  to={`/property/${p.id}`}
                   className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
                   onClick={() => window.scrollTo(0, 0)}
                 >

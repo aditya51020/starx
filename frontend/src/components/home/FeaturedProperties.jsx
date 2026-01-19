@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, EffectCoverflow } from 'swiper/modules';
 import { Phone, MessageCircle, Heart, Star, Clock, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PropertyCardSkeleton from '../common/PropertyCardSkeleton'; // Import Skeleton
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -63,7 +64,7 @@ export default function FeaturedProperties({
                 {loading ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="bg-slate-100 h-96 rounded-3xl animate-pulse"></div>
+                            <PropertyCardSkeleton key={i} />
                         ))}
                     </div>
                 ) : properties.length === 0 ? (
@@ -92,16 +93,17 @@ export default function FeaturedProperties({
                         className="pb-12 px-4"
                     >
                         {properties.map(property => (
-                            <SwiperSlide key={property._id}>
+                            <SwiperSlide key={property.id}>
                                 <motion.div
                                     whileHover={{ y: -10 }}
                                     className="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100"
                                 >
-                                    <Link to={`/property/${property._id}`} className="block relative">
+                                    <Link to={`/property/${property.id}`} className="block relative">
                                         <div className="aspect-[4/3] overflow-hidden">
                                             <img
                                                 src={property.images?.[0] || 'https://via.placeholder.com/400x300?text=No+Image'}
                                                 alt={property.title}
+                                                loading="lazy"
                                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                             />
                                         </div>
@@ -119,42 +121,44 @@ export default function FeaturedProperties({
                                             )}
                                         </div>
 
-                                        {/* Contact Buttons */}
-                                        <div className="absolute top-4 right-16 flex gap-2">
-                                            {property.contactPhone && (
-                                                <>
-                                                    <a
-                                                        href={`tel:${property.contactPhone}`}
-                                                        onClick={(e) => e.stopPropagation()}
-                                                        className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
-                                                    >
-                                                        <Phone className="w-4 h-4" />
-                                                    </a>
-                                                    <a
-                                                        href={`https://wa.me/91${property.contactPhone?.replace(/\D/g, '')}`}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        onClick={(e) => e.stopPropagation()}
-                                                        className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
-                                                    >
-                                                        <MessageCircle className="w-4 h-4" />
-                                                    </a>
-                                                </>
-                                            )}
-                                        </div>
+
                                     </Link>
+
+                                    {/* Contact Buttons (Moved Outside Link) */}
+                                    <div className="absolute top-4 right-16 flex gap-2 z-10">
+                                        {property.contactPhone && (
+                                            <>
+                                                <a
+                                                    href={`tel:${property.contactPhone}`}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
+                                                >
+                                                    <Phone className="w-4 h-4" />
+                                                </a>
+                                                <a
+                                                    href={`https://wa.me/91${property.contactPhone?.replace(/\D/g, '')}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
+                                                >
+                                                    <MessageCircle className="w-4 h-4" />
+                                                </a>
+                                            </>
+                                        )}
+                                    </div>
 
                                     {/* Wishlist Button */}
                                     <button
                                         onClick={(e) => {
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            toggleWishlist(property._id);
+                                            toggleWishlist(property.id);
                                         }}
                                         className="absolute top-4 right-4 bg-white/90 p-2 rounded-full shadow-lg hover:scale-110 transition z-10"
                                     >
                                         <Heart
-                                            className={`w-5 h-5 ${wishlist.includes(property._id) ? 'fill-blue-500 text-blue-500' : 'text-slate-600'}`}
+                                            className={`w-5 h-5 ${wishlist.includes(property.id) ? 'fill-blue-500 text-blue-500' : 'text-slate-600'}`}
                                         />
                                     </button>
 

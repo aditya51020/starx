@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Home, Building2, Phone, Info, User, Briefcase } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, Home, Building2, Phone, Info, Briefcase, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     // Handle scroll effect
     useEffect(() => {
@@ -21,6 +24,11 @@ export default function Navbar() {
     useEffect(() => {
         setIsOpen(false);
     }, [location]);
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
     const navLinks = [
         { name: 'Home', path: '/', icon: Home },
@@ -60,6 +68,39 @@ export default function Navbar() {
                             </Link>
                         ))}
 
+                        {/* Auth Buttons */}
+                        {user ? (
+                            <div className="flex items-center gap-4 pl-4 border-l border-gray-200">
+                                <span className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                                        <User className="w-4 h-4" />
+                                    </div>
+                                    Hi, {user.name || 'User'}
+                                </span>
+                                <button
+                                    onClick={handleLogout}
+                                    className="text-gray-600 hover:text-red-600 transition"
+                                    title="Logout"
+                                >
+                                    <LogOut className="w-5 h-5" />
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-4 pl-4 border-l border-gray-200">
+                                <Link
+                                    to="/login"
+                                    className="text-blue-600 font-semibold hover:text-blue-700"
+                                >
+                                    Log In
+                                </Link>
+                                <Link
+                                    to="/signup"
+                                    className="bg-blue-600 text-white px-5 py-2 rounded-full font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
+                                >
+                                    Sign Up
+                                </Link>
+                            </div>
+                        )}
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -79,7 +120,7 @@ export default function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-white border-t border-slate-100 overflow-hidden"
+                        className="md:hidden bg-white border-t border-slate-100 overflow-hidden shadow-xl"
                     >
                         <div className="container mx-auto px-4 py-4 flex flex-col gap-2">
                             {navLinks.map((link) => (
@@ -96,6 +137,43 @@ export default function Navbar() {
                                 </Link>
                             ))}
 
+                            <div className="border-t border-gray-100 my-2"></div>
+
+                            {user ? (
+                                <>
+                                    <div className="flex items-center gap-3 p-4">
+                                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                                            <User className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-gray-900">{user.name}</p>
+                                            <p className="text-xs text-gray-500">{user.email}</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full flex items-center gap-3 p-4 rounded-xl text-red-600 hover:bg-red-50"
+                                    >
+                                        <LogOut className="w-5 h-5" />
+                                        <span className="font-medium">Logout</span>
+                                    </button>
+                                </>
+                            ) : (
+                                <div className="p-4 space-y-3">
+                                    <Link
+                                        to="/login"
+                                        className="block w-full text-center py-3 border border-gray-200 rounded-xl font-bold text-gray-700 hover:bg-gray-50"
+                                    >
+                                        Log In
+                                    </Link>
+                                    <Link
+                                        to="/signup"
+                                        className="block w-full text-center py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700"
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </motion.div>
                 )}

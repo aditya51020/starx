@@ -1,12 +1,27 @@
-// src/pages/Properties.jsx - ENHANCED WITH AIRBNB STYLE
+// src/pages/Properties.jsx - ENHANCED WITH AIRBNB STYLE & MAP & COMPARE
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
   Search, Filter, Grid, List, ChevronDown, X, Heart,
   MapPin, Bed, Bath, Maximize, TrendingUp, Home as HomeIcon,
-  SlidersHorizontal, ArrowUpDown, Sparkles
+  SlidersHorizontal, ArrowUpDown, Sparkles, Check, Map as MapIcon, Plus
 } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import { useCompare } from '../context/CompareContext';
+import { useAuth } from '../context/AuthContext';
+import toast from 'react-hot-toast';
+import PropertyCardSkeleton from '../components/common/PropertyCardSkeleton'; // Import Skeleton
+
+// Fix Leaflet icons
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 export default function Properties() {
   const [properties, setProperties] = useState([]);
@@ -14,8 +29,11 @@ export default function Properties() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [total, setTotal] = useState(0);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [viewMode, setViewMode] = useState('grid'); // grid or list
+  const [viewMode, setViewMode] = useState('grid'); // grid, list, map
   const [wishlist, setWishlist] = useState([]);
+
+  const { addToCompare, compareList } = useCompare();
+  const { user } = useAuth(); // If we want server-side wishlist later
 
   const [filters, setFilters] = useState({
     region: searchParams.get('region') || '',
@@ -25,14 +43,17 @@ export default function Properties() {
     minPrice: searchParams.get('minPrice') || '',
     maxPrice: searchParams.get('maxPrice') || '',
     furnishing: searchParams.get('furnishing') || '',
+    amenities: searchParams.get('amenities') || '',
+    search: searchParams.get('search') || '',
     sort: searchParams.get('sort') || 'latest'
   });
 
   useEffect(() => {
-    // Load wishlist from localStorage
+    // Load wishlist from localStorage (Legacy)
     const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    // Ideally merge with user.wishlist if logged in
     setWishlist(savedWishlist);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -73,6 +94,10 @@ export default function Properties() {
 
     setWishlist(newWishlist);
     localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+    // TODO: Sync with backend if user is logged in
+    if (user) {
+      toast.success(wishlist.includes(propertyId) ? 'Removed from Wishlist' : 'Added to Wishlist');
+    }
   };
 
   const updateUrl = () => {
@@ -92,6 +117,8 @@ export default function Properties() {
       minPrice: '',
       maxPrice: '',
       furnishing: '',
+      amenities: '',
+      search: '',
       sort: 'latest'
     });
     setSearchParams({});
@@ -99,26 +126,99 @@ export default function Properties() {
 
   const activeFilterCount = Object.values(filters).filter(v => v && v !== 'latest').length;
 
+  // Custom Dropdown Component
+  const CustomDropdown = ({ label, icon: Icon, value, options, onChange, placeholder = "Select" }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+      <div className="relative">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          {label}
+        </label>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl flex items-center justify-between hover:border-blue-500 focus:ring-2 focus:ring-blue-100 transition group"
+        >
+          <div className="flex items-center gap-2 text-gray-700">
+            {Icon && <Icon className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition" />}
+            <span className={value ? "font-medium" : "text-gray-500"}>
+              {value || placeholder}
+            </span>
+          </div>
+          <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {isOpen && (
+          <>
+            <div
+              className="fixed inset-0 z-10"
+              onClick={() => setIsOpen(false)}
+            ></div>
+            <div className="absolute z-20 w-full mt-2 bg-white border border-gray-100 rounded-xl shadow-xl max-h-60 overflow-y-auto animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="p-1">
+                {options.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => {
+                      onChange(opt.value);
+                      setIsOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition flex items-center justify-between ${value === opt.value
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-gray-700 hover:bg-gray-50'
+                      }`}
+                  >
+                    {opt.label}
+                    {value === opt.value && <Check className="w-4 h-4" />}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    );
+  };
+
   // Filter Section Component
   const FilterSection = ({ isMobile = false }) => (
     <div className="space-y-6">
-      {/* Location */}
+      {/* Search Bar */}
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          📍 Location
+          🔍 Search
         </label>
-        <select
-          value={filters.region}
-          onChange={(e) => setFilters({ ...filters, region: e.target.value })}
-          onBlur={updateUrl}
-          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-        >
-          <option value="">All Locations</option>
-          <option value="Vasundhara">Vasundhara</option>
-          <option value="Indirapuram">Indirapuram</option>
-          <option value="Sector 63">Sector 63</option>
-        </select>
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search by name, loc..."
+            value={filters.search}
+            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+            onKeyDown={(e) => e.key === 'Enter' && updateUrl()}
+            onBlur={updateUrl}
+            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        </div>
       </div>
+
+      {/* Location Dropdown */}
+      <CustomDropdown
+        label="📍 Location"
+        icon={MapPin}
+        value={filters.region}
+        placeholder="All Locations"
+        options={[
+          { value: '', label: 'All Locations' },
+          { value: 'Vasundhara', label: 'Vasundhara' },
+          { value: 'Indirapuram', label: 'Indirapuram' },
+          { value: 'Sector 63', label: 'Sector 63' }
+        ]}
+        onChange={(val) => {
+          setFilters({ ...filters, region: val });
+          setTimeout(updateUrl, 100);
+        }}
+      />
 
       {/* Transaction Type */}
       <div>
@@ -165,6 +265,39 @@ export default function Properties() {
               {type || 'All Types'}
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Amenities */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          ✨ Amenities
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {['Parking', 'Gym', 'Swimming Pool', 'Security', 'Lift', 'WiFi'].map((amenity) => {
+            const isActive = filters.amenities?.split(',').includes(amenity);
+            return (
+              <button
+                key={amenity}
+                onClick={() => {
+                  let current = filters.amenities ? filters.amenities.split(',') : [];
+                  if (isActive) {
+                    current = current.filter(a => a !== amenity);
+                  } else {
+                    current.push(amenity);
+                  }
+                  setFilters({ ...filters, amenities: current.join(',') });
+                  setTimeout(updateUrl, 100);
+                }}
+                className={`py-1.5 px-3 rounded-full font-medium text-xs transition border ${isActive
+                  ? 'bg-blue-50 border-blue-200 text-blue-600'
+                  : 'bg-white border-gray-200 text-gray-600 hover:border-blue-300'
+                  }`}
+              >
+                {amenity}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -221,23 +354,22 @@ export default function Properties() {
         </div>
       </div>
 
-      {/* Furnishing */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          🪑 Furnishing Status
-        </label>
-        <select
-          value={filters.furnishing}
-          onChange={(e) => setFilters({ ...filters, furnishing: e.target.value })}
-          onBlur={updateUrl}
-          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="">All Types</option>
-          <option value="Furnished">Furnished</option>
-          <option value="Semi-Furnished">Semi-Furnished</option>
-          <option value="Unfurnished">Unfurnished</option>
-        </select>
-      </div>
+      {/* Furnishing Dropdown */}
+      <CustomDropdown
+        label="🪑 Furnishing Status"
+        value={filters.furnishing}
+        placeholder="All Types"
+        options={[
+          { value: '', label: 'All Types' },
+          { value: 'Furnished', label: 'Furnished' },
+          { value: 'Semi-Furnished', label: 'Semi-Furnished' },
+          { value: 'Unfurnished', label: 'Unfurnished' }
+        ]}
+        onChange={(val) => {
+          setFilters({ ...filters, furnishing: val });
+          setTimeout(updateUrl, 100);
+        }}
+      />
 
       {/* Action Buttons */}
       <div className="pt-4 space-y-3">
@@ -373,6 +505,12 @@ export default function Properties() {
                   >
                     <List className="w-5 h-5" />
                   </button>
+                  <button
+                    onClick={() => setViewMode('map')}
+                    className={`p-2 rounded ${viewMode === 'map' ? 'bg-white shadow' : 'text-gray-500'}`}
+                  >
+                    <MapIcon className="w-5 h-5" />
+                  </button>
                 </div>
 
                 {/* Mobile Filter Button */}
@@ -391,11 +529,11 @@ export default function Properties() {
               </div>
             </div>
 
-            {/* Property Grid/List */}
+            {/* Property Grid/List/Map */}
             {loading ? (
               <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'} gap-6`}>
                 {[1, 2, 3, 4, 5, 6].map(i => (
-                  <div key={i} className="bg-gray-200 h-96 rounded-2xl animate-pulse"></div>
+                  <PropertyCardSkeleton key={i} />
                 ))}
               </div>
             ) : properties.length === 0 ? (
@@ -410,15 +548,48 @@ export default function Properties() {
                   Clear All Filters
                 </button>
               </div>
+            ) : viewMode === 'map' ? (
+              // MAP VIEW
+              <div className="h-[600px] rounded-2xl overflow-hidden shadow-lg border border-gray-200 relative z-0">
+                <MapContainer
+                  center={[28.6692, 77.4538]}
+                  zoom={12}
+                  style={{ height: '100%', width: '100%' }}
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; OpenStreetMap contributors'
+                  />
+                  {properties.map(property => (
+                    (property.lat && property.lng) ? (
+                      <Marker
+                        key={property.id}
+                        position={[property.lat, property.lng]}
+                      >
+                        <Popup>
+                          <div className="w-48">
+                            <img src={property.images?.[0]} alt={property.title} className="w-full h-24 object-cover rounded mb-2" />
+                            <h4 className="font-bold text-sm truncate">{property.title}</h4>
+                            <p className="text-blue-600 font-bold">₹{property.price?.toLocaleString('en-IN')}</p>
+                            <Link to={`/property/${property.id}`} className="block mt-2 text-center bg-blue-600 text-white py-1 rounded text-xs">View Details</Link>
+                          </div>
+                        </Popup>
+                      </Marker>
+                    ) : null
+                  ))}
+                </MapContainer>
+              </div>
             ) : (
+              // GRID / LIST VIEW
               <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'} gap-6`}>
                 {properties.map(property => (
-                  <Link
-                    key={property._id}
-                    to={`/property/${property._id}`}
-                    className={`group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 ${viewMode === 'list' ? 'flex flex-row' : 'flex flex-col'
+                  <div
+                    key={property.id}
+                    className={`group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 relative ${viewMode === 'list' ? 'flex flex-row' : 'flex flex-col'
                       }`}
                   >
+                    <Link to={`/property/${property.id}`} className="absolute inset-0 z-0"></Link>
+
                     {/* Image */}
                     <div className={`relative overflow-hidden ${viewMode === 'list' ? 'w-80 h-64' : 'h-64 w-full'}`}>
                       <img
@@ -445,25 +616,41 @@ export default function Properties() {
                         )}
                       </div>
 
-                      {/* Wishlist Button */}
-                      <button
-                        onClick={(e) => toggleWishlist(property._id, e)}
-                        className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full hover:bg-white transition shadow-lg z-10"
-                      >
-                        <Heart
-                          className={`w-5 h-5 ${wishlist.includes(property._id)
-                            ? 'fill-blue-500 text-blue-500'
-                            : 'text-gray-600'
-                            }`}
-                        />
-                      </button>
+                      {/* Top Right Action Buttons */}
+                      <div className="absolute top-4 right-4 flex flex-col gap-2 z-10 transition-opacity opacity-0 group-hover:opacity-100">
+                        {/* Wishlist Button */}
+                        <button
+                          onClick={(e) => toggleWishlist(property._id || property.id, e)}
+                          className="bg-white/90 backdrop-blur-sm p-2 rounded-full hover:bg-white transition shadow-lg"
+                          title="Add to Wishlist"
+                        >
+                          <Heart
+                            className={`w-5 h-5 ${wishlist.includes(property._id || property.id)
+                              ? 'fill-blue-500 text-blue-500'
+                              : 'text-gray-600'
+                              }`}
+                          />
+                        </button>
+                        {/* Compare Button */}
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            addToCompare(property);
+                          }}
+                          className="bg-white/90 backdrop-blur-sm p-2 rounded-full hover:bg-white transition shadow-lg"
+                          title="Add to Compare"
+                        >
+                          <Plus className={`w-5 h-5 ${compareList.find(p => p.id === property.id) ? 'text-blue-600' : 'text-gray-600'}`} />
+                        </button>
+                      </div>
 
                       {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                     </div>
 
                     {/* Content */}
-                    <div className="p-6 flex-1">
+                    <div className="p-6 flex-1 pointer-events-none">
                       <h3 className="font-bold text-xl text-gray-900 mb-2 line-clamp-1 group-hover:text-blue-600 transition">
                         {property.title}
                       </h3>
@@ -507,13 +694,13 @@ export default function Properties() {
                         </div>
                       )}
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             )}
 
             {/* Load More Button (Optional) */}
-            {properties.length < total && (
+            {properties.length < total && viewMode !== 'map' && (
               <div className="text-center mt-12">
                 <button className="bg-white border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition">
                   Load More Properties

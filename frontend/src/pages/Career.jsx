@@ -49,7 +49,7 @@ export default function Career() {
                     ) : (
                         <div className="grid gap-6">
                             {jobs.map((job) => (
-                                <div key={job._id} className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 group">
+                                <div key={job.id} className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 group">
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                                         <div>
                                             <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">

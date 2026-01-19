@@ -6,9 +6,10 @@ import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 export default function AdminLogin() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { adminLogin } = useAuth(); // Use adminLogin
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -16,11 +17,11 @@ export default function AdminLogin() {
     setIsLoading(true);
 
     try {
-      await login(password);
+      await adminLogin(email, password); // Call adminLogin
       toast.success('Welcome back, Admin!');
       navigate('/admin/dashboard');
     } catch (err) {
-      toast.error("Invalid password. Please try again.");
+      toast.error("Invalid credentials. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -39,9 +40,26 @@ export default function AdminLogin() {
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wider">Password</label>
+            <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wider">Email</label>
             <div className="relative group">
               <UserIcon className="absolute left-4 top-4 w-5 h-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 border-2 border-slate-200 rounded-xl 
+                focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none bg-slate-50 focus:bg-white"
+                placeholder="admin@starx.com"
+                required
+                disabled={isLoading}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wider">Password</label>
+            <div className="relative group">
+              <Lock className="absolute left-4 top-4 w-5 h-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
               <input
                 type="password"
                 value={password}

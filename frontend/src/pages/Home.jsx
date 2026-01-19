@@ -19,8 +19,7 @@ export default function HomePage() {
   const [wishlist, setWishlist] = useState([]);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
   const [activeView, setActiveView] = useState('featured');
-  const [isListening, setIsListening] = useState(false);
-  const [voiceQuery, setVoiceQuery] = useState('');
+
 
   const navigate = useNavigate();
 
@@ -99,43 +98,7 @@ export default function HomePage() {
     navigate(`/properties?${params.toString()}`);
   };
 
-  const startVoiceSearch = () => {
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      alert('Voice search not supported in your browser. Please use Chrome or Edge.');
-      return;
-    }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'en-IN';
-
-    recognition.onstart = () => setIsListening(true);
-    recognition.onend = () => setIsListening(false);
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setVoiceQuery(transcript);
-
-      // Simple parsing logic (could be improved)
-      const lowerTranscript = transcript.toLowerCase();
-      const filters = {};
-
-      if (lowerTranscript.includes('vasundhara')) filters.region = 'Vasundhara';
-      else if (lowerTranscript.includes('indirapuram')) filters.region = 'Indirapuram';
-      else if (lowerTranscript.includes('sector 63')) filters.region = 'Sector 63';
-
-      if (lowerTranscript.includes('rent')) filters.transactionType = 'Rent';
-      else if (lowerTranscript.includes('buy') || lowerTranscript.includes('sale')) filters.transactionType = 'Sell';
-
-      const bhkMatch = lowerTranscript.match(/(\d+)\s*bhk/);
-      if (bhkMatch) filters.bhk = bhkMatch[1];
-
-      // Auto search after delay
-      setTimeout(() => handleSearch(filters), 1000);
-    };
-
-    recognition.start();
-  };
 
   const locationData = [
     {
@@ -162,9 +125,6 @@ export default function HomePage() {
     <div className="min-h-screen bg-white font-sans">
       <HeroSection
         onSearch={handleSearch}
-        voiceQuery={voiceQuery}
-        isListening={isListening}
-        startVoiceSearch={startVoiceSearch}
       />
 
       <FeaturedProperties

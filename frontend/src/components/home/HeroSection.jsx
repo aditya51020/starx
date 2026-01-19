@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Search, Sparkles, Building2, TrendingUp, Zap, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
+import CustomDropdown from '../common/CustomDropdown';
 
-export default function HeroSection({ onSearch, voiceQuery, isListening, startVoiceSearch }) {
+export default function HeroSection({ onSearch }) {
     const [filters, setFilters] = useState({
         region: '',
         transactionType: '',
@@ -55,70 +56,65 @@ export default function HeroSection({ onSearch, voiceQuery, isListening, startVo
                     onSubmit={handleSubmit}
                     className="max-w-6xl mx-auto bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 md:p-6 border border-white/50"
                 >
-                    {voiceQuery && (
-                        <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            className="mb-4 p-3 bg-emerald-50 rounded-lg border border-emerald-200"
-                        >
-                            <p className="text-sm text-emerald-700 font-medium">🎤 Voice Query: "{voiceQuery}"</p>
-                        </motion.div>
-                    )}
 
                     <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4 mb-4">
                         <div className="col-span-2 md:col-span-1 space-y-2">
                             <label className="text-sm font-bold text-slate-700 ml-1">Location</label>
-                            <select
+                            <CustomDropdown
                                 value={filters.region}
-                                onChange={(e) => setFilters({ ...filters, region: e.target.value })}
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all hover:bg-white"
-                            >
-                                <option value="">All Locations</option>
-                                <option value="Vasundhara">Vasundhara</option>
-                                <option value="Indirapuram">Indirapuram</option>
-                                <option value="Sector 63">Sector 63</option>
-                            </select>
+                                onChange={(val) => setFilters({ ...filters, region: val })}
+                                placeholder="All Locations"
+                                options={[
+                                    { value: '', label: 'All Locations' },
+                                    { value: 'Vasundhara', label: 'Vasundhara' },
+                                    { value: 'Indirapuram', label: 'Indirapuram' },
+                                    { value: 'Sector 63', label: 'Sector 63' }
+                                ]}
+                            />
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-bold text-slate-700 ml-1">Type</label>
-                            <select
+                            <CustomDropdown
                                 value={filters.transactionType}
-                                onChange={(e) => setFilters({ ...filters, transactionType: e.target.value })}
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all hover:bg-white"
-                            >
-                                <option value="">Rent / Sell</option>
-                                <option value="Rent">For Rent</option>
-                                <option value="Sell">For Sale</option>
-                            </select>
+                                onChange={(val) => setFilters({ ...filters, transactionType: val })}
+                                placeholder="Rent / Sell"
+                                options={[
+                                    { value: '', label: 'Rent / Sell' },
+                                    { value: 'Rent', label: 'For Rent' },
+                                    { value: 'Sell', label: 'For Sale' }
+                                ]}
+                            />
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-bold text-slate-700 ml-1">Property</label>
-                            <select
+                            <CustomDropdown
                                 value={filters.propertyType}
-                                onChange={(e) => setFilters({ ...filters, propertyType: e.target.value })}
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all hover:bg-white"
-                            >
-                                <option value="">All Types</option>
-                                <option value="Apartment">Apartment</option>
-                                <option value="Villa">Villa</option>
-                                <option value="House">House</option>
-                                <option value="Plot">Plot</option>
-                            </select>
+                                onChange={(val) => setFilters({ ...filters, propertyType: val })}
+                                placeholder="All Types"
+                                options={[
+                                    { value: '', label: 'All Types' },
+                                    { value: 'Apartment', label: 'Apartment' },
+                                    { value: 'Villa', label: 'Villa' },
+                                    { value: 'House', label: 'House' },
+                                    { value: 'Plot', label: 'Plot' }
+                                ]}
+                            />
                         </div>
 
                         <div className="col-span-2 md:col-span-1 space-y-2">
                             <label className="text-sm font-bold text-slate-700 ml-1">BHK</label>
-                            <select
+                            <CustomDropdown
                                 value={filters.bhk}
-                                onChange={(e) => setFilters({ ...filters, bhk: e.target.value })}
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all hover:bg-white"
-                            >
-                                <option value="">Any BHK</option>
-                                {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n} BHK</option>)}
-                                <option value="6">5+ BHK</option>
-                            </select>
+                                onChange={(val) => setFilters({ ...filters, bhk: val })}
+                                placeholder="Any BHK"
+                                options={[
+                                    { value: '', label: 'Any BHK' },
+                                    ...[1, 2, 3, 4, 5].map(n => ({ value: n, label: `${n} BHK` })),
+                                    { value: '6', label: '5+ BHK' }
+                                ]}
+                            />
                         </div>
 
                         <div className="col-span-2 md:col-span-2 grid grid-cols-2 gap-3 md:gap-4">
@@ -157,19 +153,6 @@ export default function HeroSection({ onSearch, voiceQuery, isListening, startVo
                             Search Properties
                         </motion.button>
 
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            type="button"
-                            onClick={startVoiceSearch}
-                            className={`px-6 py-4 rounded-xl font-bold transition-all border-2 ${isListening
-                                ? 'bg-red-50 border-red-500 text-red-600 animate-pulse'
-                                : 'bg-white border-slate-200 text-slate-700 hover:border-blue-500 hover:text-blue-600'
-                                }`}
-                            title="Voice Search"
-                        >
-                            {isListening ? 'Listening...' : '🎤 Voice'}
-                        </motion.button>
                     </div>
                 </motion.form>
 
