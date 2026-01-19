@@ -18,22 +18,30 @@ const PORT = process.env.PORT || 5000;
 const ALLOWED_ORIGINS = [
   "https://starxbuildtech.co.in",
   "https://www.starxbuildtech.co.in",
+  "https://starxbuildtech.co.in/",
+  "https://www.starxbuildtech.co.in/",
   "https://starx-nu.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174",
   ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [])
 ];
 
+console.log('Allowed Origins:', ALLOWED_ORIGINS);
+
 // CORS
 app.use(cors({
   origin: (origin, callback) => {
+    console.log('Incoming Origin:', origin);
     if (!origin || ALLOWED_ORIGINS.includes(origin)) {
       callback(null, true);
     } else {
+      console.error('CORS Blocked Origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
 }));
 
 // Security
@@ -58,9 +66,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Routes
+app.use('/api/auth', authRoutes); // Auth routes first
 app.use('/api/admin', adminRoutes);
 app.use('/api', publicRoutes);
-app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 
 // Simple health check route (testing ke liye)
