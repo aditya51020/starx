@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../axiosConfig';
 import { Loader2, ArrowLeft, Save } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 import BasicDetails from './components/BasicDetails';
 import AdditionalInfo from './components/AdditionalInfo';
@@ -93,7 +94,7 @@ export default function AddProperty() {
         })
         .catch(err => {
           console.error('Failed to load property:', err);
-          alert('Failed to load property details. Please try again.');
+          toast.error('Failed to load property details. Please try again.');
         })
         .finally(() => setLoading(false));
     }
@@ -134,7 +135,7 @@ export default function AddProperty() {
       }
     } catch (err) {
       console.error('Upload failed:', err);
-      alert('Failed to upload images');
+      toast.error('Failed to upload images');
     } finally {
       setLoading(false);
     }
@@ -164,7 +165,7 @@ export default function AddProperty() {
 
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
-      alert('Please fill in all required fields highlighted in red.');
+      toast.error('Missing Fields: Please fill in all required fields.');
 
       // Smooth scroll to the first error
       setTimeout(() => {
@@ -193,15 +194,15 @@ export default function AddProperty() {
 
       if (isEdit) {
         await api.put(`/api/admin/properties/${id}`, payload);
-        alert('✅ Property Updated Successfully!');
+        toast.success('Property Updated Successfully!');
       } else {
         await api.post('/api/admin/properties', payload);
-        alert('✅ Property Added Successfully!');
+        toast.success('Property Added Successfully!');
       }
       navigate('/admin/dashboard');
     } catch (err) {
       console.error('Submit error:', err);
-      alert(err.response?.data?.message || '❌ Failed to save property. Please try again.');
+      toast.error(err.response?.data?.message || 'Failed to save property. Please try again.');
     } finally {
       setSubmitting(false);
     }
