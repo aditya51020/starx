@@ -48,7 +48,7 @@ const Contact = () => {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Phone</h3>
               <p className="text-gray-600 mb-4">Mon-Fri from 8am to 5pm.</p>
-              <a href="tel:+919876543210" className="text-blue-600 font-semibold hover:text-blue-700">+91 98765 43210</a>
+              <a href="tel:9958253683" className="text-blue-600 font-semibold hover:text-blue-700">9958253683</a>
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transform hover:-translate-y-1 transition duration-300">
@@ -57,7 +57,7 @@ const Contact = () => {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Email</h3>
               <p className="text-gray-600 mb-4">Our friendly team is here to help.</p>
-              <a href="mailto:hello@starxrealty.in" className="text-blue-600 font-semibold hover:text-blue-700">hello@starxrealty.in</a>
+              <a href="mailto:Starxassociates@gmail.com" className="text-blue-600 font-semibold hover:text-blue-700">Starxassociates@gmail.com</a>
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transform hover:-translate-y-1 transition duration-300">
@@ -66,7 +66,7 @@ const Contact = () => {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Office</h3>
               <p className="text-gray-600 mb-4">Come say hello at our office headquarters.</p>
-              <p className="text-blue-600 font-semibold">Vasundhara, Ghaziabad, UP</p>
+              <p className="text-blue-600 font-semibold">Plot Number 39, Vidhayak Lane, Nyay Khand 1-Indirapuram, Ghaziabad-201014, Uttar Pradesh</p>
             </div>
           </div>
 

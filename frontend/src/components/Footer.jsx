@@ -73,15 +73,15 @@ export default function Footer() {
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-slate-400">
                                 <MapPin className="w-5 h-5 text-blue-500 shrink-0 mt-1" />
-                                <span>123, StarX Tower, Sector 62, Noida, Uttar Pradesh 201301</span>
+                                <span>Plot Number 39, Vidhayak Lane, Nyay Khand 1-Indirapuram, Ghaziabad-201014, Uttar Pradesh</span>
                             </li>
                             <li className="flex items-center gap-3 text-slate-400">
                                 <Phone className="w-5 h-5 text-blue-500 shrink-0" />
-                                <a href="tel:+919876543210" className="hover:text-white">+91 98765 43210</a>
+                                <a href="tel:9958253683" className="hover:text-white">9958253683</a>
                             </li>
                             <li className="flex items-center gap-3 text-slate-400">
                                 <Mail className="w-5 h-5 text-blue-500 shrink-0" />
-                                <a href="mailto:info@starx.com" className="hover:text-white">info@starx.com</a>
+                                <a href="mailto:Starxassociates@gmail.com" className="hover:text-white">Starxassociates@gmail.com</a>
                             </li>
                         </ul>
                     </div>
