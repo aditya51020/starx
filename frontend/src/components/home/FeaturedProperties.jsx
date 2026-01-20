@@ -55,7 +55,7 @@ export default function FeaturedProperties({
                                     }`}
                             >
                                 <tab.icon className="w-4 h-4" />
-                                {tab.label}
+                                <span className="hidden md:block">{tab.label}</span>
                             </button>
                         ))}
                     </div>
