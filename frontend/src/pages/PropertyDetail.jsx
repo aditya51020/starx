@@ -611,7 +611,7 @@ export default function PropertyDetail() {
                   key={p.id}
                   to={`/property/${p.id}`}
                   className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
-                  onClick={() => window.scrollTo(0, 0)}
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 >
                   <div className="relative h-64 overflow-hidden">
                     <img

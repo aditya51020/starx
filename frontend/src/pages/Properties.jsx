@@ -14,6 +14,7 @@ import { useCompare } from '../context/CompareContext';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import PropertyCardSkeleton from '../components/common/PropertyCardSkeleton'; // Import Skeleton
+import LoginModal from '../components/common/LoginModal'; // Import LoginModal
 
 // Fix Leaflet icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -29,6 +30,7 @@ export default function Properties() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [total, setTotal] = useState(0);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false); // Login Modal State
   const [viewMode, setViewMode] = useState('grid'); // grid, list, map
   const [wishlist, setWishlist] = useState([]);
 
@@ -702,7 +704,19 @@ export default function Properties() {
             {/* Load More Button (Optional) */}
             {properties.length < total && viewMode !== 'map' && (
               <div className="text-center mt-12">
-                <button className="bg-white border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition">
+                <button
+                  onClick={() => {
+                    if (!user) {
+                      setShowLoginModal(true);
+                      window.scrollTo({ top: 0, behavior: 'smooth' }); // Optional: scroll up slightly or keep position
+                    } else {
+                      // Logic to load more properties (e.g., pagination)
+                      // For now just console log or toast that we would load more
+                      toast('Loading more properties...', { icon: '⏳' });
+                    }
+                  }}
+                  className="bg-white border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition"
+                >
                   Load More Properties
                 </button>
               </div>
@@ -710,6 +724,9 @@ export default function Properties() {
           </div>
         </div>
       </div>
+
+      {/* Login Modal */}
+      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
 
       {/* Mobile Filters Modal */}
       {showMobileFilters && (

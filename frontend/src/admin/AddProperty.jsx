@@ -164,8 +164,17 @@ export default function AddProperty() {
 
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
-      const errorMessages = Object.values(formErrors).join('\n');
-      alert(`Please fix the following errors:\n${errorMessages}`);
+      alert('Please fill in all required fields highlighted in red.');
+
+      // Smooth scroll to the first error
+      setTimeout(() => {
+        const firstError = document.querySelector('.border-red-500');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstError.focus();
+        }
+      }, 100);
+
       return;
     }
 

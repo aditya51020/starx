@@ -44,7 +44,7 @@ export default function ImageUpload({ form, errors, imageInput, setImageInput, h
                         onDragOver={onDragOver}
                         onDragLeave={onDragLeave}
                         onDrop={onDrop}
-                        className={`flex-1 flex flex-col items-center justify-center h-48 border-2 border-dashed rounded-xl cursor-pointer transition ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:bg-gray-50'
+                        className={`flex-1 flex flex-col items-center justify-center h-48 border-2 border-dashed rounded-xl cursor-pointer transition ${isDragging ? 'border-blue-500 bg-blue-50' : errors.images ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:bg-gray-50'
                             }`}
                     >
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">

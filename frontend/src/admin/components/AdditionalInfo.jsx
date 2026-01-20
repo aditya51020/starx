@@ -21,8 +21,9 @@ export default function AdditionalInfo({ form, setForm, errors, availableAmeniti
                     rows="6"
                     value={form.description}
                     onChange={e => setForm({ ...form, description: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 resize-none"
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 resize-none ${errors.description ? 'border-red-500' : 'border-gray-300'}`}
                 />
+                {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
