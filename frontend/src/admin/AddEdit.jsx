@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import axios from 'axios';
+import api from '../../axiosConfig';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -38,7 +38,7 @@ export default function AddEdit() {
 
   useEffect(() => {
     if (isEdit) {
-      axios.get(`/api/admin/properties/${id}`).then(res => {
+      api.get(`/api/admin/properties/${id}`).then(res => {
         const p = res.data;
         Object.keys(p).forEach(k => setValue(k, p[k]));
         setImages(p.images);
@@ -51,16 +51,16 @@ export default function AddEdit() {
     const files = Array.from(e.dataTransfer.files);
     const form = new FormData();
     files.forEach(f => form.append('images', f));
-    const res = await axios.post('/api/admin/upload', form, { headers: { 'Content-Type': 'multipart/form-data' } });
+    const res = await api.post('/api/admin/upload', form, { headers: { 'Content-Type': 'multipart/form-data' } });
     setImages(i => [...i, ...res.data.urls]);
   };
 
   const onSubmit = async data => {
     data.images = images;
     if (isEdit) {
-      await axios.put(`/api/admin/properties/${id}`, data);
+      await api.put(`/api/admin/properties/${id}`, data);
     } else {
-      await axios.post('/api/admin/properties', data);
+      await api.post('/api/admin/properties', data);
     }
     toast.success('Saved');
     navigate('/admin/listings');

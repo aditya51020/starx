@@ -1,6 +1,6 @@
 // src/pages/Properties.jsx - ENHANCED WITH AIRBNB STYLE & MAP & COMPARE
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../axiosConfig';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
   Search, Filter, Grid, List, ChevronDown, X, Heart,
@@ -65,7 +65,7 @@ export default function Properties() {
           if (value) params.set(key, value);
         });
 
-        const res = await axios.get(`/api/properties?${params.toString()}`);
+        const res = await api.get(`/api/properties?${params.toString()}`);
 
         const data = res.data?.data || res.data?.properties || res.data || [];
         const totalCount = res.data?.total || res.data?.count || data.length || 0;

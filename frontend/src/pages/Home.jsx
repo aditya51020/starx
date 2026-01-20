@@ -1,6 +1,6 @@
 // src/pages/Home.jsx
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { Train, Hospital, School, ShoppingCart, Coffee } from 'lucide-react';
 
@@ -44,12 +44,12 @@ export default function HomePage() {
     setRecentlyViewed(savedViewed);
 
     const fetchPromises = [
-      axios.get('/api/properties?featured=true&limit=10'),
-      axios.get('/api/properties?limit=50')
+      api.get('/api/properties?featured=true&limit=10'),
+      api.get('/api/properties?limit=50')
     ];
 
     if (savedViewed.length > 0) {
-      fetchPromises.push(axios.get(`/api/properties?ids=${savedViewed.join(',')}`));
+      fetchPromises.push(api.get(`/api/properties?ids=${savedViewed.join(',')}`));
     }
 
     Promise.all(fetchPromises)

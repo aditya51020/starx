@@ -1,7 +1,7 @@
 // src/pages/PropertyDetail.jsx - ENHANCED AIRBNB STYLE
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../axiosConfig';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import {
   Heart, Share2, MapPin, Bed, Bath, Maximize, Home,
@@ -56,7 +56,7 @@ export default function PropertyDetail() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await axios.post('/api/inquiries', {
+      await api.post('/api/inquiries', {
         ...inquiryForm,
         propertyId: id
       });
@@ -101,8 +101,8 @@ export default function PropertyDetail() {
     const fetchProperty = async () => {
       try {
         const [propRes, similarRes] = await Promise.all([
-          axios.get(`/api/properties/${id}`),
-          axios.get(`/api/properties?limit=6`)
+          api.get(`/api/properties/${id}`),
+          api.get(`/api/properties?limit=6`)
         ]);
 
         const data = propRes.data?.data || propRes.data || null;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../axiosConfig';
 import PropertyCard from '../components/PropertyCard';
 
 export default function Listings() {
@@ -9,7 +9,7 @@ export default function Listings() {
 
   const applyFilters = () => {
     const query = new URLSearchParams(filters).toString();
-    axios.get(`/api/properties?${query}`).then(res => setProperties(res.data));
+    api.get(`/api/properties?${query}`).then(res => setProperties(res.data));
   };
 
   useEffect(() => { applyFilters(); }, [filters]);

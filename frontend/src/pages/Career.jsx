@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../axiosConfig';
 import { Briefcase, MapPin, Clock, ArrowRight, Loader2 } from 'lucide-react';
 
 export default function Career() {
@@ -9,7 +9,7 @@ export default function Career() {
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                const res = await axios.get('/api/jobs');
+                const res = await api.get('/api/jobs');
                 setJobs(res.data.data || []);
             } catch (err) {
                 console.error('Failed to fetch jobs:', err);
