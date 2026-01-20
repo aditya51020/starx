@@ -126,26 +126,22 @@ export default function FeaturedProperties({
 
                                     {/* Contact Buttons (Moved Outside Link) */}
                                     <div className="absolute top-4 right-16 flex gap-2 z-10">
-                                        {property.contactPhone && (
-                                            <>
-                                                <a
-                                                    href={`tel:${property.contactPhone}`}
-                                                    onClick={(e) => e.stopPropagation()}
-                                                    className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
-                                                >
-                                                    <Phone className="w-4 h-4" />
-                                                </a>
-                                                <a
-                                                    href={`https://wa.me/91${property.contactPhone?.replace(/\D/g, '')}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    onClick={(e) => e.stopPropagation()}
-                                                    className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
-                                                >
-                                                    <MessageCircle className="w-4 h-4" />
-                                                </a>
-                                            </>
-                                        )}
+                                        <a
+                                            href={`tel:9958253683`}
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
+                                        >
+                                            <Phone className="w-4 h-4" />
+                                        </a>
+                                        <a
+                                            href={`https://wa.me/919958253683`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
+                                        >
+                                            <MessageCircle className="w-4 h-4" />
+                                        </a>
                                     </div>
 
                                     {/* Wishlist Button */}

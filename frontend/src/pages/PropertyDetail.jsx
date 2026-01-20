@@ -190,7 +190,7 @@ export default function PropertyDetail() {
     );
   }
 
-  const phone = property.contactPhone || "9958253683";
+  const phone = "9958253683"; // Forced as per user request
   const coordinates = property.lat && property.lng ? [property.lat, property.lng] : [28.6692, 77.4538];
 
   return (
