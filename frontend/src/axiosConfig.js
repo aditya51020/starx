@@ -7,7 +7,7 @@ const getBaseUrl = () => {
   //   return "http://localhost:5000";
   // }
   const url = "https://api.starxbuildtech.co.in";
-  console.log("%c API URL: " + url, "background: #222; color: #bada55; padding: 4px; font-size: 14px");
+
   return url;
 };
 

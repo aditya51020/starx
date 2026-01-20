@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Plus, Edit, Trash2, LogOut, Building2, Briefcase, MessageSquare, Phone, Mail } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import api from '../axiosConfig';
 
@@ -51,10 +52,11 @@ export default function AdminDashboard() {
     try {
       await api.delete(`/api/admin/properties/${id}`);
       setProperties(prev => prev.filter(p => p.id !== id));
-      alert('Property successfully deleted!');
+      setProperties(prev => prev.filter(p => p.id !== id));
+      toast.success('Property successfully deleted!');
     } catch (err) {
       console.error(err);
-      alert('Failed to delete property');
+      toast.error('Failed to delete property');
     }
   };
 
@@ -63,10 +65,11 @@ export default function AdminDashboard() {
     try {
       await api.delete(`/api/jobs/${id}`);
       setJobs(prev => prev.filter(j => j.id !== id));
-      alert('Job deleted successfully!');
+      setJobs(prev => prev.filter(j => j.id !== id));
+      toast.success('Job deleted successfully!');
     } catch (err) {
       console.error(err);
-      alert('Failed to delete job');
+      toast.error('Failed to delete job');
     }
   };
 
@@ -75,9 +78,10 @@ export default function AdminDashboard() {
     try {
       await api.delete(`/api/admin/inquiries/${id}`);
       setInquiries(prev => prev.filter(i => i.id !== id));
+      toast.success('Inquiry deleted successfully!');
     } catch (err) {
       console.error(err);
-      alert('Failed to delete inquiry');
+      toast.error('Failed to delete inquiry');
     }
   };
 
