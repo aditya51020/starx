@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Search, Sparkles, Building2, TrendingUp, Zap, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import CustomDropdown from '../common/CustomDropdown';
+import PriceRangeDropdown from '../common/PriceRangeDropdown';
 
 export default function HeroSection({ onSearch }) {
     const [filters, setFilters] = useState({
@@ -54,7 +55,7 @@ export default function HeroSection({ onSearch }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     onSubmit={handleSubmit}
-                    className="max-w-6xl mx-auto bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 md:p-6 border border-white/50"
+                    className="max-w-6xl mx-auto bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 md:p-6 border border-white/50 relative z-20"
                 >
 
                     <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4 mb-4">
@@ -78,11 +79,11 @@ export default function HeroSection({ onSearch }) {
                             <CustomDropdown
                                 value={filters.transactionType}
                                 onChange={(val) => setFilters({ ...filters, transactionType: val })}
-                                placeholder="Rent / Sell"
+                                placeholder="Rent / buy"
                                 options={[
-                                    { value: '', label: 'Rent / Sell' },
+                                    { value: '', label: 'Rent / buy' },
                                     { value: 'Rent', label: 'For Rent' },
-                                    { value: 'Sell', label: 'For Sale' }
+                                    { value: 'buy', label: 'For buy' }
                                 ]}
                             />
                         </div>
@@ -117,28 +118,8 @@ export default function HeroSection({ onSearch }) {
                             />
                         </div>
 
-                        <div className="col-span-2 md:col-span-2 grid grid-cols-2 gap-3 md:gap-4">
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-slate-700 ml-1">Min Price</label>
-                                <input
-                                    type="number"
-                                    placeholder="₹ Min"
-                                    value={filters.minPrice}
-                                    onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all hover:bg-white"
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-slate-700 ml-1">Max Price</label>
-                                <input
-                                    type="number"
-                                    placeholder="₹ Max"
-                                    value={filters.maxPrice}
-                                    onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all hover:bg-white"
-                                />
-                            </div>
+                        <div className="col-span-2 md:col-span-2">
+                            <PriceRangeDropdown filters={filters} setFilters={setFilters} />
                         </div>
                     </div>
 

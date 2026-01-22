@@ -5,7 +5,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import {
   Search, Filter, Grid, List, ChevronDown, X, Heart,
   MapPin, Bed, Bath, Maximize, TrendingUp, Home as HomeIcon,
-  SlidersHorizontal, ArrowUpDown, Sparkles, Check, Map as MapIcon, Plus
+  SlidersHorizontal, ArrowUpDown, Sparkles, Check, Map as MapIcon, Plus, Building2, Sofa, CreditCard, Star
 } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -14,7 +14,9 @@ import { useCompare } from '../context/CompareContext';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import PropertyCardSkeleton from '../components/common/PropertyCardSkeleton'; // Import Skeleton
+
 import LoginModal from '../components/common/LoginModal'; // Import LoginModal
+import PriceRangeDropdown from '../components/common/PriceRangeDropdown'; // Import PriceRangeDropdown
 
 // Fix Leaflet icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -182,13 +184,141 @@ export default function Properties() {
     );
   };
 
+  // Price Range Dropdown Component by StarX
+  const PriceRangeDropdown = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const isRent = filters.transactionType === 'Rent';
+
+    // Price Options
+    const rentOptions = [
+      { val: 5000, label: '₹ 5 Thousand' },
+      { val: 10000, label: '₹ 10 Thousand' },
+      { val: 15000, label: '₹ 15 Thousand' },
+      { val: 20000, label: '₹ 20 Thousand' },
+      { val: 25000, label: '₹ 25 Thousand' },
+      { val: 30000, label: '₹ 30 Thousand' },
+      { val: 40000, label: '₹ 40 Thousand' },
+      { val: 50000, label: '₹ 50 Thousand' },
+      { val: 75000, label: '₹ 75 Thousand' },
+      { val: 100000, label: '₹ 1 Lakh' },
+    ];
+
+    const sellOptions = [
+      { val: 2000000, label: '₹ 20 Lakh' },
+      { val: 4000000, label: '₹ 40 Lakh' },
+      { val: 6000000, label: '₹ 60 Lakh' },
+      { val: 8000000, label: '₹ 80 Lakh' },
+      { val: 10000000, label: '₹ 1 Cr' },
+      { val: 15000000, label: '₹ 1.5 Cr' },
+      { val: 20000000, label: '₹ 2 Cr' },
+      { val: 30000000, label: '₹ 3 Cr' },
+      { val: 50000000, label: '₹ 5 Cr' },
+    ];
+
+    const options = isRent ? rentOptions : sellOptions;
+
+    // Helper to format display value
+    const formatPrice = (val) => {
+      if (!val) return '';
+      if (val >= 10000000) return `₹${val / 10000000} Cr`;
+      if (val >= 100000) return `₹${val / 100000} L`;
+      if (val >= 1000) return `₹${val / 1000} K`;
+      return `₹${val}`;
+    };
+
+    const displayText = filters.minPrice || filters.maxPrice
+      ? `${formatPrice(filters.minPrice) || 'Min'} - ${formatPrice(filters.maxPrice) || 'Max'}`
+      : 'Budget';
+
+    return (
+      <div className="relative">
+        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <CreditCard className="w-4 h-4 text-[#D4AF37]" /> Budget
+        </label>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl flex items-center justify-between hover:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition group text-left"
+        >
+          <span className={filters.minPrice || filters.maxPrice ? "font-medium text-gray-900" : "text-gray-500"}>
+            {displayText}
+          </span>
+          <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {isOpen && (
+          <>
+            <div
+              className="fixed inset-0 z-10"
+              onClick={() => setIsOpen(false)}
+            ></div>
+            <div className="absolute z-20 w-[300px] mt-2 bg-white border border-gray-100 rounded-xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 p-0">
+              <div className="flex border-b border-gray-100 bg-gray-50">
+                <div className="flex-1 p-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-r">Min</div>
+                <div className="flex-1 p-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Max</div>
+              </div>
+              <div className="flex max-h-64">
+                {/* Min Column */}
+                <div className="flex-1 overflow-y-auto border-r border-gray-100">
+                  <button
+                    onClick={() => setFilters(prev => ({ ...prev, minPrice: '' }))}
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${!filters.minPrice ? 'text-[#D4AF37] font-bold bg-[#FFFDF0]' : 'text-gray-700'}`}
+                  >
+                    Min
+                  </button>
+                  {options.map(opt => (
+                    <button
+                      key={`min-${opt.val}`}
+                      onClick={() => setFilters(prev => ({ ...prev, minPrice: opt.val }))}
+                      disabled={filters.maxPrice && opt.val >= filters.maxPrice} // Disable if > max
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${Number(filters.minPrice) === opt.val ? 'text-[#D4AF37] font-bold bg-[#FFFDF0]' : 'text-gray-700'} disabled:opacity-30 disabled:cursor-not-allowed`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Max Column */}
+                <div className="flex-1 overflow-y-auto">
+                  <button
+                    onClick={() => {
+                      setFilters(prev => ({ ...prev, maxPrice: '' }));
+                      setIsOpen(false);
+                      setTimeout(updateUrl, 100);
+                    }}
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${!filters.maxPrice ? 'text-[#D4AF37] font-bold bg-[#FFFDF0]' : 'text-gray-700'}`}
+                  >
+                    Max
+                  </button>
+                  {options.map(opt => (
+                    <button
+                      key={`max-${opt.val}`}
+                      onClick={() => {
+                        setFilters(prev => ({ ...prev, maxPrice: opt.val }));
+                        setIsOpen(false);
+                        setTimeout(updateUrl, 100);
+                      }}
+                      disabled={filters.minPrice && opt.val <= filters.minPrice} // Disable if < min
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${Number(filters.maxPrice) === opt.val ? 'text-[#D4AF37] font-bold bg-[#FFFDF0]' : 'text-gray-700'} disabled:opacity-30 disabled:cursor-not-allowed`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    );
+  };
+
   // Filter Section Component
   const FilterSection = ({ isMobile = false }) => (
     <div className="space-y-6">
       {/* Search Bar */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          🔍 Search
+        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <Search className="w-4 h-4 text-[#D4AF37]" /> Search
         </label>
         <div className="relative">
           <input
@@ -206,7 +336,7 @@ export default function Properties() {
 
       {/* Location Dropdown */}
       <CustomDropdown
-        label="📍 Location"
+        label={<div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[#D4AF37]" /> Location</div>}
         icon={MapPin}
         value={filters.region}
         placeholder="All Locations"
@@ -224,8 +354,8 @@ export default function Properties() {
 
       {/* Transaction Type */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          🏠 Property For
+        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <HomeIcon className="w-4 h-4 text-[#D4AF37]" /> Property For
         </label>
         <div className="grid grid-cols-3 gap-2">
           {['', 'Rent', 'Sell'].map((type) => (
@@ -248,8 +378,8 @@ export default function Properties() {
 
       {/* Property Type */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          🏢 Property Type
+        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <Building2 className="w-4 h-4 text-[#D4AF37]" /> Property Type
         </label>
         <div className="grid grid-cols-2 gap-2">
           {['', 'Apartment', 'Villa', 'House', 'Plot'].map((type) => (
@@ -272,8 +402,8 @@ export default function Properties() {
 
       {/* Amenities */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          ✨ Amenities
+        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-[#D4AF37]" /> Amenities
         </label>
         <div className="flex flex-wrap gap-2">
           {['Parking', 'Gym', 'Swimming Pool', 'Security', 'Lift', 'WiFi'].map((amenity) => {
@@ -305,8 +435,8 @@ export default function Properties() {
 
       {/* BHK */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          🛏️ BHK Configuration
+        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <Bed className="w-4 h-4 text-[#D4AF37]" /> BHK Configuration
         </label>
         <div className="grid grid-cols-3 gap-2">
           {['', '1', '2', '3', '4', '5'].map((bhk) => (
@@ -328,37 +458,11 @@ export default function Properties() {
       </div>
 
       {/* Price Range */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          💰 Price Range
-        </label>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <input
-              type="number"
-              placeholder="₹ Min"
-              value={filters.minPrice}
-              onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
-              onBlur={updateUrl}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37]"
-            />
-          </div>
-          <div>
-            <input
-              type="number"
-              placeholder="₹ Max"
-              value={filters.maxPrice}
-              onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
-              onBlur={updateUrl}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37]"
-            />
-          </div>
-        </div>
-      </div>
+      <PriceRangeDropdown filters={filters} setFilters={setFilters} updateUrl={updateUrl} />
 
       {/* Furnishing Dropdown */}
       <CustomDropdown
-        label="🪑 Furnishing Status"
+        label={<div className="flex items-center gap-2"><Sofa className="w-4 h-4 text-[#D4AF37]" /> Furnishing Status</div>}
         value={filters.furnishing}
         placeholder="All Types"
         options={[
@@ -421,22 +525,22 @@ export default function Properties() {
             <div className="flex flex-wrap justify-center gap-2 mt-6">
               {filters.region && (
                 <span className="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm">
-                  📍 {filters.region}
+                  <MapPin className="w-4 h-4" /> {filters.region}
                 </span>
               )}
               {filters.transactionType && (
                 <span className="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm">
-                  🏠 {filters.transactionType}
+                  <HomeIcon className="w-4 h-4" /> {filters.transactionType}
                 </span>
               )}
               {filters.propertyType && (
                 <span className="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm">
-                  🏢 {filters.propertyType}
+                  <Building2 className="w-4 h-4" /> {filters.propertyType}
                 </span>
               )}
               {filters.bhk && (
                 <span className="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm">
-                  🛏️ {filters.bhk} BHK
+                  <Bed className="w-4 h-4" /> {filters.bhk} BHK
                 </span>
               )}
             </div>
@@ -613,7 +717,7 @@ export default function Properties() {
 
                         {property.featured && (
                           <span className="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-                            ⭐ Featured
+                            <Star className="w-3 h-3 fill-current" /> Featured
                           </span>
                         )}
                       </div>
@@ -691,7 +795,7 @@ export default function Properties() {
                       {property.furnishing && (
                         <div className="mt-3">
                           <span className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
-                            🪑 {property.furnishing}
+                            <Sofa className="w-3 h-3 inline mr-1" /> {property.furnishing}
                           </span>
                         </div>
                       )}

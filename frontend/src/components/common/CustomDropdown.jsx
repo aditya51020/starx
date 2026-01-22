@@ -32,7 +32,7 @@ export default function CustomDropdown({
     }, []);
 
     return (
-        <div className="relative" ref={dropdownRef}>
+        <div className={`relative ${isOpen ? 'z-30' : 'z-auto'}`} ref={dropdownRef}>
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}

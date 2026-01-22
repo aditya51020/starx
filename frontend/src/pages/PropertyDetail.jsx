@@ -357,13 +357,15 @@ export default function PropertyDetail() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Amenities & Features</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {property.amenities.map((amenity, i) => {
-                    const IconComponent = amenityIcons[amenity] || Check;
+                    // Function to strip emojis and trim
+                    const cleanName = amenity.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2700}-\u{27BF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]/gu, '').trim();
+                    const IconComponent = amenityIcons[cleanName] || amenityIcons[amenity] || Check;
                     return (
                       <div key={i} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
                         <div className="w-10 h-10 bg-[#FFFDF0] rounded-full flex items-center justify-center flex-shrink-0">
                           <IconComponent className="w-5 h-5 text-[#D4AF37]" />
                         </div>
-                        <span className="font-medium text-gray-900">{amenity}</span>
+                        <span className="font-medium text-gray-900">{cleanName}</span>
                       </div>
                     );
                   })}
