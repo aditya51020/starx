@@ -5,8 +5,8 @@ export default function AdditionalInfo({ form, setForm, errors, availableAmeniti
     return (
         <div className="p-8 space-y-6">
             <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                    <FileText className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-[#FFFDF0] rounded-xl flex items-center justify-center">
+                    <FileText className="w-6 h-6 text-[#D4AF37]" />
                 </div>
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900">Additional Info</h2>
@@ -21,7 +21,7 @@ export default function AdditionalInfo({ form, setForm, errors, availableAmeniti
                     rows="6"
                     value={form.description}
                     onChange={e => setForm({ ...form, description: e.target.value })}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 resize-none ${errors.description ? 'border-red-500' : 'border-gray-300'}`}
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#D4AF37] resize-none ${errors.description ? 'border-red-500' : 'border-gray-300'}`}
                 />
                 {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
             </div>
@@ -113,7 +113,7 @@ export default function AdditionalInfo({ form, setForm, errors, availableAmeniti
                             type="button"
                             onClick={() => toggleAmenity(amenity)}
                             className={`py-2 px-3 rounded-lg text-sm font-medium transition ${form.amenities.includes(amenity)
-                                ? 'bg-blue-600 text-white'
+                                ? 'bg-[#D4AF37] text-white'
                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                 }`}
                         >

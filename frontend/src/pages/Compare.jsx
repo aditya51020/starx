@@ -11,7 +11,7 @@ export default function Compare() {
                 <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">No Properties Selected</h2>
                     <p className="text-gray-600 mb-6">Select at least 2 properties to compare</p>
-                    <Link to="/properties" className="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-blue-700 transition">
+                    <Link to="/properties" className="bg-[#D4AF37] text-white px-6 py-2 rounded-xl font-bold hover:bg-[#C5A059] transition">
                         Browse Properties
                     </Link>
                 </div>
@@ -71,8 +71,8 @@ export default function Compare() {
                                                     alt={property.title}
                                                     className="w-full h-48 object-cover rounded-xl mb-4 hover:shadow-md transition"
                                                 />
-                                                <h3 className="font-bold text-xl text-gray-900 line-clamp-2 mb-2 hover:text-blue-600">{property.title}</h3>
-                                                <p className="text-blue-600 text-lg font-bold">₹{property.price?.toLocaleString('en-IN')}</p>
+                                                <h3 className="font-bold text-xl text-gray-900 line-clamp-2 mb-2 hover:text-[#D4AF37]">{property.title}</h3>
+                                                <p className="text-[#D4AF37] text-lg font-bold">₹{property.price?.toLocaleString('en-IN')}</p>
                                             </Link>
                                         </div>
                                     </th>
@@ -121,7 +121,7 @@ export default function Compare() {
                                 <td className="p-6 bg-gray-50/30 sticky left-0"></td>
                                 {compareList.map((property) => (
                                     <td key={property.id} className="p-6">
-                                        <Link to={`/property/${property.id}`} className="block w-full text-center bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">
+                                        <Link to={`/property/${property.id}`} className="block w-full text-center bg-[#D4AF37] text-white py-3 rounded-xl font-bold hover:bg-[#C5A059] transition">
                                             View Details
                                         </Link>
                                     </td>

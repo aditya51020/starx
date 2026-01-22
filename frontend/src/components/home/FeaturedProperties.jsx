@@ -50,7 +50,7 @@ export default function FeaturedProperties({
                                 key={tab.id}
                                 onClick={() => setActiveView(tab.id)}
                                 className={`px-6 py-3 rounded-xl font-bold transition-all duration-300 flex items-center gap-2 ${activeView === tab.id
-                                    ? 'bg-white text-blue-600 shadow-lg scale-105'
+                                    ? 'bg-white text-[#D4AF37] shadow-lg scale-105'
                                     : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
                                     }`}
                             >
@@ -129,7 +129,7 @@ export default function FeaturedProperties({
                                         <a
                                             href={`tel:9958253683`}
                                             onClick={(e) => e.stopPropagation()}
-                                            className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
+                                            className="bg-white/90 p-2 rounded-full hover:bg-[#D4AF37] hover:text-white transition-colors shadow-lg"
                                         >
                                             <Phone className="w-4 h-4" />
                                         </a>
@@ -138,7 +138,7 @@ export default function FeaturedProperties({
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             onClick={(e) => e.stopPropagation()}
-                                            className="bg-white/90 p-2 rounded-full hover:bg-emerald-500 hover:text-white transition-colors shadow-lg"
+                                            className="bg-white/90 p-2 rounded-full hover:bg-[#D4AF37] hover:text-white transition-colors shadow-lg"
                                         >
                                             <MessageCircle className="w-4 h-4" />
                                         </a>
@@ -154,14 +154,14 @@ export default function FeaturedProperties({
                                         className="absolute top-4 right-4 bg-white/90 p-2 rounded-full shadow-lg hover:scale-110 transition z-10"
                                     >
                                         <Heart
-                                            className={`w-5 h-5 ${wishlist.includes(property.id) ? 'fill-blue-500 text-blue-500' : 'text-slate-600'}`}
+                                            className={`w-5 h-5 ${wishlist.includes(property.id) ? 'fill-[#D4AF37] text-[#D4AF37]' : 'text-slate-600'}`}
                                         />
                                     </button>
 
                                     {/* Content */}
                                     <div className="p-6">
                                         <h3 className="text-xl font-bold text-slate-900 mb-2 truncate">{property.title}</h3>
-                                        <p className="text-2xl font-bold text-blue-600 mb-4">
+                                        <p className="text-2xl font-bold text-[#D4AF37] mb-4">
                                             ₹{property.price?.toLocaleString('en-IN') || 'N/A'}
                                         </p>
 

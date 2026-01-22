@@ -78,7 +78,7 @@ export default function AddEdit() {
           {images.map((url, i) => <img key={i} src={url} alt="" className="w-24 h-24 object-cover rounded" />)}
         </div>
       </div>
-      <button type="submit" className="btn-primary">Save Property</button>
+      <button type="submit" className="w-full bg-[#D4AF37] text-white py-3 rounded-xl font-bold hover:bg-[#C5A059] transition shadow-lg shadow-[#D4AF37]/30">Save Property</button>
     </form>
   );
 }

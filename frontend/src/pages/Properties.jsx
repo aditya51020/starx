@@ -139,10 +139,10 @@ export default function Properties() {
         </label>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl flex items-center justify-between hover:border-blue-500 focus:ring-2 focus:ring-blue-100 transition group"
+          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl flex items-center justify-between hover:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition group"
         >
           <div className="flex items-center gap-2 text-gray-700">
-            {Icon && <Icon className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition" />}
+            {Icon && <Icon className="w-4 h-4 text-gray-400 group-hover:text-[#D4AF37] transition" />}
             <span className={value ? "font-medium" : "text-gray-500"}>
               {value || placeholder}
             </span>
@@ -166,7 +166,7 @@ export default function Properties() {
                       setIsOpen(false);
                     }}
                     className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition flex items-center justify-between ${value === opt.value
-                      ? 'bg-blue-50 text-blue-600'
+                      ? 'bg-[#FFFDF0] text-[#D4AF37]'
                       : 'text-gray-700 hover:bg-gray-50'
                       }`}
                   >
@@ -198,7 +198,7 @@ export default function Properties() {
             onChange={(e) => setFilters({ ...filters, search: e.target.value })}
             onKeyDown={(e) => e.key === 'Enter' && updateUrl()}
             onBlur={updateUrl}
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
         </div>
@@ -236,7 +236,7 @@ export default function Properties() {
                 setTimeout(updateUrl, 100);
               }}
               className={`py-2 px-3 rounded-lg font-medium text-sm transition ${filters.transactionType === type
-                ? 'bg-blue-600 text-white'
+                ? 'bg-[#D4AF37] text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
             >
@@ -260,7 +260,7 @@ export default function Properties() {
                 setTimeout(updateUrl, 100);
               }}
               className={`py-2 px-3 rounded-lg font-medium text-sm transition ${filters.propertyType === type
-                ? 'bg-blue-600 text-white'
+                ? 'bg-[#D4AF37] text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
             >
@@ -292,8 +292,8 @@ export default function Properties() {
                   setTimeout(updateUrl, 100);
                 }}
                 className={`py-1.5 px-3 rounded-full font-medium text-xs transition border ${isActive
-                  ? 'bg-blue-50 border-blue-200 text-blue-600'
-                  : 'bg-white border-gray-200 text-gray-600 hover:border-blue-300'
+                  ? 'bg-[#FFFDF0] border-[#D4AF37] text-[#D4AF37]'
+                  : 'bg-white border-gray-200 text-gray-600 hover:border-[#F0E68C]'
                   }`}
               >
                 {amenity}
@@ -317,7 +317,7 @@ export default function Properties() {
                 setTimeout(updateUrl, 100);
               }}
               className={`py-2 px-3 rounded-lg font-medium text-sm transition ${filters.bhk === bhk
-                ? 'bg-blue-600 text-white'
+                ? 'bg-[#D4AF37] text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
             >
@@ -340,7 +340,7 @@ export default function Properties() {
               value={filters.minPrice}
               onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
               onBlur={updateUrl}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37]"
             />
           </div>
           <div>
@@ -350,7 +350,7 @@ export default function Properties() {
               value={filters.maxPrice}
               onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
               onBlur={updateUrl}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37]"
             />
           </div>
         </div>
@@ -377,7 +377,7 @@ export default function Properties() {
       <div className="pt-4 space-y-3">
         <button
           onClick={updateUrl}
-          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-bold hover:from-blue-700 hover:to-indigo-700 transition shadow-lg"
+          className="w-full bg-[#D4AF37] text-white py-4 rounded-xl font-bold hover:bg-[#C5A059] transition shadow-lg"
         >
           Apply Filters
         </button>
@@ -451,11 +451,11 @@ export default function Properties() {
             <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-6 border border-gray-100">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                  <SlidersHorizontal className="w-6 h-6 text-blue-600" />
+                  <SlidersHorizontal className="w-6 h-6 text-[#D4AF37]" />
                   Filters
                 </h3>
                 {activeFilterCount > 0 && (
-                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-bold">
+                  <span className="bg-[#FFFDF0] text-[#D4AF37] px-3 py-1 rounded-full text-sm font-bold">
                     {activeFilterCount}
                   </span>
                 )}
@@ -471,7 +471,7 @@ export default function Properties() {
             <div className="bg-white rounded-2xl shadow-lg p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="flex items-center gap-4">
                 <p className="text-gray-700 font-medium">
-                  Showing <span className="font-bold text-blue-600">{properties.length}</span> of <span className="font-bold">{total}</span> results
+                  Showing <span className="font-bold text-[#D4AF37]">{properties.length}</span> of <span className="font-bold">{total}</span> results
                 </p>
               </div>
 
@@ -484,7 +484,7 @@ export default function Properties() {
                       setFilters({ ...filters, sort: e.target.value });
                       setTimeout(updateUrl, 100);
                     }}
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg appearance-none focus:ring-2 focus:ring-blue-500 bg-white"
+                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg appearance-none focus:ring-2 focus:ring-[#D4AF37] bg-white"
                   >
                     <option value="latest">Latest First</option>
                     <option value="priceLow">Price: Low to High</option>
@@ -518,12 +518,12 @@ export default function Properties() {
                 {/* Mobile Filter Button */}
                 <button
                   onClick={() => setShowMobileFilters(true)}
-                  className="lg:hidden bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-semibold hover:bg-blue-700 transition"
+                  className="lg:hidden bg-[#D4AF37] text-white px-4 py-2 rounded-lg flex items-center gap-2 font-semibold hover:bg-[#C5A059] transition"
                 >
                   <Filter className="w-5 h-5" />
                   Filters
                   {activeFilterCount > 0 && (
-                    <span className="bg-white text-blue-600 px-2 py-0.5 rounded-full text-xs font-bold">
+                    <span className="bg-white text-[#D4AF37] px-2 py-0.5 rounded-full text-xs font-bold">
                       {activeFilterCount}
                     </span>
                   )}
@@ -545,7 +545,7 @@ export default function Properties() {
                 <p className="text-gray-500 mb-6">Try adjusting your filters to see more results</p>
                 <button
                   onClick={clearFilters}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
+                  className="bg-[#D4AF37] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#C5A059] transition"
                 >
                   Clear All Filters
                 </button>
@@ -572,8 +572,8 @@ export default function Properties() {
                           <div className="w-48">
                             <img src={property.images?.[0]} alt={property.title} className="w-full h-24 object-cover rounded mb-2" />
                             <h4 className="font-bold text-sm truncate">{property.title}</h4>
-                            <p className="text-blue-600 font-bold">₹{property.price?.toLocaleString('en-IN')}</p>
-                            <Link to={`/property/${property.id}`} className="block mt-2 text-center bg-blue-600 text-white py-1 rounded text-xs">View Details</Link>
+                            <p className="text-[#D4AF37] font-bold">₹{property.price?.toLocaleString('en-IN')}</p>
+                            <Link to={`/property/${property.id}`} className="block mt-2 text-center bg-[#D4AF37] text-white py-1 rounded text-xs">View Details</Link>
                           </div>
                         </Popup>
                       </Marker>
@@ -606,7 +606,7 @@ export default function Properties() {
                           ? 'bg-green-500'
                           : property.transactionType === 'Sold'
                             ? 'bg-gray-500'
-                            : 'bg-blue-500'
+                            : 'bg-[#D4AF37]'
                           }`}>
                           {property.transactionType}
                         </span>
@@ -628,7 +628,7 @@ export default function Properties() {
                         >
                           <Heart
                             className={`w-5 h-5 ${wishlist.includes(property._id || property.id)
-                              ? 'fill-blue-500 text-blue-500'
+                              ? 'fill-[#D4AF37] text-[#D4AF37]'
                               : 'text-gray-600'
                               }`}
                           />
@@ -643,7 +643,7 @@ export default function Properties() {
                           className="bg-white/90 backdrop-blur-sm p-2 rounded-full hover:bg-white transition shadow-lg"
                           title="Add to Compare"
                         >
-                          <Plus className={`w-5 h-5 ${compareList.find(p => p.id === property.id) ? 'text-blue-600' : 'text-gray-600'}`} />
+                          <Plus className={`w-5 h-5 ${compareList.find(p => p.id === property.id) ? 'text-[#D4AF37]' : 'text-gray-600'}`} />
                         </button>
                       </div>
 
@@ -653,12 +653,12 @@ export default function Properties() {
 
                     {/* Content */}
                     <div className="p-6 flex-1 pointer-events-none">
-                      <h3 className="font-bold text-xl text-gray-900 mb-2 line-clamp-1 group-hover:text-blue-600 transition">
+                      <h3 className="font-bold text-xl text-gray-900 mb-2 line-clamp-1 group-hover:text-[#D4AF37] transition">
                         {property.title}
                       </h3>
 
                       <div className="flex items-center text-gray-600 text-sm mb-3">
-                        <MapPin className="w-4 h-4 mr-1 text-blue-500" />
+                        <MapPin className="w-4 h-4 mr-1 text-[#D4AF37]" />
                         {property.region}
                       </div>
 
@@ -715,7 +715,7 @@ export default function Properties() {
                       toast('Loading more properties...', { icon: '⏳' });
                     }
                   }}
-                  className="bg-white border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition"
+                  className="bg-white border-2 border-[#D4AF37] text-[#D4AF37] px-8 py-4 rounded-xl font-bold hover:bg-[#FFFDF0] transition"
                 >
                   Load More Properties
                 </button>
@@ -734,7 +734,7 @@ export default function Properties() {
           <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center z-10">
               <h3 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                <Filter className="w-6 h-6 text-blue-600" />
+                <Filter className="w-6 h-6 text-[#D4AF37]" />
                 Filters
               </h3>
               <button

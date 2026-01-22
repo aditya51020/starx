@@ -75,12 +75,12 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                                                         className="w-full h-32 object-cover rounded-lg mb-3"
                                                     />
                                                     <h3 className="font-bold text-sm line-clamp-1 mb-1">{property.title}</h3>
-                                                    <p className="text-blue-600 font-bold text-lg mb-2">
+                                                    <p className="text-[#D4AF37] font-bold text-lg mb-2">
                                                         ₹{property.price?.toLocaleString('en-IN')}
                                                     </p>
                                                     <Link
                                                         to={`/property/${property.id}`}
-                                                        className="block w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 transition"
+                                                        className="block w-full bg-[#D4AF37] text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-[#C5A059] transition"
                                                     >
                                                         View Details
                                                     </Link>
@@ -118,8 +118,8 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                                     { icon: Star, title: 'Premium Service', desc: 'Dedicated support from experts' }
                                 ].map((item, i) => (
                                     <div key={i} className="flex items-start gap-4">
-                                        <div className="bg-blue-100 p-3 rounded-2xl">
-                                            <item.icon className="w-6 h-6 text-blue-600" />
+                                        <div className="bg-[#FFFDF0] p-3 rounded-2xl">
+                                            <item.icon className="w-6 h-6 text-[#D4AF37]" />
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-slate-900 mb-1">{item.title}</h4>
@@ -129,16 +129,16 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                                 ))}
                             </div>
 
-                            <div className="bg-blue-600 rounded-2xl p-8 text-white relative overflow-hidden group">
+                            <div className="bg-[#D4AF37] rounded-2xl p-8 text-white relative overflow-hidden group">
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-white/20 transition-all"></div>
 
                                 <h4 className="font-bold text-2xl mb-2 relative z-10">
                                     Ready to Get Started?
                                 </h4>
-                                <p className="text-blue-100 mb-6 relative z-10 max-w-md">
+                                <p className="text-[#FFFDF0] mb-6 relative z-10 max-w-md">
                                     Browse through our extensive collection of properties or contact us for personalized assistance.
                                 </p>
-                                <Link to="/contact" className="inline-block bg-white text-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-50 transition shadow-lg relative z-10">
+                                <Link to="/contact" className="inline-block bg-white text-[#D4AF37] px-8 py-3 rounded-xl font-bold hover:bg-[#FFFDF0] transition shadow-lg relative z-10">
                                     Contact Our Team
                                 </Link>
                             </div>

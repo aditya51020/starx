@@ -44,7 +44,7 @@ export default function AddJob() {
                 <div className="flex items-center justify-between mb-8">
                     <button
                         onClick={() => navigate('/admin/dashboard')}
-                        className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-blue-600 hover:bg-white rounded-xl transition"
+                        className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-[#D4AF37] hover:bg-white rounded-xl transition"
                     >
                         <ArrowLeft className="w-5 h-5" /> Back to Dashboard
                     </button>
@@ -54,7 +54,7 @@ export default function AddJob() {
                 <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
                     <div className="p-8">
                         <div className="flex items-center gap-4 mb-8 pb-8 border-b border-gray-100">
-                            <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600">
+                            <div className="w-16 h-16 bg-[#FFFDF0] rounded-2xl flex items-center justify-center text-[#D4AF37]">
                                 <Briefcase className="w-8 h-8" />
                             </div>
                             <div>
@@ -72,7 +72,7 @@ export default function AddJob() {
                                         required
                                         value={form.title}
                                         onChange={e => setForm({ ...form, title: e.target.value })}
-                                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none transition"
                                         placeholder="e.g. Senior React Developer"
                                     />
                                 </div>
@@ -83,7 +83,7 @@ export default function AddJob() {
                                         required
                                         value={form.department}
                                         onChange={e => setForm({ ...form, department: e.target.value })}
-                                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none transition"
                                         placeholder="e.g. Engineering"
                                     />
                                 </div>
@@ -97,7 +97,7 @@ export default function AddJob() {
                                         required
                                         value={form.location}
                                         onChange={e => setForm({ ...form, location: e.target.value })}
-                                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none transition"
                                         placeholder="e.g. Remote, Noida"
                                     />
                                 </div>
@@ -106,7 +106,7 @@ export default function AddJob() {
                                     <select
                                         value={form.type}
                                         onChange={e => setForm({ ...form, type: e.target.value })}
-                                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none transition"
                                     >
                                         <option value="Full-time">Full-time</option>
                                         <option value="Part-time">Part-time</option>
@@ -123,7 +123,7 @@ export default function AddJob() {
                                     rows="4"
                                     value={form.description}
                                     onChange={e => setForm({ ...form, description: e.target.value })}
-                                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none transition"
                                     placeholder="Describe the role and responsibilities..."
                                 ></textarea>
                             </div>
@@ -134,7 +134,7 @@ export default function AddJob() {
                                     rows="4"
                                     value={form.requirements}
                                     onChange={e => setForm({ ...form, requirements: e.target.value })}
-                                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none transition"
                                     placeholder="- 3+ years of experience&#10;- Knowledge of React&#10;- Good communication skills"
                                 ></textarea>
                             </div>
@@ -150,7 +150,7 @@ export default function AddJob() {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-indigo-700 transition shadow-lg hover:shadow-blue-500/30 flex items-center gap-2"
+                                    className="px-8 py-3 bg-[#D4AF37] text-white rounded-xl font-bold hover:bg-[#C5A059] transition shadow-lg hover:shadow-[#D4AF37]/30 flex items-center gap-2"
                                 >
                                     {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                                     Post Job

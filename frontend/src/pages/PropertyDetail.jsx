@@ -182,7 +182,7 @@ export default function PropertyDetail() {
         <div className="text-center">
           <Home className="w-20 h-20 text-gray-300 mx-auto mb-4" />
           <h2 className="text-3xl font-bold text-gray-800 mb-4">Property Not Found</h2>
-          <Link to="/properties" className="inline-flex items-center gap-2 text-blue-600 hover:underline text-lg">
+          <Link to="/properties" className="inline-flex items-center gap-2 text-[#D4AF37] hover:underline text-lg">
             <ChevronLeft className="w-5 h-5" /> Back to Properties
           </Link>
         </div>
@@ -203,7 +203,7 @@ export default function PropertyDetail() {
       />
       {/* Image Gallery */}
       <div className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-3xl overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-3xl overflow-hidden relative">
           {/* Main Large Image */}
           <div className="md:col-span-2 md:row-span-2 relative group">
             <img
@@ -259,7 +259,7 @@ export default function PropertyDetail() {
                   </div>
                   <div className="flex flex-wrap items-center gap-4 text-gray-600">
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-5 h-5 text-blue-500" />
+                      <MapPin className="w-5 h-5 text-[#D4AF37]" />
                       {property.region}, Ghaziabad
                     </span>
                     <span className="flex items-center gap-1">
@@ -273,29 +273,29 @@ export default function PropertyDetail() {
               {/* Quick Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-gray-50 rounded-2xl">
                 <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Bed className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 mx-auto mb-2 bg-[#FFFDF0] rounded-full flex items-center justify-center">
+                    <Bed className="w-6 h-6 text-[#D4AF37]" />
                   </div>
                   <p className="text-2xl font-bold text-gray-900">{property.bhk}</p>
                   <p className="text-sm text-gray-600">Bedrooms</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-indigo-100 rounded-full flex items-center justify-center">
-                    <Bath className="w-6 h-6 text-indigo-600" />
+                  <div className="w-12 h-12 mx-auto mb-2 bg-gray-100 rounded-full flex items-center justify-center">
+                    <Bath className="w-6 h-6 text-gray-600" />
                   </div>
                   <p className="text-2xl font-bold text-gray-900">{property.bathrooms || property.bhk}</p>
                   <p className="text-sm text-gray-600">Bathrooms</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-blue-50 rounded-full flex items-center justify-center">
-                    <Maximize className="w-6 h-6 text-blue-500" />
+                  <div className="w-12 h-12 mx-auto mb-2 bg-[#FFFDF0] rounded-full flex items-center justify-center">
+                    <Maximize className="w-6 h-6 text-[#D4AF37]" />
                   </div>
                   <p className="text-2xl font-bold text-gray-900">{property.area}</p>
                   <p className="text-sm text-gray-600">Sq. Ft.</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-indigo-50 rounded-full flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-indigo-500" />
+                  <div className="w-12 h-12 mx-auto mb-2 bg-gray-100 rounded-full flex items-center justify-center">
+                    <Building2 className="w-6 h-6 text-gray-500" />
                   </div>
                   <p className="text-2xl font-bold text-gray-900">{property.floor || 'N/A'}</p>
                   <p className="text-sm text-gray-600">Floor</p>
@@ -360,8 +360,8 @@ export default function PropertyDetail() {
                     const IconComponent = amenityIcons[amenity] || Check;
                     return (
                       <div key={i} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
-                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <IconComponent className="w-5 h-5 text-blue-600" />
+                        <div className="w-10 h-10 bg-[#FFFDF0] rounded-full flex items-center justify-center flex-shrink-0">
+                          <IconComponent className="w-5 h-5 text-[#D4AF37]" />
                         </div>
                         <span className="font-medium text-gray-900">{amenity}</span>
                       </div>
@@ -387,7 +387,7 @@ export default function PropertyDetail() {
                     <Popup>
                       <div className="text-center p-2">
                         <h3 className="font-bold">{property.title}</h3>
-                        <p className="text-blue-600 font-semibold">₹{property.price?.toLocaleString('en-IN')}</p>
+                        <p className="text-[#D4AF37] font-semibold">₹{property.price?.toLocaleString('en-IN')}</p>
                       </div>
                     </Popup>
                   </Marker>
@@ -396,23 +396,23 @@ export default function PropertyDetail() {
 
               {/* Nearby Places */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                <div className="p-4 bg-blue-50 rounded-xl border border-blue-200">
-                  <Train className="w-6 h-6 text-blue-600 mb-2" />
+                <div className="p-4 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20">
+                  <Train className="w-6 h-6 text-[#D4AF37] mb-2" />
                   <p className="text-sm font-semibold text-gray-900">Metro Station</p>
                   <p className="text-xs text-gray-600">0.5 km away</p>
                 </div>
-                <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
-                  <Hospital className="w-6 h-6 text-indigo-600 mb-2" />
+                <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                  <Hospital className="w-6 h-6 text-gray-600 mb-2" />
                   <p className="text-sm font-semibold text-gray-900">Hospital</p>
                   <p className="text-xs text-gray-600">1.2 km away</p>
                 </div>
-                <div className="p-4 bg-blue-50 rounded-xl border border-blue-200">
-                  <School className="w-6 h-6 text-blue-600 mb-2" />
+                <div className="p-4 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20">
+                  <School className="w-6 h-6 text-[#D4AF37] mb-2" />
                   <p className="text-sm font-semibold text-gray-900">School</p>
                   <p className="text-xs text-gray-600">0.8 km away</p>
                 </div>
-                <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
-                  <ShoppingCart className="w-6 h-6 text-indigo-600 mb-2" />
+                <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                  <ShoppingCart className="w-6 h-6 text-gray-600 mb-2" />
                   <p className="text-sm font-semibold text-gray-900">Shopping Mall</p>
                   <p className="text-xs text-gray-600">2.0 km away</p>
                 </div>
@@ -443,7 +443,7 @@ export default function PropertyDetail() {
                 {property.transactionType !== 'Rent' && (
                   <button
                     onClick={() => setShowEMI(!showEMI)}
-                    className="w-full mb-4 flex items-center justify-between p-4 bg-indigo-50 rounded-xl text-indigo-700 font-semibold hover:bg-indigo-100 transition"
+                    className="w-full mb-4 flex items-center justify-between p-4 bg-[#FFFDF0] rounded-xl text-[#D4AF37] font-semibold hover:bg-[#F0E68C]/20 transition"
                   >
                     <span className="flex items-center gap-2">
                       <Calculator className="w-5 h-5" />
@@ -484,14 +484,14 @@ export default function PropertyDetail() {
                         const years = parseFloat(document.getElementById('emiYears').value);
                         calculateEMI(amt, rate, years);
                       }}
-                      className="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold"
+                      className="w-full bg-[#D4AF37] text-white py-2 rounded-lg font-semibold"
                     >
                       Calculate
                     </button>
                     {emiResult && (
                       <div className="mt-3 p-3 bg-white rounded-lg border">
                         <p className="text-sm text-gray-600">Monthly EMI</p>
-                        <p className="text-2xl font-bold text-indigo-600">₹{emiResult.monthly.toLocaleString('en-IN')}</p>
+                        <p className="text-2xl font-bold text-[#D4AF37]">₹{emiResult.monthly.toLocaleString('en-IN')}</p>
                         <div className="mt-2 text-xs text-gray-600">
                           <p>Total: ₹{emiResult.total.toLocaleString('en-IN')}</p>
                           <p>Interest: ₹{emiResult.interest.toLocaleString('en-IN')}</p>
@@ -519,9 +519,9 @@ export default function PropertyDetail() {
                   </a>
                 </div>
 
-                <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
-                  <p className="text-sm text-blue-800 font-semibold text-center flex items-center justify-center gap-2">
-                    <Zap className="w-4 h-4" />
+                <div className="mt-6 p-4 bg-gradient-to-r from-[#FFFDF0] to-gray-50 rounded-xl border border-[#D4AF37]/30">
+                  <p className="text-sm text-gray-800 font-semibold text-center flex items-center justify-center gap-2">
+                    <Zap className="w-4 h-4 text-[#D4AF37]" />
                     Response within 5 minutes
                   </p>
                 </div>
@@ -534,7 +534,7 @@ export default function PropertyDetail() {
                       type="text"
                       placeholder="Your Name"
                       required
-                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-sm"
                       value={inquiryForm.name}
                       onChange={e => setInquiryForm({ ...inquiryForm, name: e.target.value })}
                     />
@@ -542,7 +542,7 @@ export default function PropertyDetail() {
                       type="email"
                       placeholder="Email Address"
                       required
-                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-sm"
                       value={inquiryForm.email}
                       onChange={e => setInquiryForm({ ...inquiryForm, email: e.target.value })}
                     />
@@ -550,21 +550,21 @@ export default function PropertyDetail() {
                       type="tel"
                       placeholder="Phone Number"
                       required
-                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-sm"
                       value={inquiryForm.phone}
                       onChange={e => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
                     />
                     <textarea
                       placeholder="I'm interested in this property..."
                       rows="3"
-                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-sm"
                       value={inquiryForm.message}
                       onChange={e => setInquiryForm({ ...inquiryForm, message: e.target.value })}
                     ></textarea>
                     <button
                       type="submit"
                       disabled={submitting}
-                      className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition disabled:bg-blue-400"
+                      className="w-full bg-[#D4AF37] text-white py-3 rounded-lg font-bold hover:bg-[#C5A059] transition disabled:bg-gray-400"
                     >
                       {submitting ? 'Sending...' : 'Send Enquiry'}
                     </button>
@@ -576,7 +576,7 @@ export default function PropertyDetail() {
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-6 border border-gray-200">
                 <h3 className="text-lg font-bold mb-4">Listed by</h3>
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#D4AF37] to-[#C5A059] rounded-full flex items-center justify-center text-white font-bold text-xl">
                     SP
                   </div>
                   <div>
@@ -600,7 +600,7 @@ export default function PropertyDetail() {
           <div className="mt-20">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Similar Properties</h2>
-              <Link to="/properties" className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-1">
+              <Link to="/properties" className="text-[#D4AF37] hover:text-[#C5A059] font-semibold flex items-center gap-1">
                 View All <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
@@ -625,7 +625,7 @@ export default function PropertyDetail() {
                   </div>
                   <div className="p-6">
                     <h3 className="font-bold text-xl mb-2 line-clamp-1">{p.title}</h3>
-                    <p className="text-3xl font-bold text-blue-600 mb-2">
+                    <p className="text-3xl font-bold text-[#D4AF37] mb-2">
                       ₹{p.price?.toLocaleString('en-IN')}
                     </p>
                     <div className="flex items-center gap-2 text-gray-600 mb-3">

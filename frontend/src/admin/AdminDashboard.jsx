@@ -93,10 +93,10 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-6 shadow-lg">
+      <div className="bg-gradient-to-r from-gray-900 to-black text-white py-6 shadow-lg">
         <div className="container mx-auto px-6 flex justify-between items-center">
           <h1 className="text-3xl font-bold flex items-center gap-3">
-            <Building2 className="w-10 h-10" /> Admin Dashboard
+            <Building2 className="w-10 h-10 text-[#D4AF37]" /> Admin Dashboard
           </h1>
           <button
             onClick={handleLogout}
@@ -118,7 +118,7 @@ export default function AdminDashboard() {
           </div>
           <Link
             to="/admin/add"
-            className="bg-blue-600 text-white px-7 py-4 rounded-xl font-bold flex items-center gap-3 hover:bg-blue-700 shadow-lg hover:shadow-xl transition transform hover:scale-105"
+            className="bg-[#D4AF37] text-white px-7 py-4 rounded-xl font-bold flex items-center gap-3 hover:bg-[#C5A059] shadow-lg hover:shadow-xl transition transform hover:scale-105"
           >
             <Plus className="w-6 h-6" /> Add New Property
           </Link>
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
             <p className="text-xl text-gray-500 mb-8">Start by adding your first property!</p>
             <Link
               to="/admin/add"
-              className="inline-flex items-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition shadow-lg"
+              className="inline-flex items-center gap-3 bg-[#D4AF37] text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#C5A059] transition shadow-lg"
             >
               <Plus className="w-6 h-6" /> Add Your First Property
             </Link>
@@ -160,7 +160,7 @@ export default function AdminDashboard() {
                   <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
                     {p.title || 'Untitled Property'}
                   </h3>
-                  <p className="text-3xl font-bold text-blue-600 mb-3">
+                  <p className="text-3xl font-bold text-[#D4AF37] mb-3">
                     ₹{p.price?.toLocaleString('en-IN') || 'N/A'}
                   </p>
                   <p className="text-gray-600 text-sm mb-4">
@@ -170,7 +170,7 @@ export default function AdminDashboard() {
                   <div className="flex gap-3">
                     <Link
                       to={`/admin/edit/${p.id}`}
-                      className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold text-center hover:bg-blue-700 transition flex items-center justify-center gap-2"
+                      className="flex-1 bg-[#D4AF37] text-white py-3 rounded-lg font-semibold text-center hover:bg-[#C5A059] transition flex items-center justify-center gap-2"
                     >
                       <Edit className="w-5 h-5" /> Edit
                     </Link>
@@ -218,7 +218,7 @@ export default function AdminDashboard() {
                       <h3 className="text-xl font-bold text-gray-900">{job.title}</h3>
                       <p className="text-sm text-gray-500">{job.department} • {job.location}</p>
                     </div>
-                    <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">
+                    <span className="bg-[#FFFDF0] text-[#D4AF37] px-3 py-1 rounded-full text-xs font-bold">
                       {job.type}
                     </span>
                   </div>
@@ -268,17 +268,17 @@ export default function AdminDashboard() {
                         <td className="px-6 py-4">
                           <p className="font-bold text-gray-900">{inq.name}</p>
                           {inq.propertyId?.title && (
-                            <span className="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded mt-1 inline-block">
+                            <span className="text-xs bg-[#FFFDF0] text-[#D4AF37] px-2 py-1 rounded mt-1 inline-block">
                               Ref: {inq.propertyId.title}
                             </span>
                           )}
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex flex-col gap-1 text-sm text-gray-600">
-                            <a href={`tel:${inq.phone}`} className="flex items-center gap-2 hover:text-blue-600">
+                            <a href={`tel:${inq.phone}`} className="flex items-center gap-2 hover:text-[#D4AF37]">
                               <Phone className="w-3 h-3" /> {inq.phone}
                             </a>
-                            <a href={`mailto:${inq.email}`} className="flex items-center gap-2 hover:text-blue-600">
+                            <a href={`mailto:${inq.email}`} className="flex items-center gap-2 hover:text-[#D4AF37]">
                               <Mail className="w-3 h-3" /> {inq.email}
                             </a>
                           </div>

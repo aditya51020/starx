@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { X, Mail, Lock, Building2 } from 'lucide-react';
+import { X, Mail, Lock } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import logo from '../../assets/logo.jpg';
 
 export default function LoginModal({ isOpen, onClose }) {
     const [formData, setFormData] = useState({ email: '', password: '' });
@@ -38,12 +39,7 @@ export default function LoginModal({ isOpen, onClose }) {
                     </button>
 
                     <div className="inline-flex items-center gap-2 group mb-4">
-                        <div className="bg-blue-600 text-white p-2 rounded-xl">
-                            <Building2 className="w-6 h-6" />
-                        </div>
-                        <span className="text-2xl font-bold text-gray-900">
-                            Star<span className="text-blue-600">X</span>
-                        </span>
+                        <img src={logo} alt="StarX Logo" className="h-16 w-auto object-contain" />
                     </div>
                     <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
                     <p className="text-gray-600 mt-1">Sign in to view more properties</p>
@@ -60,7 +56,7 @@ export default function LoginModal({ isOpen, onClose }) {
                                     <input
                                         type="email"
                                         required
-                                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition"
                                         placeholder="you@example.com"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -74,7 +70,7 @@ export default function LoginModal({ isOpen, onClose }) {
                                     <input
                                         type="password"
                                         required
-                                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition"
                                         placeholder="••••••••"
                                         value={formData.password}
                                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -86,7 +82,7 @@ export default function LoginModal({ isOpen, onClose }) {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-500/30 disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-full bg-[#D4AF37] text-white py-3 rounded-xl font-bold hover:bg-[#C5A059] transition shadow-lg shadow-[#D4AF37]/30 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {loading ? 'Signing in...' : 'Sign In'}
                         </button>
@@ -97,7 +93,7 @@ export default function LoginModal({ isOpen, onClose }) {
                                 <Link
                                     to="/signup"
                                     onClick={onClose}
-                                    className="text-blue-600 font-bold hover:text-blue-700 hover:underline"
+                                    className="text-[#D4AF37] font-bold hover:text-[#C5A059] hover:underline"
                                 >
                                     Create Account
                                 </Link>

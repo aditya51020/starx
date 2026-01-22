@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, Building2, User } from 'lucide-react';
+import { Mail, Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
+import logo from '../assets/logo.jpg';
 
 export default function Login() {
     const [isAdmin, setIsAdmin] = useState(false);
@@ -31,12 +32,7 @@ export default function Login() {
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-3xl shadow-xl">
                 <div className="text-center">
                     <Link to="/" className="inline-flex items-center gap-2 group mb-6">
-                        <div className="bg-blue-600 text-white p-2 rounded-xl">
-                            <Building2 className="w-6 h-6" />
-                        </div>
-                        <span className="text-2xl font-bold text-gray-900">
-                            Star<span className="text-blue-600">X</span>
-                        </span>
+                        <img src={logo} alt="StarX Logo" className="h-16 w-auto object-contain" />
                     </Link>
                     <h2 className="text-3xl font-bold text-gray-900">
                         {isAdmin ? 'Admin Portal' : 'Welcome Back'}
@@ -60,7 +56,7 @@ export default function Login() {
                                 <input
                                     type="email"
                                     required
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition"
                                     placeholder="you@example.com"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -77,7 +73,7 @@ export default function Login() {
                                 <input
                                     type="password"
                                     required
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition"
                                     placeholder="••••••••"
                                     value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -88,7 +84,7 @@ export default function Login() {
 
                     <button
                         type="submit"
-                        className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                        className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-[#D4AF37] hover:bg-[#C5A059] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#D4AF37] transition-colors"
                     >
                         {isAdmin ? 'Access Dashboard' : 'Sign In'}
                     </button>
@@ -103,7 +99,7 @@ export default function Login() {
                     </button>
 
                     {!isAdmin && (
-                        <Link to="/signup" className="text-blue-600 hover:text-blue-500 font-bold">
+                        <Link to="/signup" className="text-[#D4AF37] hover:text-[#C5A059] font-bold">
                             Create Account
                         </Link>
                     )}

@@ -212,7 +212,7 @@ export default function AddProperty() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-16 h-16 animate-spin text-blue-600 mx-auto mb-4" />
+          <Loader2 className="w-16 h-16 animate-spin text-[#D4AF37] mx-auto mb-4" />
           <p className="text-2xl font-semibold text-gray-700">Loading property...</p>
         </div>
       </div>
@@ -226,7 +226,7 @@ export default function AddProperty() {
         <div className="flex items-center justify-between mb-8">
           <button
             onClick={() => navigate('/admin/dashboard')}
-            className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-blue-600 hover:bg-white rounded-xl transition"
+            className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-[#D4AF37] hover:bg-white rounded-xl transition"
           >
             <ArrowLeft className="w-5 h-5" /> Back to Dashboard
           </button>
@@ -275,14 +275,14 @@ export default function AddProperty() {
               <button
                 type="button"
                 onClick={() => navigate('/admin/dashboard')}
-                className="px-8 py-4 bg-white border-2 border-slate-200 text-slate-700 rounded-xl font-bold hover:border-blue-500 hover:text-blue-600 transition"
+                className="px-8 py-4 bg-white border-2 border-slate-200 text-slate-700 rounded-xl font-bold hover:border-[#D4AF37] hover:text-[#D4AF37] transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-blue-500/30 transition shadow-xl disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                className="flex-1 bg-[#D4AF37] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#C5A059] shadow-lg hover:shadow-[#D4AF37]/30 transition shadow-xl disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
               >
                 {submitting ? (
                   <>

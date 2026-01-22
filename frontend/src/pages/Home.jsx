@@ -145,34 +145,34 @@ export default function HomePage() {
       />
 
       {/* Social Proof Marquee */}
-      <section className="py-10 bg-gradient-to-r from-blue-700 to-indigo-800 overflow-hidden">
+      <section className="py-10 bg-gradient-to-r from-gray-900 to-black overflow-hidden">
         <div className="animate-marquee whitespace-nowrap flex gap-12 text-white text-lg font-medium">
           {[1, 2, 3, 4].map(i => (
             <div key={i} className="flex gap-12">
-              <span>⭐ "Found my dream home in Vasundhara!" - Rajesh K.</span>
-              <span className="text-yellow-300">•</span>
-              <span>⭐ "Best property search experience" - Priya S.</span>
-              <span className="text-yellow-300">•</span>
-              <span>⭐ "Highly recommended for Ghaziabad properties" - Amit M.</span>
-              <span className="text-yellow-300">•</span>
+              <span> "Found my dream home in Vasundhara!" - Rajesh K.</span>
+              <span className="text-[#D4AF37]">•</span>
+              <span> "Best property search experience" - Priya S.</span>
+              <span className="text-[#D4AF37]">•</span>
+              <span> "Highly recommended for Ghaziabad properties" - Amit M.</span>
+              <span className="text-[#D4AF37]">•</span>
             </div>
           ))}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
+      <section className="py-24 bg-black text-white relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[100px]"></div>
-          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-500/20 rounded-full blur-[100px]"></div>
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#D4AF37]/10 rounded-full blur-[100px]"></div>
+          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[100px]"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h2 className="text-5xl font-bold mb-6">Ready to find your new home?</h2>
-          <p className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
             Join thousands of satisfied customers who found their perfect property with StarX.
           </p>
-          <button className="bg-white text-slate-900 px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-600 hover:text-white transition-all shadow-xl hover:shadow-blue-500/25 transform hover:-translate-y-1">
+          <button className="bg-white text-black px-10 py-4 rounded-full font-bold text-lg hover:bg-[#D4AF37] hover:text-white transition-all shadow-xl hover:shadow-[#D4AF37]/25 transform hover:-translate-y-1">
             Browse All Properties
           </button>
         </div>

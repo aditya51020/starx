@@ -38,7 +38,7 @@ export default function Career() {
 
                     {loading ? (
                         <div className="flex justify-center py-20">
-                            <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
+                            <Loader2 className="w-10 h-10 animate-spin text-[#D4AF37]" />
                         </div>
                     ) : jobs.length === 0 ? (
                         <div className="text-center py-20 bg-white rounded-2xl shadow-sm border border-slate-100">
@@ -52,7 +52,7 @@ export default function Career() {
                                 <div key={job.id} className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 group">
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                                         <div>
-                                            <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                                            <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-[#D4AF37] transition-colors">
                                                 {job.title}
                                             </h3>
                                             <div className="flex flex-wrap gap-4 text-slate-500 text-sm mb-4">
@@ -68,7 +68,7 @@ export default function Career() {
                                             </div>
                                             <p className="text-slate-600 line-clamp-2">{job.description}</p>
                                         </div>
-                                        <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center gap-2 shrink-0 shadow-md hover:shadow-blue-500/30">
+                                        <button className="px-6 py-3 bg-[#D4AF37] text-white rounded-xl font-semibold hover:bg-[#C5A059] transition-all flex items-center gap-2 shrink-0 shadow-md hover:shadow-[#D4AF37]/30">
                                             Apply Now <ArrowRight className="w-4 h-4" />
                                         </button>
                                     </div>

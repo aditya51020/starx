@@ -19,12 +19,12 @@ export default function HeroSection({ onSearch }) {
     };
 
     return (
-        <section className="relative bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 pt-32 pb-40 overflow-hidden">
+        <section className="relative bg-gradient-to-br from-gray-50 via-[#FFFDF0] to-gray-50 pt-32 pb-40 overflow-hidden">
             {/* Background Blobs */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute -top-20 -left-20 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-                <div className="absolute top-0 -right-20 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-                <div className="absolute -bottom-32 left-20 w-96 h-96 bg-sky-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+                <div className="absolute -top-20 -left-20 w-96 h-96 bg-[#D4AF37] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+                <div className="absolute top-0 -right-20 w-96 h-96 bg-gray-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+                <div className="absolute -bottom-32 left-20 w-96 h-96 bg-[#D4AF37] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
@@ -35,13 +35,13 @@ export default function HeroSection({ onSearch }) {
                     className="max-w-4xl mx-auto text-center mb-12"
                 >
                     <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full mb-6 shadow-lg border border-white/50">
-                        <Sparkles className="w-4 h-4 text-yellow-500" />
+                        <Sparkles className="w-4 h-4 text-[#D4AF37]" />
                         <span className="text-sm font-semibold text-slate-700">India's Smartest Property Search</span>
                     </div>
 
                     <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight tracking-tight">
                         Find Your Dream Home in
-                        <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"> StarX Properties</span>
+                        <span className="text-[#D4AF37]"> StarX Properties</span>
                     </h1>
                     <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto px-4">
                         Discover premium properties in Vasundhara, Indirapuram & Sector 63 with AI-powered search.
@@ -125,7 +125,7 @@ export default function HeroSection({ onSearch }) {
                                     placeholder="₹ Min"
                                     value={filters.minPrice}
                                     onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all hover:bg-white"
+                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all hover:bg-white"
                                 />
                             </div>
 
@@ -136,7 +136,7 @@ export default function HeroSection({ onSearch }) {
                                     placeholder="₹ Max"
                                     value={filters.maxPrice}
                                     onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all hover:bg-white"
+                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all hover:bg-white"
                                 />
                             </div>
                         </div>
@@ -147,7 +147,7 @@ export default function HeroSection({ onSearch }) {
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             type="submit"
-                            className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-2"
+                            className="flex-1 bg-[#D4AF37] text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-[#D4AF37]/30 transition-all flex items-center justify-center gap-2"
                         >
                             <Search className="w-5 h-5" />
                             Search Properties
@@ -164,10 +164,10 @@ export default function HeroSection({ onSearch }) {
                     className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-12"
                 >
                     {[
-                        { icon: Building2, text: "1000+ Properties", color: "text-blue-600" },
-                        { icon: TrendingUp, text: "15% YoY Growth", color: "text-emerald-600" },
-                        { icon: Zap, text: "24hr Support", color: "text-yellow-600" },
-                        { icon: Award, text: "Verified Listings", color: "text-purple-600" }
+                        { icon: Building2, text: "1000+ Properties", color: "text-[#D4AF37]" },
+                        { icon: TrendingUp, text: "15% YoY Growth", color: "text-gray-900" },
+                        { icon: Zap, text: "24hr Support", color: "text-[#D4AF37]" },
+                        { icon: Award, text: "Verified Listings", color: "text-gray-900" }
                     ].map((stat, idx) => (
                         <div key={idx} className="flex flex-col items-center justify-center p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-white/50 shadow-sm hover:shadow-md transition-all">
                             <stat.icon className={`w-6 h-6 ${stat.color} mb-2`} />

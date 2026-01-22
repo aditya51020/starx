@@ -36,7 +36,7 @@ export default function CustomDropdown({
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-full px-4 py-3 bg-slate-50 border rounded-xl flex items-center justify-between transition-all hover:bg-white hover:border-blue-300 text-left ${isOpen ? 'border-blue-500 ring-2 ring-blue-500/20 shadow-lg shadow-blue-500/10' : 'border-slate-200'
+                className={`w-full px-4 py-3 bg-slate-50 border rounded-xl flex items-center justify-between transition-all hover:bg-white hover:border-[#D4AF37]/50 text-left ${isOpen ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/20 shadow-lg shadow-[#D4AF37]/10' : 'border-slate-200'
                     }`}
             >
                 <div className="flex items-center gap-2 overflow-hidden">
@@ -45,7 +45,7 @@ export default function CustomDropdown({
                         {getDisplayLabel()}
                     </span>
                 </div>
-                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-blue-500' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#D4AF37]' : ''}`} />
             </button>
 
             <AnimatePresence>
@@ -69,13 +69,13 @@ export default function CustomDropdown({
                                         onChange(optValue);
                                         setIsOpen(false);
                                     }}
-                                    className={`px-4 py-2.5 cursor-pointer flex items-center justify-between hover:bg-slate-50 transition-colors group ${isSelected ? 'bg-blue-50 text-blue-600 font-medium' : 'text-slate-600'
+                                    className={`px-4 py-2.5 cursor-pointer flex items-center justify-between hover:bg-slate-50 transition-colors group ${isSelected ? 'bg-[#FFFDF0] text-[#D4AF37] font-medium' : 'text-slate-600'
                                         }`}
                                 >
-                                    <span className={`truncate ${isSelected ? 'text-blue-600' : 'group-hover:text-slate-900'}`}>
+                                    <span className={`truncate ${isSelected ? 'text-[#D4AF37]' : 'group-hover:text-slate-900'}`}>
                                         {optLabel}
                                     </span>
-                                    {isSelected && <Check className="w-4 h-4 text-blue-600" />}
+                                    {isSelected && <Check className="w-4 h-4 text-[#D4AF37]" />}
                                 </div>
                             );
                         })}

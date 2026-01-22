@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Building2, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import logo from '../assets/logo.jpg';
 
 export default function Footer() {
     return (
@@ -9,12 +10,7 @@ export default function Footer() {
                     {/* Brand Info */}
                     <div>
                         <Link to="/" className="flex items-center gap-2 mb-6">
-                            <div className="bg-blue-600 text-white p-2 rounded-xl">
-                                <Building2 className="w-6 h-6" />
-                            </div>
-                            <span className="text-2xl font-bold">
-                                Star<span className="text-blue-500">X</span>
-                            </span>
+                            <img src={logo} alt="StarX Logo" className="h-12 w-auto object-contain bg-white rounded-lg p-1" />
                         </Link>
                         <p className="text-slate-400 mb-6 leading-relaxed">
                             Your trusted partner in finding the perfect property. We make real estate simple, transparent, and efficient.
@@ -24,7 +20,7 @@ export default function Footer() {
                                 <a
                                     key={i}
                                     href="#"
-                                    className="bg-slate-800 p-2 rounded-full hover:bg-blue-600 transition-colors"
+                                    className="bg-slate-800 p-2 rounded-full hover:bg-[#D4AF37] transition-colors"
                                 >
                                     <Icon className="w-4 h-4" />
                                 </a>
@@ -46,7 +42,7 @@ export default function Footer() {
                                 <li key={link.name}>
                                     <Link
                                         to={link.path}
-                                        className="text-slate-400 hover:text-blue-500 transition-colors"
+                                        className="text-slate-400 hover:text-[#D4AF37] transition-colors"
                                     >
                                         {link.name}
                                     </Link>
@@ -59,11 +55,11 @@ export default function Footer() {
                     <div>
                         <h4 className="text-lg font-bold mb-6">Properties</h4>
                         <ul className="space-y-4">
-                            <li><Link to="/properties?region=Vasundhara" className="text-slate-400 hover:text-blue-500">Vasundhara</Link></li>
-                            <li><Link to="/properties?region=Indirapuram" className="text-slate-400 hover:text-blue-500">Indirapuram</Link></li>
-                            <li><Link to="/properties?region=Sector 63" className="text-slate-400 hover:text-blue-500">Sector 63</Link></li>
-                            <li><Link to="/properties?type=Rent" className="text-slate-400 hover:text-blue-500">For Rent</Link></li>
-                            <li><Link to="/properties?type=Sell" className="text-slate-400 hover:text-blue-500">For Sale</Link></li>
+                            <li><Link to="/properties?region=Vasundhara" className="text-slate-400 hover:text-[#D4AF37]">Vasundhara</Link></li>
+                            <li><Link to="/properties?region=Indirapuram" className="text-slate-400 hover:text-[#D4AF37]">Indirapuram</Link></li>
+                            <li><Link to="/properties?region=Sector 63" className="text-slate-400 hover:text-[#D4AF37]">Sector 63</Link></li>
+                            <li><Link to="/properties?type=Rent" className="text-slate-400 hover:text-[#D4AF37]">For Rent</Link></li>
+                            <li><Link to="/properties?type=Sell" className="text-slate-400 hover:text-[#D4AF37]">For Sale</Link></li>
                         </ul>
                     </div>
 
@@ -72,15 +68,15 @@ export default function Footer() {
                         <h4 className="text-lg font-bold mb-6">Contact Us</h4>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-slate-400">
-                                <MapPin className="w-5 h-5 text-blue-500 shrink-0 mt-1" />
+                                <MapPin className="w-5 h-5 text-[#D4AF37] shrink-0 mt-1" />
                                 <span>Plot Number 39, Vidhayak Lane, Nyay Khand 1-Indirapuram, Ghaziabad-201014, Uttar Pradesh</span>
                             </li>
                             <li className="flex items-center gap-3 text-slate-400">
-                                <Phone className="w-5 h-5 text-blue-500 shrink-0" />
+                                <Phone className="w-5 h-5 text-[#D4AF37] shrink-0" />
                                 <a href="tel:9958253683" className="hover:text-white">9958253683</a>
                             </li>
                             <li className="flex items-center gap-3 text-slate-400">
-                                <Mail className="w-5 h-5 text-blue-500 shrink-0" />
+                                <Mail className="w-5 h-5 text-[#D4AF37] shrink-0" />
                                 <a href="mailto:Starxassociates@gmail.com" className="hover:text-white">Starxassociates@gmail.com</a>
                             </li>
                         </ul>

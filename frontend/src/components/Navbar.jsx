@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Home, Building2, Phone, Info, Briefcase, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import logo from '../assets/logo.jpg';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -40,19 +41,18 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed top-0 left-0 w-full z-[1000] transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'
+            className={`fixed top-0 left-0 w-full z-[2000] transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
                 }`}
         >
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center">
                     {/* Logo */}
-                    <Link to="/" className="flex items-center gap-2 group">
-                        <div className="bg-blue-600 text-white p-2 rounded-xl group-hover:rotate-12 transition-transform">
-                            <Building2 className="w-6 h-6" />
-                        </div>
-                        <span className={`text-2xl font-bold ${scrolled ? 'text-slate-900' : 'text-slate-900'}`}>
-                            Star<span className="text-blue-600">X</span>
-                        </span>
+                    <Link to="/" className="flex items-center group">
+                        <img
+                            src={logo}
+                            alt="StarX Logo"
+                            className="h-16 w-auto object-contain transition-transform group-hover:scale-105"
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -61,7 +61,7 @@ export default function Navbar() {
                             <Link
                                 key={link.name}
                                 to={link.path}
-                                className={`font-medium transition-colors hover:text-blue-600 ${location.pathname === link.path ? 'text-blue-600' : 'text-slate-600'
+                                className={`font-medium transition-colors hover:text-[#D4AF37] ${location.pathname === link.path ? 'text-[#D4AF37]' : 'text-slate-600'
                                     }`}
                             >
                                 {link.name}
@@ -72,7 +72,7 @@ export default function Navbar() {
                         {user ? (
                             <div className="flex items-center gap-4 pl-4 border-l border-gray-200">
                                 <span className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                                    <div className="w-8 h-8 bg-[#FFFDF0] rounded-full flex items-center justify-center text-[#D4AF37]">
                                         <User className="w-4 h-4" />
                                     </div>
                                     Hi, {user.name || 'User'}
@@ -89,13 +89,13 @@ export default function Navbar() {
                             <div className="flex items-center gap-4 pl-4 border-l border-gray-200">
                                 <Link
                                     to="/login"
-                                    className="text-blue-600 font-semibold hover:text-blue-700"
+                                    className="text-[#D4AF37] font-semibold hover:text-[#C5A059]"
                                 >
                                     Log In
                                 </Link>
                                 <Link
                                     to="/signup"
-                                    className="bg-blue-600 text-white px-5 py-2 rounded-full font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
+                                    className="bg-[#D4AF37] text-white px-5 py-2 rounded-full font-bold hover:bg-[#C5A059] transition shadow-lg shadow-yellow-100"
                                 >
                                     Sign Up
                                 </Link>
@@ -128,7 +128,7 @@ export default function Navbar() {
                                     key={link.name}
                                     to={link.path}
                                     className={`flex items-center gap-3 p-4 rounded-xl transition-colors ${location.pathname === link.path
-                                        ? 'bg-blue-50 text-blue-600'
+                                        ? 'bg-[#FFFDF0] text-[#D4AF37]'
                                         : 'text-slate-600 hover:bg-slate-50'
                                         }`}
                                 >
@@ -142,7 +142,7 @@ export default function Navbar() {
                             {user ? (
                                 <>
                                     <div className="flex items-center gap-3 p-4">
-                                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                                        <div className="w-10 h-10 bg-[#FFFDF0] rounded-full flex items-center justify-center text-[#D4AF37]">
                                             <User className="w-5 h-5" />
                                         </div>
                                         <div>
@@ -168,7 +168,7 @@ export default function Navbar() {
                                     </Link>
                                     <Link
                                         to="/signup"
-                                        className="block w-full text-center py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700"
+                                        className="block w-full text-center py-3 bg-[#D4AF37] text-white rounded-xl font-bold hover:bg-[#C5A059]"
                                     >
                                         Sign Up
                                     </Link>

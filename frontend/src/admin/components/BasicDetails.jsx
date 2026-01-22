@@ -4,8 +4,8 @@ export default function BasicDetails({ form, setForm, errors }) {
     return (
         <div className="p-8 space-y-6">
             <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                    <Home className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-[#FFFDF0] rounded-xl flex items-center justify-center">
+                    <Home className="w-6 h-6 text-[#D4AF37]" />
                 </div>
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900">Basic Details</h2>
@@ -22,7 +22,7 @@ export default function BasicDetails({ form, setForm, errors }) {
                     placeholder="e.g., Luxury 3 BHK in Vasundhara"
                     value={form.title}
                     onChange={e => setForm({ ...form, title: e.target.value })}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition ${errors.title ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#D4AF37] transition ${errors.title ? 'border-red-500' : 'border-gray-300'
                         }`}
                 />
                 {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
@@ -37,7 +37,7 @@ export default function BasicDetails({ form, setForm, errors }) {
                     placeholder="Full address of the property"
                     value={form.address}
                     onChange={e => setForm({ ...form, address: e.target.value })}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition ${errors.address ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#D4AF37] transition ${errors.address ? 'border-red-500' : 'border-gray-300'
                         }`}
                 />
                 {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
@@ -50,7 +50,7 @@ export default function BasicDetails({ form, setForm, errors }) {
                 <select
                     value={form.region}
                     onChange={e => setForm({ ...form, region: e.target.value })}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition ${errors.region ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#D4AF37] transition ${errors.region ? 'border-red-500' : 'border-gray-300'
                         }`}
                 >
                     <option value="">Select Region</option>
@@ -68,7 +68,7 @@ export default function BasicDetails({ form, setForm, errors }) {
                 <select
                     value={form.propertyType}
                     onChange={e => setForm({ ...form, propertyType: e.target.value })}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 transition ${errors.propertyType ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#D4AF37] transition ${errors.propertyType ? 'border-red-500' : 'border-gray-300'
                         }`}
                 >
                     <option value="Apartment">Apartment</option>
@@ -141,7 +141,7 @@ export default function BasicDetails({ form, setForm, errors }) {
                         type="button"
                         onClick={() => setForm({ ...form, transactionType: 'Sell' })}
                         className={`py-3 rounded-xl font-semibold transition ${form.transactionType === 'Sell'
-                            ? 'bg-blue-600 text-white'
+                            ? 'bg-[#D4AF37] text-white'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                             }`}
                     >
@@ -151,7 +151,7 @@ export default function BasicDetails({ form, setForm, errors }) {
                         type="button"
                         onClick={() => setForm({ ...form, transactionType: 'Rent' })}
                         className={`py-3 rounded-xl font-semibold transition ${form.transactionType === 'Rent'
-                            ? 'bg-blue-600 text-white'
+                            ? 'bg-[#D4AF37] text-white'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                             }`}
                     >
@@ -180,11 +180,11 @@ export default function BasicDetails({ form, setForm, errors }) {
                             type="checkbox"
                             checked={form.featured}
                             onChange={e => setForm({ ...form, featured: e.target.checked })}
-                            className="w-6 h-6 text-blue-600 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            className="w-6 h-6 text-[#D4AF37] rounded-lg focus:ring-2 focus:ring-[#D4AF37]"
                         />
                     </div>
                     <div>
-                        <span className="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition flex items-center gap-2">
+                        <span className="text-sm font-bold text-gray-900 group-hover:text-[#D4AF37] transition flex items-center gap-2">
                             <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
                             Featured Property
                         </span>

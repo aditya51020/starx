@@ -10,13 +10,13 @@ const About = () => {
 
         <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
-            Welcome to <span className="font-semibold text-blue-600">StarX Realty</span> – 
+            Welcome to <span className="font-semibold text-[#D4AF37]">StarX Realty</span> –
             one of the fastest-growing and most trusted real estate platforms in Ghaziabad.
           </p>
 
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
-            Our mission is simple: to provide genuine, verified, and up-to-date property listings 
-            in prime locations such as Vasundhara, Indirapuram, Vaishali, Noida Extension, 
+            Our mission is simple: to provide genuine, verified, and up-to-date property listings
+            in prime locations such as Vasundhara, Indirapuram, Vaishali, Noida Extension,
             Sector-63, and surrounding areas.
           </p>
 
@@ -43,7 +43,7 @@ const About = () => {
           </div>
 
           <p className="text-lg text-gray-700 leading-relaxed">
-            Whether you are looking to buy your dream home, sell your property, rent it out, 
+            Whether you are looking to buy your dream home, sell your property, rent it out,
             or invest in the best opportunities – StarX Realty is with you every step of the way.
           </p>
 

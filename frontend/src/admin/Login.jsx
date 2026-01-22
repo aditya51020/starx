@@ -33,7 +33,7 @@ export default function Login() {
         {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
         <input {...register('password')} type="password" placeholder="Password" className="input mb-4" />
         {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
-        <button type="submit" className="btn-primary w-full">Login</button>
+        <button type="submit" className="w-full bg-[#D4AF37] text-white py-3 rounded-xl font-bold hover:bg-[#C5A059] transition shadow-lg shadow-[#D4AF37]/30">Login</button>
       </form>
     </div>
   );

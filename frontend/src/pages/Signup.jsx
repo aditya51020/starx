@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, Building2, User } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 import toast from 'react-hot-toast';
+import logo from '../assets/logo.jpg';
 
 export default function Signup() {
     const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -25,12 +26,7 @@ export default function Signup() {
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-3xl shadow-xl">
                 <div className="text-center">
                     <Link to="/" className="inline-flex items-center gap-2 group mb-6">
-                        <div className="bg-blue-600 text-white p-2 rounded-xl">
-                            <Building2 className="w-6 h-6" />
-                        </div>
-                        <span className="text-2xl font-bold text-gray-900">
-                            Star<span className="text-blue-600">X</span>
-                        </span>
+                        <img src={logo} alt="StarX Logo" className="h-16 w-auto object-contain" />
                     </Link>
                     <h2 className="text-3xl font-bold text-gray-900">
                         Create Account
@@ -51,7 +47,7 @@ export default function Signup() {
                                 <input
                                     type="text"
                                     required
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition"
                                     placeholder="John Doe"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -68,7 +64,7 @@ export default function Signup() {
                                 <input
                                     type="email"
                                     required
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition"
                                     placeholder="you@example.com"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -85,7 +81,7 @@ export default function Signup() {
                                 <input
                                     type="password"
                                     required
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition"
                                     placeholder="••••••••"
                                     value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -96,7 +92,7 @@ export default function Signup() {
 
                     <button
                         type="submit"
-                        className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                        className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-[#D4AF37] hover:bg-[#C5A059] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#D4AF37] transition-colors"
                     >
                         Create Account
                     </button>
@@ -105,7 +101,7 @@ export default function Signup() {
                 <div className="text-center text-sm">
                     <p className="text-gray-600">
                         Already have an account?{' '}
-                        <Link to="/login" className="text-blue-600 hover:text-blue-500 font-bold">
+                        <Link to="/login" className="text-[#D4AF37] hover:text-[#C5A059] font-bold">
                             Sign In
                         </Link>
                     </p>

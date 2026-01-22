@@ -37,7 +37,7 @@ export default function LocationCards({ locationData }) {
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity"></div>
 
                                 {/* Price Trend Badge */}
-                                <div className="absolute top-6 right-6 bg-emerald-500/90 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 shadow-lg transform group-hover:scale-105 transition-transform">
+                                <div className="absolute top-6 right-6 bg-[#D4AF37]/90 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 shadow-lg transform group-hover:scale-105 transition-transform">
                                     <ArrowUpRight className="w-4 h-4" />
                                     {area.trend}
                                 </div>
@@ -56,7 +56,7 @@ export default function LocationCards({ locationData }) {
                                             <p className="text-sm text-slate-400 mb-1">Avg. Price</p>
                                             <p className="text-2xl font-bold">{area.avgPrice}</p>
                                         </div>
-                                        <div className="bg-white text-slate-900 px-6 py-3 rounded-xl font-bold text-sm hover:bg-blue-600 hover:text-white transition-colors">
+                                        <div className="bg-white text-slate-900 px-6 py-3 rounded-xl font-bold text-sm hover:bg-[#D4AF37] hover:text-white transition-colors">
                                             View All
                                         </div>
                                     </div>

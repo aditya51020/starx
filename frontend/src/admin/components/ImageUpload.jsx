@@ -26,8 +26,8 @@ export default function ImageUpload({ form, errors, imageInput, setImageInput, h
     return (
         <div className="p-8 space-y-6">
             <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                    <ImageIcon className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-[#FFFDF0] rounded-xl flex items-center justify-center">
+                    <ImageIcon className="w-6 h-6 text-[#D4AF37]" />
                 </div>
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900">Property Images</h2>
@@ -44,11 +44,11 @@ export default function ImageUpload({ form, errors, imageInput, setImageInput, h
                         onDragOver={onDragOver}
                         onDragLeave={onDragLeave}
                         onDrop={onDrop}
-                        className={`flex-1 flex flex-col items-center justify-center h-48 border-2 border-dashed rounded-xl cursor-pointer transition ${isDragging ? 'border-blue-500 bg-blue-50' : errors.images ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:bg-gray-50'
+                        className={`flex-1 flex flex-col items-center justify-center h-48 border-2 border-dashed rounded-xl cursor-pointer transition ${isDragging ? 'border-[#D4AF37] bg-[#FFFDF0]' : errors.images ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:bg-gray-50'
                             }`}
                     >
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <Upload className={`w-10 h-10 mb-3 ${isDragging ? 'text-blue-500' : 'text-gray-400'}`} />
+                            <Upload className={`w-10 h-10 mb-3 ${isDragging ? 'text-[#D4AF37]' : 'text-gray-400'}`} />
                             <p className="text-sm font-medium text-gray-700">
                                 {isDragging ? 'Drop images here' : 'Click or Drag images here'}
                             </p>
@@ -68,12 +68,12 @@ export default function ImageUpload({ form, errors, imageInput, setImageInput, h
                         value={imageInput}
                         onChange={e => setImageInput(e.target.value)}
                         onKeyPress={e => e.key === 'Enter' && (e.preventDefault(), handleAddImage())}
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
+                        className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37]"
                     />
                     <button
                         type="button"
                         onClick={handleAddImage}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition flex items-center gap-2 font-semibold"
+                        className="px-6 py-3 bg-[#D4AF37] text-white rounded-xl hover:bg-[#C5A059] transition flex items-center gap-2 font-semibold"
                     >
                         <Plus className="w-5 h-5" /> Add
                     </button>

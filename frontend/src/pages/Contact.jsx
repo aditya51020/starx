@@ -43,30 +43,30 @@ const Contact = () => {
           {/* Contact Info */}
           <div className="space-y-8">
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transform hover:-translate-y-1 transition duration-300">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                <Phone className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-[#FFFDF0] rounded-full flex items-center justify-center mb-6">
+                <Phone className="w-6 h-6 text-[#D4AF37]" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Phone</h3>
               <p className="text-gray-600 mb-4">Mon-Fri from 8am to 5pm.</p>
-              <a href="tel:9958253683" className="text-blue-600 font-semibold hover:text-blue-700">9958253683</a>
+              <a href="tel:9958253683" className="text-[#D4AF37] font-semibold hover:text-[#C5A059]">9958253683</a>
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transform hover:-translate-y-1 transition duration-300">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                <Mail className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-[#FFFDF0] rounded-full flex items-center justify-center mb-6">
+                <Mail className="w-6 h-6 text-[#D4AF37]" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Email</h3>
               <p className="text-gray-600 mb-4">Our friendly team is here to help.</p>
-              <a href="mailto:Starxassociates@gmail.com" className="text-blue-600 font-semibold hover:text-blue-700">Starxassociates@gmail.com</a>
+              <a href="mailto:Starxassociates@gmail.com" className="text-[#D4AF37] font-semibold hover:text-[#C5A059]">Starxassociates@gmail.com</a>
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transform hover:-translate-y-1 transition duration-300">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                <MapPin className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-[#FFFDF0] rounded-full flex items-center justify-center mb-6">
+                <MapPin className="w-6 h-6 text-[#D4AF37]" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Office</h3>
               <p className="text-gray-600 mb-4">Come say hello at our office headquarters.</p>
-              <p className="text-blue-600 font-semibold">Plot Number 39, Vidhayak Lane, Nyay Khand 1-Indirapuram, Ghaziabad-201014, Uttar Pradesh</p>
+              <p className="text-[#D4AF37] font-semibold">Plot Number 39, Vidhayak Lane, Nyay Khand 1-Indirapuram, Ghaziabad-201014, Uttar Pradesh</p>
             </div>
           </div>
 
@@ -81,7 +81,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition outline-none"
                   placeholder="John Doe"
                 />
               </div>
@@ -94,7 +94,7 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition outline-none"
                   placeholder="john@example.com"
                 />
               </div>
@@ -107,7 +107,7 @@ const Contact = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition outline-none"
                   placeholder="+91 98765 43210"
                 />
               </div>
@@ -120,7 +120,7 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   rows="4"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition outline-none resize-none"
                   placeholder="How can we help you?"
                 ></textarea>
               </div>
@@ -128,7 +128,7 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full bg-[#D4AF37] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#C5A059] transition shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>

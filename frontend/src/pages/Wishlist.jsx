@@ -52,7 +52,7 @@ export default function Wishlist() {
             </p>
             <Link
               to="/"
-              className="inline-flex items-center gap-3 bg-rose-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-rose-700 transition shadow-lg"
+              className="inline-flex items-center gap-3 bg-[#D4AF37] text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#C5A059] transition shadow-lg"
             >
               <Home className="w-5 h-5" />
               Browse Properties
@@ -76,7 +76,7 @@ export default function Wishlist() {
           </div>
           <button
             onClick={clearAll}
-            className="text-rose-600 hover:text-rose-700 font-semibold flex items-center gap-2 transition"
+            className="text-[#D4AF37] hover:text-[#C5A059] font-semibold flex items-center gap-2 transition"
           >
             <X className="w-5 h-5" />
             Clear All
@@ -104,7 +104,7 @@ export default function Wishlist() {
                   <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">
                     {property.title}
                   </h3>
-                  <p className="text-3xl font-bold text-rose-600 mb-3">
+                  <p className="text-3xl font-bold text-[#D4AF37] mb-3">
                     ₹{property.price?.toLocaleString('en-IN')}
                   </p>
                   <p className="text-gray-600 flex items-center gap-2 mb-4">
@@ -134,7 +134,7 @@ export default function Wishlist() {
                   onClick={() => removeFromWishlist(property.id)}
                   className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2"
                 >
-                  <Heart className="w-5 h-5 fill-rose-500 text-rose-500" />
+                  <Heart className="w-5 h-5 fill-[#D4AF37] text-[#D4AF37]" />
                   Remove from Wishlist
                 </button>
               </div>

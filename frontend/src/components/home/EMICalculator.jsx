@@ -32,7 +32,7 @@ export default function EMICalculator() {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setIsOpen(true)}
-                        className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 rounded-full shadow-2xl hover:shadow-indigo-500/50 transition-all"
+                        className="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-white p-4 rounded-full shadow-2xl hover:shadow-[#D4AF37]/50 transition-all"
                         title="EMI Calculator"
                     >
                         <Calculator className="w-6 h-6" />
@@ -46,8 +46,8 @@ export default function EMICalculator() {
                     >
                         <div className="flex justify-between items-center mb-6">
                             <div className="flex items-center gap-2">
-                                <div className="bg-indigo-100 p-2 rounded-lg">
-                                    <Calculator className="w-5 h-5 text-indigo-600" />
+                                <div className="bg-[#FFFDF0] p-2 rounded-lg">
+                                    <Calculator className="w-5 h-5 text-[#D4AF37]" />
                                 </div>
                                 <h3 className="text-lg font-bold text-gray-900">EMI Calculator</h3>
                             </div>
@@ -69,7 +69,7 @@ export default function EMICalculator() {
                                     type="number"
                                     id="loanAmount"
                                     placeholder="50,00,000"
-                                    className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                                    className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition"
                                 />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
@@ -101,7 +101,7 @@ export default function EMICalculator() {
                                     const years = parseFloat(document.getElementById('tenure').value);
                                     calculateEMI(amount, rate, years);
                                 }}
-                                className="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg hover:shadow-indigo-500/30"
+                                className="w-full bg-[#D4AF37] text-white py-3 rounded-xl font-bold hover:bg-[#C5A059] transition shadow-lg hover:shadow-[#D4AF37]/30"
                             >
                                 Calculate
                             </button>
@@ -110,11 +110,11 @@ export default function EMICalculator() {
                                 <motion.div
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: 'auto' }}
-                                    className="mt-4 p-4 bg-indigo-50 rounded-2xl border border-indigo-100"
+                                    className="mt-4 p-4 bg-[#FFFDF0] rounded-2xl border border-[#D4AF37]/30"
                                 >
-                                    <p className="text-xs text-indigo-600 font-semibold mb-1 uppercase">Monthly EMI</p>
-                                    <p className="text-3xl font-bold text-indigo-700 mb-3">₹{result.monthlyEMI.toLocaleString('en-IN')}</p>
-                                    <div className="space-y-2 text-sm text-gray-600 border-t border-indigo-200 pt-3">
+                                    <p className="text-xs text-[#D4AF37] font-semibold mb-1 uppercase">Monthly EMI</p>
+                                    <p className="text-3xl font-bold text-[#D4AF37] mb-3">₹{result.monthlyEMI.toLocaleString('en-IN')}</p>
+                                    <div className="space-y-2 text-sm text-gray-600 border-t border-[#D4AF37]/20 pt-3">
                                         <div className="flex justify-between">
                                             <span>Total Amount:</span>
                                             <span className="font-bold">₹{result.totalAmount.toLocaleString('en-IN')}</span>
