@@ -190,7 +190,7 @@ export default function PropertyDetail() {
     );
   }
 
-  const phone = "9958253683"; // Forced as per user request
+  const phone = "9212153683"; // Forced as per user request
   const coordinates = property.lat && property.lng ? [property.lat, property.lng] : [28.6692, 77.4538];
 
   return (
@@ -655,7 +655,7 @@ export default function PropertyDetail() {
 
       {/* Full Screen Photo Gallery Modal */}
       {showAllPhotos && (
-        <div className="fixed inset-0 bg-black z-[1050] overflow-y-auto">
+        <div className="fixed inset-0 bg-black z-[3000] overflow-y-auto">
           <div className="min-h-screen">
             {/* Header */}
             <div className="sticky top-0 bg-black/90 backdrop-blur-md border-b border-gray-800 z-10">

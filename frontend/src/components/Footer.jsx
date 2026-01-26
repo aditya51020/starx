@@ -16,7 +16,15 @@ export default function Footer() {
                             Your trusted partner in finding the perfect property. We make real estate simple, transparent, and efficient.
                         </p>
                         <div className="flex gap-4">
-                            {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
+                            <a
+                                href="https://www.facebook.com/starx.investors/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-slate-800 p-2 rounded-full hover:bg-[#D4AF37] transition-colors"
+                            >
+                                <Facebook className="w-4 h-4" />
+                            </a>
+                            {[Twitter, Instagram, Linkedin].map((Icon, i) => (
                                 <a
                                     key={i}
                                     href="#"
@@ -73,7 +81,7 @@ export default function Footer() {
                             </li>
                             <li className="flex items-center gap-3 text-slate-400">
                                 <Phone className="w-5 h-5 text-[#D4AF37] shrink-0" />
-                                <a href="tel:9958253683" className="hover:text-white">9958253683</a>
+                                <a href="tel:9212153683" className="hover:text-white">9212153683</a>
                             </li>
                             <li className="flex items-center gap-3 text-slate-400">
                                 <Mail className="w-5 h-5 text-[#D4AF37] shrink-0" />

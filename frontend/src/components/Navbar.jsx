@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Home, Building2, Phone, Info, Briefcase, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import logo from '../assets/logo.jpg';
+import logo from '../assets/logo_new.png';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
