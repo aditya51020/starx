@@ -21,7 +21,7 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-export const uploadImages = upload.array('images', 10);
+export const uploadImages = upload.array('images', 20);
 
 export const handleUpload = async (req, res) => {
   try {
@@ -32,6 +32,7 @@ export const handleUpload = async (req, res) => {
             folder: 'ghaziabad_realestate',
             resource_type: 'auto',
             allowed_formats: ['jpg', 'png', 'jpeg', 'webp', 'mp4', 'mov', 'webm'],
+            timeout: 60000 // 60s timeout
           },
           (error, result) => {
             if (error) reject(error);
@@ -42,9 +43,28 @@ export const handleUpload = async (req, res) => {
       });
     });
 
-    const urls = await Promise.all(uploadPromises);
-    console.log('Upload successful, URLs:', urls);
-    res.json({ urls });
+    // Use allSettled so one failure doesn't stop the rest
+    const results = await Promise.allSettled(uploadPromises);
+
+    // Filter out successful uploads
+    const urls = results
+      .filter(r => r.status === 'fulfilled')
+      .map(r => r.value);
+
+    // Log failures
+    const failures = results.filter(r => r.status === 'rejected');
+    if (failures.length > 0) {
+      console.error('Some uploads failed:', failures.map(f => f.reason));
+    }
+
+    console.log(`Upload complete. Success: ${urls.length}, Failed: ${failures.length}`);
+
+    res.json({
+      urls,
+      failed: failures.length,
+      message: failures.length > 0 ? `${urls.length} uploaded, ${failures.length} failed` : 'All files uploaded successfully'
+    });
+
   } catch (error) {
     console.error('Upload error details:', error);
     res.status(500).json({ message: 'Image upload failed', error: error.message || error });

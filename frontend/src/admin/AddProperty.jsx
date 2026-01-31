@@ -130,9 +130,17 @@ export default function AddProperty() {
       const res = await api.post('/api/admin/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      if (res.data.urls) {
+      if (res.data.urls && res.data.urls.length > 0) {
         setForm(prev => ({ ...prev, images: [...prev.images, ...res.data.urls] }));
-        toast.success('Images uploaded!');
+
+        if (res.data.failed > 0) {
+          toast.success(`${res.data.urls.length} files uploaded!`);
+          toast.error(`${res.data.failed} files failed to upload. Check format/size.`);
+        } else {
+          toast.success('All files uploaded successfully!');
+        }
+      } else if (res.data.failed > 0) {
+        toast.error('All files failed to upload. Please try again.');
       }
     } catch (err) {
       console.error('Upload failed details:', err);
