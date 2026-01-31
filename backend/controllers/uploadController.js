@@ -42,10 +42,11 @@ export const handleUpload = async (req, res) => {
     });
 
     const urls = await Promise.all(uploadPromises);
+    console.log('Upload successful, URLs:', urls);
     res.json({ urls });
   } catch (error) {
-    console.error('Upload error:', error);
-    res.status(500).json({ message: 'Image upload failed' });
+    console.error('Upload error details:', error);
+    res.status(500).json({ message: 'Image upload failed', error: error.message || error });
   }
 };
 

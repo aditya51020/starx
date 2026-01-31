@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { MapPin, Home, Search, Star } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapPin, Home, Search as SearchIcon, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -13,8 +15,43 @@ L.Icon.Default.mergeOptions({
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
+// Component to handle map view updates
+function MapController({ center }) {
+    const map = useMap();
+    if (center) {
+        map.flyTo(center, 13);
+    }
+    return null;
+}
+
 export default function MapSection({ allProperties, nearbyCategories }) {
-    const mapCenter = [28.6692, 77.4538];
+    const [mapCenter, setMapCenter] = useState([28.6692, 77.4538]); // Default: Vasundhara
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (!searchQuery.trim()) return;
+
+        setIsSearching(true);
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`);
+            const data = await response.json();
+
+            if (data && data.length > 0) {
+                const { lat, lon } = data[0];
+                setMapCenter([parseFloat(lat), parseFloat(lon)]);
+                toast.success(`Found: ${data[0].display_name.split(',')[0]}`);
+            } else {
+                toast.error('Location not found');
+            }
+        } catch (error) {
+            console.error('Search error:', error);
+            toast.error('Search failed');
+        } finally {
+            setIsSearching(false);
+        }
+    };
 
     return (
         <section className="py-24 bg-white overflow-hidden">
@@ -29,7 +66,7 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                         Explore Properties on Map
                     </h2>
 
-                    <div className="flex justify-center gap-3 flex-wrap">
+                    <div className="flex justify-center gap-3 flex-wrap mb-8">
                         {nearbyCategories.map((cat, idx) => (
                             <motion.button
                                 key={cat.label}
@@ -43,6 +80,29 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                             </motion.button>
                         ))}
                     </div>
+
+                    {/* Search Bar */}
+                    <div className="max-w-md mx-auto mb-8 relative z-10">
+                        <form onSubmit={handleSearch} className="flex gap-2 bg-white p-2 rounded-2xl shadow-lg border border-gray-100">
+                            <div className="flex-1 relative">
+                                <SearchIcon className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                                <input
+                                    type="text"
+                                    placeholder="Search location (e.g., Delhi, Noida)..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-gray-50 border-none focus:ring-0 text-gray-700 placeholder-gray-400"
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                disabled={isSearching}
+                                className="bg-[#D4AF37] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-[#C5A059] transition disabled:opacity-70"
+                            >
+                                {isSearching ? '...' : 'Search'}
+                            </button>
+                        </form>
+                    </div>
                 </motion.div>
 
                 <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
@@ -53,6 +113,7 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                         viewport={{ once: true }}
                         className="lg:w-5/12 w-full h-[400px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 relative z-0"
                     >
+                        {/* Key forces re-render if needed, but MapController handles flyTo */}
                         <MapContainer
                             center={mapCenter}
                             zoom={12}
@@ -63,6 +124,7 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 attribution='&copy; OpenStreetMap contributors'
                             />
+                            <MapController center={mapCenter} />
                             {allProperties.map((property) => {
                                 if (property.lat && property.lng) {
                                     return (
@@ -114,7 +176,7 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                                 {[
                                     { icon: MapPin, title: 'Prime Locations', desc: 'Most sought-after neighborhoods' },
                                     { icon: Home, title: 'Verified Listings', desc: 'Inspected for quality & authenticity' },
-                                    { icon: Search, title: 'Smart Search', desc: 'Filter by price, location & type' },
+                                    { icon: SearchIcon, title: 'Smart Search', desc: 'Filter by price, location & type' },
                                     { icon: Star, title: 'Premium Service', desc: 'Dedicated support from experts' }
                                 ].map((item, i) => (
                                     <div key={i} className="flex items-start gap-4">

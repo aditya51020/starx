@@ -132,10 +132,11 @@ export default function AddProperty() {
       });
       if (res.data.urls) {
         setForm(prev => ({ ...prev, images: [...prev.images, ...res.data.urls] }));
+        toast.success('Images uploaded!');
       }
     } catch (err) {
-      console.error('Upload failed:', err);
-      toast.error('Failed to upload images');
+      console.error('Upload failed details:', err);
+      toast.error('Failed to upload images. Check console for details.');
     } finally {
       setLoading(false);
     }
