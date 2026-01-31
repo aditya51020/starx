@@ -97,6 +97,7 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                             <button
                                 type="submit"
                                 disabled={isSearching}
+                                onClick={(e) => { e.preventDefault(); handleSearch(e); }}
                                 className="bg-[#D4AF37] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-[#C5A059] transition disabled:opacity-70"
                             >
                                 {isSearching ? '...' : 'Search'}

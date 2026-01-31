@@ -131,6 +131,7 @@ export default function LocationPicker({ form, setForm }) {
                     <button
                         type="submit"
                         disabled={isSearching}
+                        onClick={(e) => { e.preventDefault(); handleSearch(e); }}
                         className="px-4 py-2 bg-[#D4AF37] text-white rounded-xl text-sm font-medium hover:bg-[#C5A059] disabled:opacity-50"
                     >
                         {isSearching ? '...' : 'Search'}
