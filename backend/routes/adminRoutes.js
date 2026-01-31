@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.use(protect);
 
+router.get('/sign-upload', getUploadSignature);
 router.post('/properties', createProperty);
 router.get('/properties/:id', getProperty); // Added missing GET route
 router.put('/properties/:id', updateProperty);
@@ -15,7 +16,6 @@ router.delete('/properties/:id', deleteProperty);
 router.delete('/properties/bulk', bulkDelete);
 router.get('/stats', getStats);
 router.post('/upload', uploadImages, handleUpload);
-router.get('/sign-upload', getUploadSignature);
 
 // Inquiries
 router.get('/inquiries', getInquiries);

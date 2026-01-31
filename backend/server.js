@@ -72,6 +72,10 @@ app.use('/api/admin', adminRoutes);
 app.use('/api', publicRoutes);
 app.use('/api/jobs', jobRoutes);
 
+app.get('/api/test-deploy', (req, res) => {
+  res.json({ message: "Deployment v2 active", time: new Date().toISOString() });
+});
+
 // Simple health check route (testing ke liye)
 app.get('/health', (req, res) => {
   res.json({
