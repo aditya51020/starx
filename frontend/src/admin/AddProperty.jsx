@@ -118,33 +118,73 @@ export default function AddProperty() {
     return newErrors;
   };
 
+  // DIRECT UPLOAD TO CLOUDINARY
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
-    const formData = new FormData();
-    files.forEach(file => formData.append('images', file));
+    setLoading(true);
+    let successCount = 0;
+    let failCount = 0;
+    const newUrls = [];
 
     try {
-      setLoading(true);
-      const res = await api.post('/api/admin/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      if (res.data.urls && res.data.urls.length > 0) {
-        setForm(prev => ({ ...prev, images: [...prev.images, ...res.data.urls] }));
+      // 1. Get Signature from Backend
+      const signRes = await api.get('/api/admin/sign-upload');
+      const { signature, timestamp, cloudName, apiKey } = signRes.data;
 
-        if (res.data.failed > 0) {
-          toast.success(`${res.data.urls.length} files uploaded!`);
-          toast.error(`${res.data.failed} files failed to upload. Check format/size.`);
+      // 2. Upload each file directly to Cloudinary
+      const uploadPromises = files.map(async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('api_key', apiKey);
+        formData.append('timestamp', timestamp);
+        formData.append('signature', signature);
+        formData.append('folder', 'ghaziabad_realestate');
+
+        try {
+          // Determine resource type (image or video)
+          const resourceType = file.type.startsWith('video/') ? 'video' : 'image';
+
+          const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
+            method: 'POST',
+            body: formData
+          });
+
+          if (!response.ok) throw new Error('Upload failed');
+          const data = await response.json();
+          return { status: 'fulfilled', value: data.secure_url };
+        } catch (error) {
+          console.error(`Failed to upload ${file.name}:`, error);
+          return { status: 'rejected', reason: error };
+        }
+      });
+
+      const results = await Promise.all(uploadPromises);
+
+      results.forEach(res => {
+        if (res.status === 'fulfilled') {
+          newUrls.push(res.value);
+          successCount++;
+        } else {
+          failCount++;
+        }
+      });
+
+      if (newUrls.length > 0) {
+        setForm(prev => ({ ...prev, images: [...prev.images, ...newUrls] }));
+        if (failCount > 0) {
+          toast.success(`${successCount} uploaded, ${failCount} failed.`);
         } else {
           toast.success('All files uploaded successfully!');
         }
-      } else if (res.data.failed > 0) {
-        toast.error('All files failed to upload. Please try again.');
+      } else {
+        toast.error('All uploads failed.');
       }
+
     } catch (err) {
-      console.error('Upload failed details:', err);
-      toast.error('Failed to upload images. Check console for details.');
+      console.error('Signature fetch failed:', err);
+      toast.error('Failed to initialize upload.');
     } finally {
       setLoading(false);
     }
