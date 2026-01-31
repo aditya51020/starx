@@ -2,6 +2,21 @@
 import { v2 as cloudinary } from 'cloudinary';
 import multer from 'multer';
 
+export const getUploadSignature = (req, res) => {
+  const timestamp = Math.round((new Date).getTime() / 1000);
+  const signature = cloudinary.utils.api_sign_request({
+    timestamp: timestamp,
+    folder: 'ghaziabad_realestate', // Optional: Keep organized
+  }, process.env.CLOUDINARY_SECRET);
+
+  res.json({
+    signature,
+    timestamp,
+    cloudName: process.env.CLOUDINARY_CLOUD,
+    apiKey: process.env.CLOUDINARY_KEY
+  });
+};
+
 import {
   CLOUDINARY_CLOUD,
   CLOUDINARY_KEY,
