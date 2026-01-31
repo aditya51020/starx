@@ -30,7 +30,8 @@ export const handleUpload = async (req, res) => {
         const uploadStream = cloudinary.uploader.upload_stream(
           {
             folder: 'ghaziabad_realestate',
-            allowed_formats: ['jpg', 'png', 'jpeg'],
+            resource_type: 'auto',
+            allowed_formats: ['jpg', 'png', 'jpeg', 'webp', 'mp4', 'mov', 'webm'],
           },
           (error, result) => {
             if (error) reject(error);

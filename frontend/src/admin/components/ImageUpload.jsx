@@ -37,7 +37,7 @@ export default function ImageUpload({ form, errors, imageInput, setImageInput, h
 
             <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Upload Images (Drag & Drop)
+                    Upload Media (Images & Videos)
                 </label>
                 <div className="flex items-center gap-4 mb-4">
                     <label
@@ -50,11 +50,11 @@ export default function ImageUpload({ form, errors, imageInput, setImageInput, h
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
                             <Upload className={`w-10 h-10 mb-3 ${isDragging ? 'text-[#D4AF37]' : 'text-gray-400'}`} />
                             <p className="text-sm font-medium text-gray-700">
-                                {isDragging ? 'Drop images here' : 'Click or Drag images here'}
+                                {isDragging ? 'Drop media here' : 'Click or Drag images/videos here'}
                             </p>
-                            <p className="text-xs text-gray-500 mt-1">Supports JPG, PNG, WEBP</p>
+                            <p className="text-xs text-gray-500 mt-1">Supports JPG, PNG, WEBP, MP4</p>
                         </div>
-                        <input type="file" multiple className="hidden" onChange={handleFileUpload} />
+                        <input type="file" multiple className="hidden" onChange={handleFileUpload} accept="image/*,video/*" />
                     </label>
                 </div>
 
@@ -95,18 +95,26 @@ export default function ImageUpload({ form, errors, imageInput, setImageInput, h
                     <div className="grid grid-cols-2 gap-4">
                         {form.images.map((img, index) => (
                             <div key={index} className="relative group">
-                                <img
-                                    src={img}
-                                    alt={`Preview ${index + 1}`}
-                                    className="w-full h-32 object-cover rounded-xl border border-gray-200 shadow-sm"
-                                    onError={(e) => {
-                                        e.target.src = 'https://placehold.co/400x300?text=Invalid+URL';
-                                    }}
-                                />
+                                {img.match(/\.(mp4|webm|mov)$/i) ? (
+                                    <video
+                                        src={img}
+                                        className="w-full h-32 object-cover rounded-xl border border-gray-200 shadow-sm"
+                                        controls
+                                    />
+                                ) : (
+                                    <img
+                                        src={img}
+                                        alt={`Preview ${index + 1}`}
+                                        className="w-full h-32 object-cover rounded-xl border border-gray-200 shadow-sm"
+                                        onError={(e) => {
+                                            e.target.src = 'https://placehold.co/400x300?text=Invalid+URL';
+                                        }}
+                                    />
+                                )}
                                 <button
                                     type="button"
                                     onClick={() => handleRemoveImage(index)}
-                                    className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition hover:bg-red-600 shadow-sm"
+                                    className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition hover:bg-red-600 shadow-sm z-10"
                                 >
                                     <Trash2 className="w-4 h-4" />
                                 </button>

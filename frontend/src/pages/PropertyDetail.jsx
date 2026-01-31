@@ -204,26 +204,48 @@ export default function PropertyDetail() {
       {/* Image Gallery */}
       <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-3xl overflow-hidden relative">
-          {/* Main Large Image */}
-          <div className="md:col-span-2 md:row-span-2 relative group">
-            <img
-              src={property.images?.[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200'}
-              alt={property.title}
-              className="w-full h-full object-cover cursor-pointer hover:brightness-95 transition"
-              onClick={() => setShowAllPhotos(true)}
-            />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition"></div>
+          {/* Main Large Media */}
+          <div className="md:col-span-2 md:row-span-2 relative group h-full">
+            {property.images?.[0]?.match(/\.(mp4|webm|mov)$/i) ? (
+              <video
+                src={property.images[0]}
+                className="w-full h-full object-cover rounded-2xl"
+                controls
+                autoPlay
+                muted
+                loop
+              />
+            ) : (
+              <img
+                src={property.images?.[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200'}
+                alt={property.title}
+                className="w-full h-full object-cover cursor-pointer hover:brightness-95 transition"
+                onClick={() => setShowAllPhotos(true)}
+              />
+            )}
           </div>
 
-          {/* Grid of 4 smaller images */}
+          {/* Grid of 4 smaller media */}
           {property.images?.slice(1, 5).map((img, i) => (
-            <div key={i} className="relative group cursor-pointer" onClick={() => setShowAllPhotos(true)}>
-              <img
-                src={img}
-                alt={`View ${i + 2}`}
-                className="w-full h-full object-cover hover:brightness-95 transition"
-                style={{ minHeight: '200px' }}
-              />
+            <div key={i} className="relative group cursor-pointer h-full" onClick={() => setShowAllPhotos(true)}>
+              {img.match(/\.(mp4|webm|mov)$/i) ? (
+                <div className="relative w-full h-full">
+                  <video
+                    src={img}
+                    className="w-full h-full object-cover hover:brightness-95 transition"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                    <span className="bg-white/30 backdrop-blur-md p-2 rounded-full">▶️</span>
+                  </div>
+                </div>
+              ) : (
+                <img
+                  src={img}
+                  alt={`View ${i + 2}`}
+                  className="w-full h-full object-cover hover:brightness-95 transition"
+                  style={{ minHeight: '200px' }}
+                />
+              )}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition"></div>
             </div>
           ))}
@@ -677,11 +699,19 @@ export default function PropertyDetail() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {property.images?.map((img, i) => (
                   <div key={i} className="relative group">
-                    <img
-                      src={img}
-                      alt={`Photo ${i + 1}`}
-                      className="w-full h-auto rounded-2xl"
-                    />
+                    {img.match(/\.(mp4|webm|mov)$/i) ? (
+                      <video
+                        src={img}
+                        className="w-full h-auto rounded-2xl"
+                        controls
+                      />
+                    ) : (
+                      <img
+                        src={img}
+                        alt={`Photo ${i + 1}`}
+                        className="w-full h-auto rounded-2xl"
+                      />
+                    )}
                     <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
                       {i + 1} / {property.images?.length}
                     </div>
