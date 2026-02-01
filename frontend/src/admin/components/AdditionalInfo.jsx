@@ -123,6 +123,56 @@ export default function AdditionalInfo({ form, setForm, errors, availableAmeniti
                 </div>
             </div>
 
+            <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-3">Nearby Places (Distance in km)</label>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-xs text-gray-500 mb-1">Metro Station</label>
+                        <input
+                            type="number"
+                            step="0.1"
+                            placeholder="e.g. 0.5"
+                            value={form.nearbyPlaces?.metro || ''}
+                            onChange={e => setForm({ ...form, nearbyPlaces: { ...form.nearbyPlaces, metro: e.target.value } })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-xs text-gray-500 mb-1">Hospital</label>
+                        <input
+                            type="number"
+                            step="0.1"
+                            placeholder="e.g. 1.2"
+                            value={form.nearbyPlaces?.hospital || ''}
+                            onChange={e => setForm({ ...form, nearbyPlaces: { ...form.nearbyPlaces, hospital: e.target.value } })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-xs text-gray-500 mb-1">School</label>
+                        <input
+                            type="number"
+                            step="0.1"
+                            placeholder="e.g. 0.8"
+                            value={form.nearbyPlaces?.school || ''}
+                            onChange={e => setForm({ ...form, nearbyPlaces: { ...form.nearbyPlaces, school: e.target.value } })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-xs text-gray-500 mb-1">Market / Mall</label>
+                        <input
+                            type="number"
+                            step="0.1"
+                            placeholder="e.g. 2.0"
+                            value={form.nearbyPlaces?.market || ''}
+                            onChange={e => setForm({ ...form, nearbyPlaces: { ...form.nearbyPlaces, market: e.target.value } })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+                        />
+                    </div>
+                </div>
+            </div>
+
             <div className="pt-4">
                 <LocationPicker form={form} setForm={setForm} />
             </div>

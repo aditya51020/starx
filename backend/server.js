@@ -89,7 +89,7 @@ app.get('/health', (req, res) => {
 // If you have any leftover static middleware, remove it!
 
 // Database sync
-sequelize.sync({ force: false })
+sequelize.sync({ alter: true })
   .then(() => console.log('SQLite Database connected and synced'))
   .catch(err => console.error('Database sync error:', err));
 

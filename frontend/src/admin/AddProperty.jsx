@@ -36,7 +36,13 @@ export default function AddProperty() {
     amenities: [],
     featured: false,
     lat: '',
-    lng: ''
+    lng: '',
+    nearbyPlaces: {
+      metro: '',
+      hospital: '',
+      school: '',
+      market: ''
+    }
   });
 
   const [imageInput, setImageInput] = useState('');
@@ -89,7 +95,13 @@ export default function AddProperty() {
             amenities: Array.isArray(p.amenities) ? p.amenities : [],
             featured: p.featured || false,
             lat: p.lat || '',
-            lng: p.lng || ''
+            lng: p.lng || '',
+            nearbyPlaces: typeof p.nearbyPlaces === 'string' ? JSON.parse(p.nearbyPlaces) : (p.nearbyPlaces || {
+              metro: '',
+              hospital: '',
+              school: '',
+              market: ''
+            })
           });
         })
         .catch(err => {

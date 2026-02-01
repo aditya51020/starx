@@ -331,7 +331,7 @@ export default function PropertyDetail() {
             {/* Description */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">About this property</h2>
-              <p className="text-gray-600 leading-relaxed text-lg">
+              <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-line">
                 {property.description || `Beautiful and spacious ${property.bhk} BHK ${property.transactionType === 'Rent' ? 'apartment for rent' : 'property for sale'} in ${property.region}, Ghaziabad. This well-maintained property offers modern amenities and is ready to move in. Located in a prime area with excellent connectivity to major landmarks, schools, hospitals, and shopping centers.`}
               </p>
             </div>
@@ -420,26 +420,36 @@ export default function PropertyDetail() {
 
               {/* Nearby Places */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                <div className="p-4 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20">
-                  <Train className="w-6 h-6 text-[#D4AF37] mb-2" />
-                  <p className="text-sm font-semibold text-gray-900">Metro Station</p>
-                  <p className="text-xs text-gray-600">0.5 km away</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                  <Hospital className="w-6 h-6 text-gray-600 mb-2" />
-                  <p className="text-sm font-semibold text-gray-900">Hospital</p>
-                  <p className="text-xs text-gray-600">1.2 km away</p>
-                </div>
-                <div className="p-4 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20">
-                  <School className="w-6 h-6 text-[#D4AF37] mb-2" />
-                  <p className="text-sm font-semibold text-gray-900">School</p>
-                  <p className="text-xs text-gray-600">0.8 km away</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                  <ShoppingCart className="w-6 h-6 text-gray-600 mb-2" />
-                  <p className="text-sm font-semibold text-gray-900">Shopping Mall</p>
-                  <p className="text-xs text-gray-600">2.0 km away</p>
-                </div>
+                {(() => {
+                  const places = typeof property.nearbyPlaces === 'string'
+                    ? JSON.parse(property.nearbyPlaces)
+                    : (property.nearbyPlaces || {});
+
+                  return (
+                    <>
+                      <div className="p-4 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20">
+                        <Train className="w-6 h-6 text-[#D4AF37] mb-2" />
+                        <p className="text-sm font-semibold text-gray-900">Metro Station</p>
+                        <p className="text-xs text-gray-600">{places.metro || '0'} km away</p>
+                      </div>
+                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                        <Hospital className="w-6 h-6 text-gray-600 mb-2" />
+                        <p className="text-sm font-semibold text-gray-900">Hospital</p>
+                        <p className="text-xs text-gray-600">{places.hospital || '0'} km away</p>
+                      </div>
+                      <div className="p-4 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20">
+                        <School className="w-6 h-6 text-[#D4AF37] mb-2" />
+                        <p className="text-sm font-semibold text-gray-900">School</p>
+                        <p className="text-xs text-gray-600">{places.school || '0'} km away</p>
+                      </div>
+                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                        <ShoppingCart className="w-6 h-6 text-gray-600 mb-2" />
+                        <p className="text-sm font-semibold text-gray-900">Shopping Mall</p>
+                        <p className="text-xs text-gray-600">{places.market || '0'} km away</p>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
           </div>

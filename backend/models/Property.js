@@ -88,6 +88,10 @@ const Property = sequelize.define('Property', {
     allowNull: false,
     defaultValue: []
   },
+  nearbyPlaces: {
+    type: DataTypes.JSON, // { metro: 2.5, hospital: 1.0, school: 3.5, market: 0.5 }
+    defaultValue: {}
+  },
   contactName: {
     type: DataTypes.STRING
   },
