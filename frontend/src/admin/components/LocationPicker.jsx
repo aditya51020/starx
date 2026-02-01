@@ -119,24 +119,25 @@ export default function LocationPicker({ form, setForm }) {
 
             {/* Search Bar */}
             <div className="relative">
-                <form onSubmit={handleSearch} className="flex gap-2">
+                <div className="flex gap-2">
                     <input
                         type="text"
                         placeholder="Search location (e.g., Indirapuram, Noida)..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
                         className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#D4AF37] text-sm"
                     />
                     <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
                     <button
-                        type="submit"
+                        type="button"
                         disabled={isSearching}
-                        onClick={(e) => { e.preventDefault(); handleSearch(e); }}
+                        onClick={handleSearch}
                         className="px-4 py-2 bg-[#D4AF37] text-white rounded-xl text-sm font-medium hover:bg-[#C5A059] disabled:opacity-50"
                     >
                         {isSearching ? '...' : 'Search'}
                     </button>
-                </form>
+                </div>
             </div>
 
             <div className="h-64 rounded-xl overflow-hidden border border-gray-300 z-0 relative">
