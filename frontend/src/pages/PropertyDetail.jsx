@@ -203,7 +203,7 @@ export default function PropertyDetail() {
       />
       {/* Image Gallery */}
       <div className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-3xl overflow-hidden relative">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-3xl overflow-hidden relative md:h-[500px]">
           {/* Main Large Media */}
           <div className="md:col-span-2 md:row-span-2 relative group h-full">
             {property.images?.[0]?.match(/\.(mp4|webm|mov)$/i) ? (
