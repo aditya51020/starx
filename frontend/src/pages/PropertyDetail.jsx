@@ -34,6 +34,7 @@ export default function PropertyDetail() {
   const [wishlist, setWishlist] = useState([]);
   const [similar, setSimilar] = useState([]);
   const [showAllPhotos, setShowAllPhotos] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const [showEMI, setShowEMI] = useState(false);
   const [emiResult, setEmiResult] = useState(null);
 
@@ -331,9 +332,19 @@ export default function PropertyDetail() {
             {/* Description */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">About this property</h2>
-              <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-line">
-                {property.description || `Beautiful and spacious ${property.bhk} BHK ${property.transactionType === 'Rent' ? 'apartment for rent' : 'property for sale'} in ${property.region}, Ghaziabad. This well-maintained property offers modern amenities and is ready to move in. Located in a prime area with excellent connectivity to major landmarks, schools, hospitals, and shopping centers.`}
-              </p>
+              <div className="relative">
+                <p className={`text-gray-600 leading-relaxed text-lg whitespace-pre-line ${!showFullDescription ? 'line-clamp-4' : ''}`}>
+                  {property.description || `Beautiful and spacious ${property.bhk} BHK ${property.transactionType === 'Rent' ? 'apartment for rent' : 'property for sale'} in ${property.region}, Ghaziabad. This well-maintained property offers modern amenities and is ready to move in. Located in a prime area with excellent connectivity to major landmarks, schools, hospitals, and shopping centers.`}
+                </p>
+                {(property.description?.length > 300 || !property.description) && (
+                  <button
+                    onClick={() => setShowFullDescription(!showFullDescription)}
+                    className="mt-2 text-[#D4AF37] font-semibold hover:underline flex items-center gap-1"
+                  >
+                    {showFullDescription ? 'Show Less' : 'Read More'}
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Divider */}
