@@ -145,7 +145,19 @@ export const updateProperty = async (req, res) => {
       data.slug = slug;
     }
 
+    console.log('Update Property Body:', JSON.stringify(data, null, 2));
+
+    // Check if nearbyPlaces is being passed
+    if (data.nearbyPlaces) {
+      console.log('Updating nearbyPlaces:', data.nearbyPlaces);
+    }
+
     await prop.update(data);
+
+    // Refetch to see what's in DB
+    await prop.reload();
+    console.log('Updated Property loaded from DB:', JSON.stringify(prop.nearbyPlaces, null, 2));
+
     res.json(prop);
   } catch (error) {
     res.status(400).json({ message: 'Update Failed', error: error.message });

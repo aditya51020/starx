@@ -716,24 +716,24 @@ export default function PropertyDetail() {
             </div>
 
             {/* Photo Grid */}
-            <div className="container mx-auto px-4 py-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="container mx-auto px-4 py-8 h-full flex flex-col justify-center">
+              <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 md:grid md:grid-cols-2 md:overflow-visible no-scrollbar pb-4 md:pb-0 items-center">
                 {property.images?.map((img, i) => (
-                  <div key={i} className="relative group">
+                  <div key={i} className="relative group flex-shrink-0 w-full md:w-auto snap-center flex items-center justify-center bg-black/50 rounded-2xl p-2 h-[80vh] md:h-auto">
                     {img.match(/\.(mp4|webm|mov)$/i) ? (
                       <video
                         src={img}
-                        className="w-full h-auto rounded-2xl"
+                        className="max-w-full max-h-full w-auto h-auto rounded-xl shadow-2xl mx-auto object-contain"
                         controls
                       />
                     ) : (
                       <img
                         src={img}
                         alt={`Photo ${i + 1}`}
-                        className="w-full h-auto rounded-2xl"
+                        className="max-w-full max-h-full w-auto h-auto rounded-xl shadow-2xl mx-auto object-contain"
                       />
                     )}
-                    <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                    <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm backdrop-blur-md">
                       {i + 1} / {property.images?.length}
                     </div>
                   </div>
