@@ -125,8 +125,8 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white font-sans">
       <Helmet>
-        <title>Home | StartxProperties - Best Real Estate in Ghaziabad</title>
-        <meta name="description" content="Explore top properties in Vasundhara, Indirapuram, and Sector 63. Buy your dream home with StartxProperties today." />
+        <title>StarX Buildtech – Real Estate & Property Development Company</title>
+        <meta name="description" content="StarX Buildtech (also known as Star X or Starx Properties) is a trusted real estate and construction company in Ghaziabad, offering premium properties in Vasundhara, Indirapuram, and Sector 63." />
         <link rel="canonical" href="https://www.starxbuildtech.co.in/" />
       </Helmet>
       <HeroSection

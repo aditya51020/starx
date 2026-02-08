@@ -5,25 +5,30 @@ const About = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <Meta
-        title="About Us"
-        description="Learn about StarX Realty, your trusted partner for buying, selling, and renting properties in Ghaziabad, Vasundhara, and Indirapuram."
-        keywords="About StarX Realty, Real Estate Company Ghaziabad, Property Dealers, Real Estate Agents"
+        title="About StarX Properties (StarX Buildtech) - Trusted Real Estate Consultants"
+        description="StarX Properties (operating under StarX Buildtech) is a trusted real estate firm in Ghaziabad. We are widely searched as Starx, Star X, and Starx Properties."
+        keywords="StarX Buildtech, StarX Properties, Star X Real Estate, Property Consultants Ghaziabad, Buy Property Indirapuram"
       />
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-8">
-          About StarX Realty
+          About StarX Properties (StarX Buildtech)
         </h1>
 
         <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
-            Welcome to <span className="font-semibold text-[#D4AF37]">StarX Realty</span> –
-            one of the fastest-growing and most trusted real estate platforms in Ghaziabad.
+            <span className="font-bold text-[#D4AF37]">StarX Properties</span>, operating under <span className="font-bold text-gray-900">StarX Buildtech</span>, is a trusted real estate and property consultancy firm based in Ghaziabad, Uttar Pradesh. We are widely searched and recognized as <strong>Starx</strong>, <strong>Star X</strong>, and <strong>Starx Properties</strong> by our clients.
           </p>
 
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
-            Our mission is simple: to provide genuine, verified, and up-to-date property listings
-            in prime locations such as Vasundhara, Indirapuram, Vaishali, Noida Extension,
-            Sector-63, and surrounding areas.
+            With a strong local presence in Indirapuram, Vaishali, Vasundhara and nearby areas, StarX Properties specializes in residential and commercial property buying, selling, leasing, and investment consulting. Our focus is on transparent deals, genuine properties, and long-term client relationships.
+          </p>
+
+          <p className="text-lg text-gray-700 leading-relaxed mb-6">
+            Over the years, <strong>StarX Buildtech / StarX Properties</strong> has helped hundreds of clients find the right homes, plots, and commercial spaces with complete legal clarity and professional guidance. Our experienced team ensures smooth documentation, site visits, and end-to-end support throughout the property transaction.
+          </p>
+
+          <p className="text-lg text-gray-700 leading-relaxed font-semibold bg-[#FFFDF0] p-4 rounded-lg border border-[#D4AF37]/20">
+            If you are searching for Starx Properties Ghaziabad, Star X real estate, or Starx Buildtech, you are at the right place.
           </p>
 
           <div className="my-10">
