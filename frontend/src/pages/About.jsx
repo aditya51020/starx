@@ -7,7 +7,7 @@ const About = () => {
       <Meta
         title="About StarX Properties (StarX Buildtech) - Trusted Real Estate Consultants"
         description="StarX Properties (operating under StarX Buildtech) is a trusted real estate firm in Ghaziabad. We are widely searched as Starx, Star X, and Starx Properties."
-        keywords="StarX Buildtech, StarX Properties, Star X Real Estate, Property Consultants Ghaziabad, Buy Property Indirapuram"
+        keywords="starx properties, starx buildtech, star x properties, star x buildtech, property dealer in ghaziabad, real estate agent in indirapuram, property consultant in ghaziabad, real estate agent in vasundhara, buy property in indirapuram"
       />
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-8">
