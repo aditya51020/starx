@@ -35,6 +35,7 @@ export default function Navbar() {
         { name: 'Home', path: '/', icon: Home },
         { name: 'Properties', path: '/properties', icon: Building2 },
         { name: 'Career', path: '/career', icon: Briefcase },
+        { name: 'Blog', path: '/blog', icon: LayoutDashboard }, // Using LayoutDashboard as a placeholder icon
         { name: 'About Us', path: '/about', icon: Info },
         { name: 'Contact', path: '/contact', icon: Phone },
     ];

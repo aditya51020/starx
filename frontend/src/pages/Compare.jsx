@@ -1,6 +1,7 @@
 import { useCompare } from '../context/CompareContext';
 import { Link } from 'react-router-dom';
 import { Check, X, ArrowLeft, Trash2 } from 'lucide-react';
+import Meta from '../components/Meta';
 
 export default function Compare() {
     const { compareList, removeFromCompare, clearCompare } = useCompare();
@@ -8,6 +9,10 @@ export default function Compare() {
     if (compareList.length === 0) {
         return (
             <div className="min-h-screen pt-24 px-4 bg-gray-50 flex items-center justify-center">
+                <Meta
+                    title="Compare Properties"
+                    description="Compare properties side-by-side to find the best deal."
+                />
                 <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">No Properties Selected</h2>
                     <p className="text-gray-600 mb-6">Select at least 2 properties to compare</p>
@@ -34,6 +39,10 @@ export default function Compare() {
 
     return (
         <div className="min-h-screen pt-24 pb-12 bg-gray-50">
+            <Meta
+                title="Compare Properties"
+                description="Compare up to 4 properties side-by-side to make the best decision."
+            />
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">

@@ -1,8 +1,14 @@
 import React from 'react';
+import Meta from '../components/Meta';
 
 const About = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <Meta
+        title="About Us"
+        description="Learn about StarX Realty, your trusted partner for buying, selling, and renting properties in Ghaziabad, Vasundhara, and Indirapuram."
+        keywords="About StarX Realty, Real Estate Company Ghaziabad, Property Dealers, Real Estate Agents"
+      />
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-8">
           About StarX Realty

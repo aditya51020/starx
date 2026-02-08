@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, User } from 'lucide-react';
 import toast from 'react-hot-toast';
 import logo from '../assets/logo.jpg';
+import Meta from '../components/Meta';
 
 export default function Signup() {
     const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -23,6 +24,10 @@ export default function Signup() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <Meta
+                title="Create Account"
+                description="Sign up for a StarX Realty account to save your favorite properties and get personalized recommendations."
+            />
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-3xl shadow-xl">
                 <div className="text-center">
                     <Link to="/" className="inline-flex items-center gap-2 group mb-6">

@@ -10,6 +10,7 @@ import {
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { Helmet } from 'react-helmet-async';
 import { useCompare } from '../context/CompareContext';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
@@ -500,6 +501,10 @@ export default function Properties() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>All Properties | StartxProperties - Buy, Sell, Rent in Ghaziabad</title>
+        <meta name="description" content="Browse our extensive list of properties in Vasundhara, Indirapuram, and Sector 63. Find your perfect home or investment opportunity." />
+      </Helmet>
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-slate-900 to-slate-800 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">

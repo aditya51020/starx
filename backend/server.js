@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import compression from 'compression';
 import morgan from 'morgan';
 import sequelize from './config/database.js';
 import adminRoutes from './routes/adminRoutes.js';
@@ -57,6 +58,9 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 app.use('/api', limiter);
+
+// Compression
+app.use(compression());
 
 // Logging
 app.use(morgan('dev'));

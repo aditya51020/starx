@@ -1,24 +1,26 @@
-// src/App.jsx
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { Suspense, lazy } from 'react';
 
-// Pages
-import HomePage from './pages/Home';
-import Properties from './pages/Properties';
-import PropertyDetail from './pages/PropertyDetail';
-import Wishlist from './pages/Wishlist';
-import Contact from './pages/Contact';
-import About from './pages/About';
-import Career from './pages/Career';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Compare from './pages/Compare'; // Import Compare Page
+// Lazy Load Pages
+const HomePage = lazy(() => import('./pages/Home'));
+const Properties = lazy(() => import('./pages/Properties'));
+const PropertyDetail = lazy(() => import('./pages/PropertyDetail'));
+const Wishlist = lazy(() => import('./pages/Wishlist'));
+const Contact = lazy(() => import('./pages/Contact'));
+const About = lazy(() => import('./pages/About'));
+const Career = lazy(() => import('./pages/Career'));
+const Login = lazy(() => import('./pages/Login'));
+const Signup = lazy(() => import('./pages/Signup'));
+const Compare = lazy(() => import('./pages/Compare'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
 
-// Admin Pages
-import AdminLogin from './admin/AdminLogin';
-import AdminDashboard from './admin/AdminDashboard';
-import AddProperty from './admin/AddProperty';
-import AddJob from './admin/AddJob';
+// Lazy Load Admin Pages
+const AdminLogin = lazy(() => import('./admin/AdminLogin'));
+const AdminDashboard = lazy(() => import('./admin/AdminDashboard'));
+const AddProperty = lazy(() => import('./admin/AddProperty'));
+const AddJob = lazy(() => import('./admin/AddJob'));
 
 
 
@@ -51,46 +53,50 @@ function App() {
         <Toaster position="top-center" />
         {!isAdminRoute && <Navbar />}
         <main className="min-h-screen">
-          <Routes>
+          <Suspense fallback={<div className="flex justify-center items-center min-h-screen">Loading...</div>}>
+            <Routes>
 
-            {/* ====================== PUBLIC ROUTES ====================== */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/properties" element={<Properties />} />
-            <Route path="/property/:id" element={<PropertyDetail />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/career" element={<Career />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/compare" element={<Compare />} />
+              {/* ====================== PUBLIC ROUTES ====================== */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/properties" element={<Properties />} />
+              <Route path="/property/:id" element={<PropertyDetail />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/career" element={<Career />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/compare" element={<Compare />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
 
-            {/* Optional region pages (agar use kar rahe ho) */}
-            {/* <Route path="/vasundhara" element={<RegionPage region="Vasundhara" />} /> */}
+              {/* Optional region pages (agar use kar rahe ho) */}
+              {/* <Route path="/vasundhara" element={<RegionPage region="Vasundhara" />} /> */}
 
-            {/* ====================== ADMIN ROUTES ====================== */}
-            <Route path="/admin/login" element={<AdminLogin />} />
+              {/* ====================== ADMIN ROUTES ====================== */}
+              <Route path="/admin/login" element={<AdminLogin />} />
 
-            {/* Protected Admin Area */}
-            <Route
-              path="/admin/*"
-              element={
-                <ProtectedRoute>
-                  {/* Admin Layout could go here if needed */}
-                  <Routes>
-                    <Route index element={<AdminDashboard />} />
-                    <Route path="dashboard" element={<AdminDashboard />} />
-                    <Route path="add" element={<AddProperty />} />
-                    <Route path="edit/:id" element={<AddProperty />} />
-                    <Route path="add-job" element={<AddJob />} />
-                  </Routes>
-                </ProtectedRoute>
-              }
-            />
+              {/* Protected Admin Area */}
+              <Route
+                path="/admin/*"
+                element={
+                  <ProtectedRoute>
+                    {/* Admin Layout could go here if needed */}
+                    <Routes>
+                      <Route index element={<AdminDashboard />} />
+                      <Route path="dashboard" element={<AdminDashboard />} />
+                      <Route path="add" element={<AddProperty />} />
+                      <Route path="edit/:id" element={<AddProperty />} />
+                      <Route path="add-job" element={<AddJob />} />
+                    </Routes>
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* 404 - Not Found */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+              {/* 404 - Not Found */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
         </main>
         {!isAdminRoute && <CompareFloat />}
         <Footer />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import api from '../axiosConfig'; // Ensure you have this configured
 import { MapPin, Phone, Mail, Loader2, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
+import Meta from '../components/Meta';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +34,11 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-16">
+      <Meta
+        title="Contact Us"
+        description="Get in touch with StarX Realty. Visit our office in Indirapuram, call us, or send an email for all your real estate needs in Ghaziabad."
+        keywords="Contact StarX Realty, Real Estate Office Address, Property Inquiry, Real Estate Contact Number"
+      />
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Get in Touch</h1>

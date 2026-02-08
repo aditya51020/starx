@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, X, Home, MapPin, Bed, Bath, Maximize } from 'lucide-react';
+import Meta from '../components/Meta';
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
@@ -43,6 +44,10 @@ export default function Wishlist() {
   if (wishlist.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-20">
+        <Meta
+          title="My Wishlist"
+          description="View your saved properties on StarX Realty."
+        />
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-md mx-auto">
             <Heart className="w-24 h-24 text-gray-300 mx-auto mb-6" />
@@ -65,6 +70,10 @@ export default function Wishlist() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-16">
+      <Meta
+        title="My Wishlist"
+        description="View all your saved properties in one place on StarX Realty."
+      />
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex justify-between items-center mb-10">

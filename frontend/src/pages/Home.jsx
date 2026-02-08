@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '../axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { Train, Hospital, School, ShoppingCart, Coffee } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 // Components
 import HeroSection from '../components/home/HeroSection';
@@ -123,6 +124,11 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white font-sans">
+      <Helmet>
+        <title>Home | StartxProperties - Best Real Estate in Ghaziabad</title>
+        <meta name="description" content="Explore top properties in Vasundhara, Indirapuram, and Sector 63. Buy your dream home with StartxProperties today." />
+        <link rel="canonical" href="https://www.starxbuildtech.co.in/" />
+      </Helmet>
       <HeroSection
         onSearch={handleSearch}
       />

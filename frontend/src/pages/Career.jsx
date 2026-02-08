@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../axiosConfig';
 import { Briefcase, MapPin, Clock, ArrowRight, Loader2 } from 'lucide-react';
+import Meta from '../components/Meta';
 
 export default function Career() {
     const [jobs, setJobs] = useState([]);
@@ -22,6 +23,11 @@ export default function Career() {
 
     return (
         <div className="min-h-screen bg-slate-50 pt-24 pb-20">
+            <Meta
+                title="Careers"
+                description="Join the StarX Realty team. Explore job openings and career opportunities in Ghaziabad's growing real estate sector."
+                keywords="Real Estate Jobs, Careers at StarX, Job Openings Ghaziabad, Real Estate Sales Jobs"
+            />
             {/* Hero Section */}
             <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white py-20 mb-12">
                 <div className="container mx-auto px-4 text-center">
