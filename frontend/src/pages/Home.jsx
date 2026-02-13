@@ -179,7 +179,10 @@ export default function HomePage() {
           <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
             Join thousands of satisfied customers who found their perfect property with StarX.
           </p>
-          <button className="bg-white text-black px-10 py-4 rounded-full font-bold text-lg hover:bg-[#D4AF37] hover:text-white transition-all shadow-xl hover:shadow-[#D4AF37]/25 transform hover:-translate-y-1">
+          <button
+            onClick={() => navigate('/properties')}
+            className="bg-white text-black px-10 py-4 rounded-full font-bold text-lg hover:bg-[#D4AF37] hover:text-white transition-all shadow-xl hover:shadow-[#D4AF37]/25 transform hover:-translate-y-1"
+          >
             Browse All Properties
           </button>
         </div>

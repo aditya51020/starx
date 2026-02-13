@@ -5,10 +5,11 @@ const About = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <Meta
-        title="About StarX Properties (StarX Buildtech) - Trusted Real Estate Consultants"
-        description="StarX Properties (operating under StarX Buildtech) is a trusted real estate firm in Ghaziabad. We are widely searched as Starx, Star X, and Starx Properties."
-        keywords="starx properties, starx buildtech, star x properties, star x buildtech, property dealer in ghaziabad, real estate agent in indirapuram, property consultant in ghaziabad, real estate agent in vasundhara, buy property in indirapuram"
+        title="About StarX Properties | Real Estate Consultant in Ghaziabad"
+        description="StarX Properties (StarX Buildtech) is a trusted real estate agent in Ghaziabad offering property buying, selling & investment services in Indirapuram, Vaishali & Vasundhara."
+        keywords="starx properties, starx buildtech, star x properties, property dealer in ghaziabad, real estate agent indirapuram, property consultant ghaziabad, property in vasundhara"
       />
+
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-8">
           About StarX Properties (StarX Buildtech)
@@ -27,9 +28,6 @@ const About = () => {
             Over the years, <strong>StarX Buildtech / StarX Properties</strong> has helped hundreds of clients find the right homes, plots, and commercial spaces with complete legal clarity and professional guidance. Our experienced team ensures smooth documentation, site visits, and end-to-end support throughout the property transaction.
           </p>
 
-          <p className="text-lg text-gray-700 leading-relaxed font-semibold bg-[#FFFDF0] p-4 rounded-lg border border-[#D4AF37]/20">
-            If you are searching for Starx Properties Ghaziabad, Star X real estate, or Starx Buildtech, you are at the right place.
-          </p>
 
           <div className="my-10">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Why Choose Us?</h2>
@@ -55,7 +53,8 @@ const About = () => {
 
           <p className="text-lg text-gray-700 leading-relaxed">
             Whether you are looking to buy your dream home, sell your property, rent it out,
-            or invest in the best opportunities – StarX Realty is with you every step of the way.
+            or invest in the best opportunities – StarX Properties is with you every step of the way.
+            .
           </p>
 
           <div className="mt-10 text-center">

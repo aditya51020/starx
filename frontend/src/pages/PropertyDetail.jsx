@@ -202,442 +202,299 @@ export default function PropertyDetail() {
         image={property.images?.[0]}
         url={window.location.href}
       />
-      {/* Image Gallery */}
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-4 gap-3 rounded-3xl overflow-hidden relative h-[300px] md:h-[500px]">
-          {/* Main Large Media */}
-          <div className="min-w-full md:min-w-0 snap-center md:col-span-2 md:row-span-2 relative group h-full">
-            {property.images?.[0]?.match(/\.(mp4|webm|mov)$/i) ? (
-              <video
-                src={property.images[0]}
-                className="w-full h-full object-cover rounded-2xl"
-                controls
-                autoPlay
-                muted
-                loop
-              />
-            ) : (
-              <img
-                src={property.images?.[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200'}
-                alt={property.title}
-                className="w-full h-full object-cover cursor-pointer hover:brightness-95 transition"
-                onClick={() => setShowAllPhotos(true)}
-              />
-            )}
-          </div>
+      {/* Main Content - Split Hero Layout */}
+      <div className="container mx-auto px-4 py-8 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-          {/* Grid of 4 smaller media */}
-          {property.images?.slice(1, 5).map((img, i) => (
-            <div key={i} className="min-w-full md:min-w-0 snap-center relative group cursor-pointer h-full" onClick={() => setShowAllPhotos(true)}>
-              {img.match(/\.(mp4|webm|mov)$/i) ? (
-                <div className="relative w-full h-full">
-                  <video
-                    src={img}
-                    className="w-full h-full object-cover hover:brightness-95 transition"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                    <span className="bg-white/30 backdrop-blur-md p-2 rounded-full">▶️</span>
-                  </div>
-                </div>
+          {/* Left Column - Large Hero Image (65%) */}
+          <div className="lg:col-span-8 space-y-6">
+            {/* Large Hero Image */}
+            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl h-[350px] md:h-[450px] group">
+              {property.images?.[0]?.match(/\.(mp4|webm|mov)$/i) ? (
+                <video
+                  src={property.images[0]}
+                  className="w-full h-full object-cover"
+                  controls
+                  autoPlay
+                  muted
+                  loop
+                />
               ) : (
                 <img
-                  src={img}
-                  alt={`View ${i + 2}`}
-                  className="w-full h-full object-cover hover:brightness-95 transition"
-                  style={{ minHeight: '200px' }}
+                  src={property.images?.[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200'}
+                  alt={property.title}
+                  className="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-700"
+                  onClick={() => setShowAllPhotos(true)}
                 />
               )}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition"></div>
-            </div>
-          ))}
-
-          {/* View All Photos Button */}
-          <button
-            onClick={() => setShowAllPhotos(true)}
-            className="absolute bottom-6 right-6 bg-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition flex items-center gap-2"
-          >
-            <Building2 className="w-5 h-5" />
-            Show all {property.images?.length || 0} photos
-          </button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="container mx-auto px-4 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Property Details */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Title Section */}
-            <div>
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center justify-between gap-4 mb-3">
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-                      {property.title}
-                    </h1>
-                    <button onClick={shareProperty} className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-xl transition flex-shrink-0 border border-gray-200">
-                      <Share2 className="w-5 h-5" />
-                      <span className="hidden md:inline font-medium">Share</span>
-                    </button>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4 text-gray-600">
-                    <span className="flex items-center gap-1">
-                      <MapPin className="w-5 h-5 text-[#D4AF37]" />
-                      {property.region}, Ghaziabad
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                      4.9 (120 reviews)
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quick Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-gray-50 rounded-2xl">
-                <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-[#FFFDF0] rounded-full flex items-center justify-center">
-                    <Bed className="w-6 h-6 text-[#D4AF37]" />
-                  </div>
-                  <p className="text-2xl font-bold text-gray-900">{property.bhk}</p>
-                  <p className="text-sm text-gray-600">Bedrooms</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-gray-100 rounded-full flex items-center justify-center">
-                    <Bath className="w-6 h-6 text-gray-600" />
-                  </div>
-                  <p className="text-2xl font-bold text-gray-900">{property.bathrooms || property.bhk}</p>
-                  <p className="text-sm text-gray-600">Bathrooms</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-[#FFFDF0] rounded-full flex items-center justify-center">
-                    <Maximize className="w-6 h-6 text-[#D4AF37]" />
-                  </div>
-                  <p className="text-2xl font-bold text-gray-900">{property.area}</p>
-                  <p className="text-sm text-gray-600">Sq. Ft.</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-gray-100 rounded-full flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-gray-500" />
-                  </div>
-                  <p className="text-2xl font-bold text-gray-900">{property.floor || 'N/A'}</p>
-                  <p className="text-sm text-gray-600">Floor</p>
-                </div>
-              </div>
+              {/* View All Photos Button Overlay */}
+              <button
+                onClick={() => setShowAllPhotos(true)}
+                className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl font-bold shadow-lg hover:bg-white transition flex items-center gap-2 text-gray-900 text-sm"
+              >
+                <Building2 className="w-4 h-4" />
+                Show all {property.images?.length || 0} photos
+              </button>
             </div>
 
-            {/* Divider */}
-            <div className="border-t border-gray-200"></div>
-
-            {/* Description */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">About this property</h2>
-              <div className="relative">
-                <p className={`text-gray-600 leading-relaxed text-lg whitespace-pre-line ${!showFullDescription ? 'line-clamp-4' : ''}`}>
-                  {property.description || `Beautiful and spacious ${property.bhk} BHK ${property.transactionType === 'Rent' ? 'apartment for rent' : 'property for sale'} in ${property.region}, Ghaziabad. This well-maintained property offers modern amenities and is ready to move in. Located in a prime area with excellent connectivity to major landmarks, schools, hospitals, and shopping centers.`}
-                </p>
-                {(property.description?.length > 300 || !property.description) && (
-                  <button
-                    onClick={() => setShowFullDescription(!showFullDescription)}
-                    className="mt-2 text-[#D4AF37] font-semibold hover:underline flex items-center gap-1"
-                  >
-                    {showFullDescription ? 'Show Less' : 'Read More'}
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Divider */}
-            <div className="border-t border-gray-200"></div>
-
-            {/* Property Features */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Property Details</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 bg-gray-50 rounded-xl">
-                  <p className="text-sm text-gray-600 mb-1">Furnishing</p>
-                  <p className="font-semibold text-gray-900">{property.furnishing || 'Semi-Furnished'}</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-xl">
-                  <p className="text-sm text-gray-600 mb-1">Property Age</p>
-                  <p className="font-semibold text-gray-900">{property.propertyAge || '2-5 years'}</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-xl">
-                  <p className="text-sm text-gray-600 mb-1">Total Floors</p>
-                  <p className="font-semibold text-gray-900">{property.totalFloors || 'G+5'}</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-xl">
-                  <p className="text-sm text-gray-600 mb-1">Facing</p>
-                  <p className="font-semibold text-gray-900">{property.facing || 'East'}</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-xl">
-                  <p className="text-sm text-gray-600 mb-1">Status</p>
-                  <p className="font-semibold text-gray-900">{property.transactionType}</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-xl">
-                  <p className="text-sm text-gray-600 mb-1">Available From</p>
-                  <p className="font-semibold text-gray-900">Immediate</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Divider */}
-            <div className="border-t border-gray-200"></div>
-
-            {/* Amenities */}
-            {property.amenities && property.amenities.length > 0 && (
+            {/* Description & Details (Below Image) */}
+            <div className="space-y-6">
+              {/* Description */}
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Amenities & Features</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {property.amenities.map((amenity, i) => {
-                    // Function to strip emojis and trim
-                    const cleanName = amenity.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2700}-\u{27BF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]/gu, '').trim();
-                    const IconComponent = amenityIcons[cleanName] || amenityIcons[amenity] || Check;
-                    return (
-                      <div key={i} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
-                        <div className="w-10 h-10 bg-[#FFFDF0] rounded-full flex items-center justify-center flex-shrink-0">
-                          <IconComponent className="w-5 h-5 text-[#D4AF37]" />
-                        </div>
-                        <span className="font-medium text-gray-900">{cleanName}</span>
-                      </div>
-                    );
-                  })}
+                <h2 className="text-xl font-bold text-gray-900 mb-2">About this property</h2>
+                <div className="relative">
+                  <p className={`text-gray-600 leading-relaxed whitespace-pre-line ${!showFullDescription ? 'line-clamp-4' : ''}`}>
+                    {property.description || `Beautiful and spacious ${property.bhk} BHK ${property.transactionType === 'Rent' ? 'apartment for rent' : 'property for sale'} in ${property.region}, Ghaziabad. This well-maintained property offers modern amenities and is ready to move in. Located in a prime area with excellent connectivity to major landmarks, schools, hospitals, and shopping centers.`}
+                  </p>
+                  {(property.description?.length > 300 || !property.description) && (
+                    <button
+                      onClick={() => setShowFullDescription(!showFullDescription)}
+                      className="mt-1 text-[#D4AF37] font-semibold hover:underline flex items-center gap-1 text-sm"
+                    >
+                      {showFullDescription ? 'Show Less' : 'Read More'}
+                    </button>
+                  )}
                 </div>
               </div>
-            )}
 
-            {/* Divider */}
-            <div className="border-t border-gray-200"></div>
+              {/* Divider */}
+              <div className="border-t border-gray-200"></div>
 
-            {/* Location Map */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Location & Nearby</h2>
-              <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-lg" style={{ height: '400px' }}>
-                <MapContainer center={coordinates} zoom={15} style={{ height: '100%', width: '100%' }}>
-                  <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; OpenStreetMap contributors'
-                  />
-                  <Marker position={coordinates}>
-                    <Popup>
-                      <div className="text-center p-2">
-                        <h3 className="font-bold">{property.title}</h3>
-                        <p className="text-[#D4AF37] font-semibold">₹{property.price?.toLocaleString('en-IN')}</p>
-                      </div>
-                    </Popup>
-                  </Marker>
-                </MapContainer>
+              {/* Property Features Grid */}
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-3">Property Details</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="p-3 bg-gray-50 rounded-xl">
+                    <p className="text-xs text-gray-500 mb-0.5">Type</p>
+                    <p className="font-bold text-gray-900 text-base">{property.propertyType || 'Apartment'}</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-xl">
+                    <p className="text-xs text-gray-500 mb-0.5">Furnishing</p>
+                    <p className="font-bold text-gray-900 text-base">{property.furnishing || 'Semi-Furnished'}</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-xl">
+                    <p className="text-xs text-gray-500 mb-0.5">Area</p>
+                    <p className="font-bold text-gray-900 text-base">{property.area} sqft</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-xl">
+                    <p className="text-xs text-gray-500 mb-0.5">Status</p>
+                    <p className="font-bold text-gray-900 text-base">{property.transactionType}</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-xl">
+                    <p className="text-xs text-gray-500 mb-0.5">Bedrooms</p>
+                    <p className="font-bold text-gray-900 text-base">{property.bhk} BHK</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-xl">
+                    <p className="text-xs text-gray-500 mb-0.5">Bathrooms</p>
+                    <p className="font-bold text-gray-900 text-base">{property.bathrooms || property.bhk}</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Nearby Places */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                {(() => {
-                  const places = typeof property.nearbyPlaces === 'string'
-                    ? JSON.parse(property.nearbyPlaces)
-                    : (property.nearbyPlaces || {});
+              {/* Divider */}
+              <div className="border-t border-gray-200"></div>
 
-                  return (
-                    <>
-                      <div className="p-4 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20">
-                        <Train className="w-6 h-6 text-[#D4AF37] mb-2" />
-                        <p className="text-sm font-semibold text-gray-900">Metro Station</p>
-                        <p className="text-xs text-gray-600">{places.metro || '0'} km away</p>
-                      </div>
-                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                        <Hospital className="w-6 h-6 text-gray-600 mb-2" />
-                        <p className="text-sm font-semibold text-gray-900">Hospital</p>
-                        <p className="text-xs text-gray-600">{places.hospital || '0'} km away</p>
-                      </div>
-                      <div className="p-4 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20">
-                        <School className="w-6 h-6 text-[#D4AF37] mb-2" />
-                        <p className="text-sm font-semibold text-gray-900">School</p>
-                        <p className="text-xs text-gray-600">{places.school || '0'} km away</p>
-                      </div>
-                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                        <ShoppingCart className="w-6 h-6 text-gray-600 mb-2" />
-                        <p className="text-sm font-semibold text-gray-900">Shopping Mall</p>
-                        <p className="text-xs text-gray-600">{places.market || '0'} km away</p>
-                      </div>
-                    </>
-                  );
-                })()}
+              {/* Amenities */}
+              {property.amenities && property.amenities.length > 0 && (
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900 mb-4">Amenities</h2>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {property.amenities.map((amenity, i) => {
+                      const cleanName = amenity.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2700}-\u{27BF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]/gu, '').trim();
+                      const IconComponent = amenityIcons[cleanName] || amenityIcons[amenity] || Check;
+                      return (
+                        <div key={i} className="flex items-center gap-2 p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition border border-gray-100">
+                          <div className="w-8 h-8 bg-[#FFFDF0] rounded-full flex items-center justify-center flex-shrink-0">
+                            <IconComponent className="w-4 h-4 text-[#D4AF37]" />
+                          </div>
+                          <span className="font-bold text-gray-800 text-sm">{cleanName}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Divider */}
+              <div className="border-t border-gray-200"></div>
+
+              {/* Location Map */}
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-3">Location</h2>
+                <div className="rounded-[1.5rem] overflow-hidden border border-gray-200 shadow-lg h-[300px]">
+                  <MapContainer center={coordinates} zoom={15} style={{ height: '100%', width: '100%' }}>
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; OpenStreetMap contributors'
+                    />
+                    <Marker position={coordinates}>
+                      <Popup>
+                        <div className="text-center p-2">
+                          <h3 className="font-bold">{property.title}</h3>
+                          <p className="text-[#D4AF37] font-semibold">₹{property.price?.toLocaleString('en-IN')}</p>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  </MapContainer>
+                </div>
+
+                {/* Nearby Places Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+                  {(() => {
+                    const places = typeof property.nearbyPlaces === 'string'
+                      ? JSON.parse(property.nearbyPlaces)
+                      : (property.nearbyPlaces || {});
+
+                    return (
+                      <>
+                        <div className="p-3 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20 text-center">
+                          <Train className="w-6 h-6 text-[#D4AF37] mx-auto mb-1" />
+                          <p className="text-xs font-bold text-gray-900">Metro</p>
+                          <p className="text-[10px] text-gray-600">{places.metro || '0'} km</p>
+                        </div>
+                        <div className="p-3 bg-gray-50 rounded-xl border border-gray-200 text-center">
+                          <Hospital className="w-6 h-6 text-gray-600 mx-auto mb-1" />
+                          <p className="text-xs font-bold text-gray-900">Hospital</p>
+                          <p className="text-[10px] text-gray-600">{places.hospital || '0'} km</p>
+                        </div>
+                        <div className="p-3 bg-[#FFFDF0] rounded-xl border border-[#D4AF37]/20 text-center">
+                          <School className="w-6 h-6 text-[#D4AF37] mx-auto mb-1" />
+                          <p className="text-xs font-bold text-gray-900">School</p>
+                          <p className="text-[10px] text-gray-600">{places.school || '0'} km</p>
+                        </div>
+                        <div className="p-3 bg-gray-50 rounded-xl border border-gray-200 text-center">
+                          <ShoppingCart className="w-6 h-6 text-gray-600 mx-auto mb-1" />
+                          <p className="text-xs font-bold text-gray-900">Mall</p>
+                          <p className="text-[10px] text-gray-600">{places.market || '0'} km</p>
+                        </div>
+                      </>
+                    );
+                  })()}
+                </div>
               </div>
+
             </div>
           </div>
 
-          {/* Right Column - Sticky Booking Card */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
-              {/* Price Card */}
-              <div className="bg-white border-2 border-gray-200 rounded-3xl shadow-xl p-6">
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-4xl font-bold text-gray-900">
+          {/* Right Column - Sticky Info & Booking (35%) */}
+          <div className="lg:col-span-4">
+            <div className="sticky top-24 space-y-4">
+
+              {/* Main Info Card - Compact */}
+              <div className="bg-white rounded-[2rem] shadow-xl border border-gray-100 p-6">
+                {/* Address & Title */}
+                <div className="mb-4">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">{property.region}, Ghaziabad</p>
+                  <h1 className="text-2xl font-extrabold text-gray-900 leading-tight mb-1">{property.title}</h1>
+                  <div className="flex items-center gap-1.5 text-[#D4AF37]">
+                    <Star className="w-4 h-4 fill-current" />
+                    <span className="font-bold text-base">4.9</span>
+                    <span className="text-gray-400 text-xs">(120 reviews)</span>
+                  </div>
+                </div>
+
+                {/* Key Stats Row */}
+                <div className="flex justify-between items-center py-4 border-t border-b border-gray-100 mb-4">
+                  <div className="text-center">
+                    <span className="block text-xl font-bold text-gray-900">{property.bhk}</span>
+                    <span className="text-[10px] text-gray-500 font-bold uppercase">Beds</span>
+                  </div>
+                  <div className="w-px h-8 bg-gray-200"></div>
+                  <div className="text-center">
+                    <span className="block text-xl font-bold text-gray-900">{property.bathrooms || property.bhk}</span>
+                    <span className="text-[10px] text-gray-500 font-bold uppercase">Baths</span>
+                  </div>
+                  <div className="w-px h-8 bg-gray-200"></div>
+                  <div className="text-center">
+                    <span className="block text-xl font-bold text-gray-900">{property.area}</span>
+                    <span className="text-[10px] text-gray-500 font-bold uppercase">Sqft</span>
+                  </div>
+                </div>
+
+                {/* Price */}
+                <div className="mb-5">
+                  <p className="text-gray-500 font-medium mb-0.5 text-sm">
+                    {property.transactionType === 'Rent' ? 'Monthly Rent' : 'Total Price'}
+                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-4xl font-extrabold text-gray-900 tracking-tight">
                       ₹{property.price?.toLocaleString('en-IN')}
                     </span>
                     {property.transactionType === 'Rent' && (
-                      <span className="text-lg text-gray-600">/month</span>
+                      <span className="text-lg text-gray-400 font-medium">/mo</span>
                     )}
                   </div>
-                  <p className="text-gray-600">
-                    {property.transactionType === 'Rent' ? 'Monthly Rent' : 'Total Price'}
-                  </p>
                 </div>
 
-                {/* EMI Calculator Toggle */}
-                {property.transactionType !== 'Rent' && (
-                  <button
-                    onClick={() => setShowEMI(!showEMI)}
-                    className="w-full mb-4 flex items-center justify-between p-4 bg-[#FFFDF0] rounded-xl text-[#D4AF37] font-semibold hover:bg-[#F0E68C]/20 transition"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Calculator className="w-5 h-5" />
-                      EMI Calculator
-                    </span>
-                    <ChevronRight className={`w-5 h-5 transition-transform ${showEMI ? 'rotate-90' : ''}`} />
-                  </button>
-                )}
-
-                {showEMI && (
-                  <div className="mb-6 p-4 bg-gray-50 rounded-xl space-y-3">
-                    <input
-                      type="number"
-                      id="emiAmount"
-                      placeholder="Loan Amount"
-                      defaultValue={property.price}
-                      className="w-full px-3 py-2 border rounded-lg"
-                    />
-                    <input
-                      type="number"
-                      id="emiRate"
-                      placeholder="Interest Rate (%)"
-                      defaultValue="8.5"
-                      step="0.1"
-                      className="w-full px-3 py-2 border rounded-lg"
-                    />
-                    <input
-                      type="number"
-                      id="emiYears"
-                      placeholder="Tenure (Years)"
-                      defaultValue="20"
-                      className="w-full px-3 py-2 border rounded-lg"
-                    />
-                    <button
-                      onClick={() => {
-                        const amt = parseFloat(document.getElementById('emiAmount').value);
-                        const rate = parseFloat(document.getElementById('emiRate').value);
-                        const years = parseFloat(document.getElementById('emiYears').value);
-                        calculateEMI(amt, rate, years);
-                      }}
-                      className="w-full bg-[#D4AF37] text-white py-2 rounded-lg font-semibold"
-                    >
-                      Calculate
-                    </button>
-                    {emiResult && (
-                      <div className="mt-3 p-3 bg-white rounded-lg border">
-                        <p className="text-sm text-gray-600">Monthly EMI</p>
-                        <p className="text-2xl font-bold text-[#D4AF37]">₹{emiResult.monthly.toLocaleString('en-IN')}</p>
-                        <div className="mt-2 text-xs text-gray-600">
-                          <p>Total: ₹{emiResult.total.toLocaleString('en-IN')}</p>
-                          <p>Interest: ₹{emiResult.interest.toLocaleString('en-IN')}</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Contact Buttons */}
+                {/* Action Buttons */}
                 <div className="space-y-3">
-                  <a
-                    href={`tel:${phone}`}
-                    className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:from-green-600 hover:to-green-700 transition shadow-lg text-lg"
+                  <button
+                    onClick={() => document.getElementById('inquiryForm').scrollIntoView({ behavior: 'smooth' })}
+                    className="w-full bg-black text-white py-3 rounded-xl font-bold text-base hover:bg-gray-800 transition shadow-lg flex items-center justify-center gap-2"
                   >
-                    <Phone className="w-6 h-6" /> Call Now
-                  </a>
-                  <a
-                    href={`https://wa.me/91${phone.replace(/\D/g, '')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:from-green-700 hover:to-green-800 transition shadow-lg text-lg"
+                    Request a tour <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={shareProperty}
+                    className="w-full bg-white border border-gray-200 text-gray-900 py-3 rounded-xl font-bold text-base hover:bg-gray-50 transition flex items-center justify-center gap-2"
                   >
-                    <MessageCircle className="w-6 h-6" /> WhatsApp
-                  </a>
-                </div>
-
-                <div className="mt-6 p-4 bg-gradient-to-r from-[#FFFDF0] to-gray-50 rounded-xl border border-[#D4AF37]/30">
-                  <p className="text-sm text-gray-800 font-semibold text-center flex items-center justify-center gap-2">
-                    <Zap className="w-4 h-4 text-[#D4AF37]" />
-                    Response within 5 minutes
-                  </p>
-                </div>
-
-                {/* Inquiry Form */}
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <h3 className="font-bold text-gray-900 mb-4">Request a Call Back</h3>
-                  <form onSubmit={handleInquirySubmit} className="space-y-3">
-                    <input
-                      type="text"
-                      placeholder="Your Name"
-                      required
-                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-sm"
-                      value={inquiryForm.name}
-                      onChange={e => setInquiryForm({ ...inquiryForm, name: e.target.value })}
-                    />
-                    <input
-                      type="email"
-                      placeholder="Email Address"
-                      required
-                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-sm"
-                      value={inquiryForm.email}
-                      onChange={e => setInquiryForm({ ...inquiryForm, email: e.target.value })}
-                    />
-                    <input
-                      type="tel"
-                      placeholder="Phone Number"
-                      required
-                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-sm"
-                      value={inquiryForm.phone}
-                      onChange={e => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
-                    />
-                    <textarea
-                      placeholder="I'm interested in this property..."
-                      rows="3"
-                      className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent text-sm"
-                      value={inquiryForm.message}
-                      onChange={e => setInquiryForm({ ...inquiryForm, message: e.target.value })}
-                    ></textarea>
-                    <button
-                      type="submit"
-                      disabled={submitting}
-                      className="w-full bg-[#D4AF37] text-white py-3 rounded-lg font-bold hover:bg-[#C5A059] transition disabled:bg-gray-400"
-                    >
-                      {submitting ? 'Sending...' : 'Send Enquiry'}
-                    </button>
-                  </form>
+                    <Share2 className="w-4 h-4" /> Share Property
+                  </button>
                 </div>
               </div>
 
               {/* Agent Card */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-6 border border-gray-200">
-                <h3 className="text-lg font-bold mb-4">Listed by</h3>
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#D4AF37] to-[#C5A059] rounded-full flex items-center justify-center text-white font-bold text-xl">
+              <div className="bg-white rounded-[1.5rem] shadow-lg border border-gray-100 p-4 flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#C5A059] rounded-full flex items-center justify-center text-white font-bold text-lg ring-2 ring-white shadow-md">
                     SP
                   </div>
-                  <div>
-                    <p className="font-bold text-lg">StarX Properties</p>
-                    <p className="text-gray-600 flex items-center gap-1 text-sm">
-                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                      4.9 • 200+ reviews
-                    </p>
-                  </div>
+                  <div className="absolute -bottom-0.5 -right-0.5 bg-green-500 w-3.5 h-3.5 rounded-full border-2 border-white"></div>
                 </div>
-                <p className="text-sm text-gray-600">
-                  Trusted real estate agent in Ghaziabad with 10+ years of experience
-                </p>
+                <div>
+                  <p className="font-bold text-base text-gray-900">StarX Properties</p>
+                  <p className="text-green-600 text-xs font-semibold">Verified Agent • Online</p>
+                </div>
+                <button className="ml-auto text-blue-600 font-bold text-xs hover:underline bg-blue-50 px-3 py-1 rounded-full">Contact</button>
               </div>
+
+              {/* Inquiry Form (Simplified for Side Panel) */}
+              <div id="inquiryForm" className="bg-gray-50 rounded-[2rem] p-6 border border-gray-200">
+                <h3 className="font-bold text-gray-900 mb-4">Interested? Get in touch</h3>
+                <form onSubmit={handleInquirySubmit} className="space-y-3">
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    required
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent font-medium"
+                    value={inquiryForm.name}
+                    onChange={e => setInquiryForm({ ...inquiryForm, name: e.target.value })}
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Phone"
+                    required
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent font-medium"
+                    value={inquiryForm.phone}
+                    onChange={e => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
+                  />
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full bg-[#D4AF37] text-white py-3 rounded-xl font-bold hover:bg-[#C5A059] transition shadow-md"
+                  >
+                    {submitting ? 'Sending...' : 'Send Message'}
+                  </button>
+                </form>
+                <div className="flex gap-2 mt-3">
+                  <a href={`tel:${phone}`} className="flex-1 bg-white border border-gray-200 py-2 rounded-lg text-center font-bold text-gray-700 hover:bg-gray-50 transition">Call</a>
+                  <a href={`https://wa.me/91${phone.replace(/\D/g, '')}`} className="flex-1 bg-[#25D366]/10 border border-[#25D366]/20 py-2 rounded-lg text-center font-bold text-[#25D366] hover:bg-[#25D366]/20 transition">WhatsApp</a>
+                </div>
+              </div>
+
             </div>
           </div>
+
         </div>
 
         {/* Similar Properties */}
