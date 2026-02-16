@@ -471,6 +471,14 @@ export default function PropertyDetail() {
                     onChange={e => setInquiryForm({ ...inquiryForm, name: e.target.value })}
                   />
                   <input
+                    type="email"
+                    placeholder="Email"
+                    required
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent font-medium"
+                    value={inquiryForm.email}
+                    onChange={e => setInquiryForm({ ...inquiryForm, email: e.target.value })}
+                  />
+                  <input
                     type="tel"
                     placeholder="Phone"
                     required
@@ -478,6 +486,14 @@ export default function PropertyDetail() {
                     value={inquiryForm.phone}
                     onChange={e => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
                   />
+                  <textarea
+                    placeholder="Message"
+                    required
+                    rows="3"
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent font-medium resize-none"
+                    value={inquiryForm.message}
+                    onChange={e => setInquiryForm({ ...inquiryForm, message: e.target.value })}
+                  ></textarea>
                   <button
                     type="submit"
                     disabled={submitting}

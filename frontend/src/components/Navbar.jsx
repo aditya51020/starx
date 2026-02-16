@@ -35,24 +35,24 @@ export default function Navbar() {
         { name: 'Home', path: '/', icon: Home },
         { name: 'Properties', path: '/properties', icon: Building2 },
         { name: 'Career', path: '/career', icon: Briefcase },
-        { name: 'Blog', path: '/blog', icon: LayoutDashboard }, // Using LayoutDashboard as a placeholder icon
+        { name: 'Blog', path: '/blog', icon: LayoutDashboard },
         { name: 'About Us', path: '/about', icon: Info },
         { name: 'Contact', path: '/contact', icon: Phone },
     ];
 
     return (
         <nav
-            className={`fixed top-0 left-0 w-full z-[2000] transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
+            className={`fixed top-0 left-0 w-full z-[2000] transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-4'
                 }`}
         >
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center">
-                    {/* Logo */}
+                    {/* Logo - Increased contrast logic not needed as logo is image, but ensuring container is clean */}
                     <Link to="/" className="flex items-center group">
                         <img
                             src={logo}
                             alt="StarX Logo"
-                            className="h-16 w-auto object-contain transition-transform group-hover:scale-105"
+                            className="h-12 md:h-16 w-auto object-contain transition-transform group-hover:scale-105"
                         />
                     </Link>
 
@@ -62,7 +62,11 @@ export default function Navbar() {
                             <Link
                                 key={link.name}
                                 to={link.path}
-                                className={`font-medium transition-colors hover:text-[#D4AF37] ${location.pathname === link.path ? 'text-[#D4AF37]' : 'text-slate-600'
+                                className={`font-bold text-sm uppercase tracking-wide transition-colors hover:text-[#D4AF37] ${location.pathname === '/' && !scrolled
+                                        ? 'text-slate-900' // Dark text even when not scrolled properties page might need check
+                                        : location.pathname === link.path
+                                            ? 'text-[#D4AF37]'
+                                            : 'text-slate-900'
                                     }`}
                             >
                                 {link.name}
@@ -71,32 +75,32 @@ export default function Navbar() {
 
                         {/* Auth Buttons */}
                         {user ? (
-                            <div className="flex items-center gap-4 pl-4 border-l border-gray-200">
-                                <span className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                    <div className="w-8 h-8 bg-[#FFFDF0] rounded-full flex items-center justify-center text-[#D4AF37]">
+                            <div className="flex items-center gap-4 pl-4 border-l border-gray-300">
+                                <span className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                                    <div className="w-8 h-8 bg-[#FFFDF0] rounded-full flex items-center justify-center text-[#D4AF37] border border-[#D4AF37]/20">
                                         <User className="w-4 h-4" />
                                     </div>
-                                    Hi, {user.name || 'User'}
+                                    Hi, {user.name?.split(' ')[0] || 'User'}
                                 </span>
                                 <button
                                     onClick={handleLogout}
-                                    className="text-gray-600 hover:text-red-600 transition"
+                                    className="text-slate-500 hover:text-red-600 transition"
                                     title="Logout"
                                 >
                                     <LogOut className="w-5 h-5" />
                                 </button>
                             </div>
                         ) : (
-                            <div className="flex items-center gap-4 pl-4 border-l border-gray-200">
+                            <div className="flex items-center gap-4 pl-4 border-l border-gray-300">
                                 <Link
                                     to="/login"
-                                    className="text-[#D4AF37] font-semibold hover:text-[#C5A059]"
+                                    className="text-slate-900 font-bold hover:text-[#D4AF37] transition-colors"
                                 >
                                     Log In
                                 </Link>
                                 <Link
                                     to="/signup"
-                                    className="bg-[#D4AF37] text-white px-5 py-2 rounded-full font-bold hover:bg-[#C5A059] transition shadow-lg shadow-yellow-100"
+                                    className="bg-slate-900 text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#D4AF37] transition-all shadow-lg hover:shadow-[#D4AF37]/25"
                                 >
                                     Sign Up
                                 </Link>
@@ -107,7 +111,7 @@ export default function Navbar() {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="md:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                        className="md:hidden p-2 text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
                     >
                         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>
@@ -130,11 +134,11 @@ export default function Navbar() {
                                     to={link.path}
                                     className={`flex items-center gap-3 p-4 rounded-xl transition-colors ${location.pathname === link.path
                                         ? 'bg-[#FFFDF0] text-[#D4AF37]'
-                                        : 'text-slate-600 hover:bg-slate-50'
+                                        : 'text-slate-900 hover:bg-slate-50'
                                         }`}
                                 >
                                     <link.icon className="w-5 h-5" />
-                                    <span className="font-medium">{link.name}</span>
+                                    <span className="font-bold">{link.name}</span>
                                 </Link>
                             ))}
 
@@ -163,7 +167,7 @@ export default function Navbar() {
                                 <div className="p-4 space-y-3">
                                     <Link
                                         to="/login"
-                                        className="block w-full text-center py-3 border border-gray-200 rounded-xl font-bold text-gray-700 hover:bg-gray-50"
+                                        className="block w-full text-center py-3 border border-gray-200 rounded-xl font-bold text-gray-900 hover:bg-gray-50"
                                     >
                                         Log In
                                     </Link>
