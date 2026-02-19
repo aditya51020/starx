@@ -332,7 +332,7 @@ export default function Properties() {
                 className="hidden"
                 checked={isSelected}
                 onChange={() => {
-                  let current = selected ? selected.split(',') : [];
+                  let current = selected ? selected.split(',').filter(Boolean) : [];
                   if (isSelected) {
                     current = current.filter(a => a !== opt);
                   } else {
@@ -363,29 +363,15 @@ export default function Properties() {
       </div>
 
       {/* Location */}
-      <div>
-        <label className="block text-sm font-bold text-gray-900 mb-3">Location</label>
-        <div className="space-y-2">
-          {['Vasundhara', 'Indirapuram', 'Sector 63'].map(loc => (
-            <label key={loc} className="flex items-center gap-3 cursor-pointer group">
-              <div className={`w-5 h-5 rounded border flex items-center justify-center transition ${filters.region === loc ? 'bg-[#D4AF37] border-[#D4AF37]' : 'border-gray-300 bg-white group-hover:border-[#D4AF37]'}`}>
-                {filters.region === loc && <Check className="w-3.5 h-3.5 text-white" />}
-              </div>
-              <input
-                type="radio"
-                name="location"
-                checked={filters.region === loc}
-                onChange={() => {
-                  setFilters({ ...filters, region: loc });
-                  setTimeout(updateUrl, 100);
-                }}
-                className="hidden"
-              />
-              <span className={`text-sm ${filters.region === loc ? 'text-gray-900 font-medium' : 'text-gray-600'}`}>{loc}</span>
-            </label>
-          ))}
-        </div>
-      </div>
+      <CheckboxGroup
+        label="Location"
+        options={['Vasundhara', 'Indirapuram', 'Sector 63', 'Vaishali', 'Noida Extension', 'Sahibabad', 'Siddharth Vihar', 'Crossings Republik', 'Raj Nagar Extension', 'Govindpuram', 'Other']}
+        selected={filters.region}
+        onChange={(val) => {
+          setFilters({ ...filters, region: val });
+          setTimeout(updateUrl, 100);
+        }}
+      />
 
       {/* Price Range */}
       <div>
@@ -487,11 +473,11 @@ export default function Properties() {
           {/* Active Filters Display */}
           {activeFilterCount > 0 && (
             <div className="flex flex-wrap justify-center gap-2">
-              {filters.region && (
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5" /> {filters.region}
+              {filters.region && filters.region.split(',').map(r => (
+                <span key={r} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5" /> {r}
                 </span>
-              )}
+              ))}
               {filters.transactionType && (
                 <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1.5">
                   <HomeIcon className="w-3.5 h-3.5" /> {filters.transactionType}

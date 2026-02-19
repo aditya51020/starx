@@ -30,7 +30,7 @@ const Property = sequelize.define('Property', {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      isIn: [['Vasundhara', 'Indirapuram', 'Sector 63']]
+      isIn: [['Vasundhara', 'Indirapuram', 'Sector 63', 'Vaishali', 'Noida Extension', 'Sahibabad', 'Siddharth Vihar', 'Crossings Republik', 'Raj Nagar Extension', 'Govindpuram', 'Other']]
     }
   },
   propertyType: {

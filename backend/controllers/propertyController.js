@@ -8,7 +8,14 @@ export const getProperties = async (req, res) => {
     const { region, transactionType, propertyType, minPrice, maxPrice, bhk, featured, amenities, search, limit = 20, page = 1 } = req.query;
     const where = {};
 
-    if (region) where.region = region;
+    if (region) {
+      const regions = region.split(',');
+      if (regions.length > 1) {
+        where.region = { [Op.in]: regions };
+      } else {
+        where.region = region;
+      }
+    }
     if (transactionType) where.transactionType = transactionType;
     if (propertyType) where.propertyType = propertyType;
     if (bhk) where.bhk = +bhk;

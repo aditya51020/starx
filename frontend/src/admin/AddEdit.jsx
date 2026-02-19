@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 const schema = z.object({
   title: z.string().min(5),
   description: z.string().min(20),
-  region: z.enum(['Vasundhara', 'Indirapuram', 'Sector 63']),
+  region: z.enum(['Vasundhara', 'Indirapuram', 'Sector 63', 'Vaishali', 'Noida Extension', 'Sahibabad', 'Siddharth Vihar', 'Crossings Republik', 'Raj Nagar Extension', 'Govindpuram', 'Other']),
   propertyType: z.string(),
   transactionType: z.enum(['Rent', 'Sell', 'Sold']),
   price: z.coerce.number().positive(),
