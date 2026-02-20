@@ -28,10 +28,7 @@ const Property = sequelize.define('Property', {
   },
   region: {
     type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      isIn: [['Vasundhara', 'Indirapuram', 'Sector 63', 'Vaishali', 'Noida Extension', 'Sahibabad', 'Siddharth Vihar', 'Crossings Republik', 'Raj Nagar Extension', 'Govindpuram', 'Other']]
-    }
+    allowNull: false
   },
   propertyType: {
     type: DataTypes.STRING,
