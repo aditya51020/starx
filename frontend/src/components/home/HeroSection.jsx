@@ -1,8 +1,23 @@
-import { useState } from 'react';
-import { Search, Building2, TrendingUp, Download, MapPin, Home, DollarSign } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Search, MapPin, Home, DollarSign, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import CustomDropdown from '../common/CustomDropdown';
 import PriceRangeDropdown from '../common/PriceRangeDropdown';
+
+const PREDEFINED_LOCATIONS = [
+    'Vasundhara',
+    'Indirapuram',
+    'Sector 63',
+    'Sector 62',
+    'Sector 61',
+    'Niti Khand',
+    'Raj Nagar Extension',
+    'Crossings Republik',
+    'Noida Extension',
+    'Greater Noida West',
+    'Siddharth Vihar',
+    'Govindpuram',
+];
 
 export default function HeroSection({ onSearch }) {
     const [filters, setFilters] = useState({
@@ -13,6 +28,45 @@ export default function HeroSection({ onSearch }) {
         minPrice: '',
         maxPrice: ''
     });
+
+    // Location search state
+    const [locationInput, setLocationInput] = useState('');
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const locationRef = useRef(null);
+
+    const filteredLocations = locationInput.trim()
+        ? PREDEFINED_LOCATIONS.filter(loc =>
+            loc.toLowerCase().includes(locationInput.toLowerCase())
+        )
+        : PREDEFINED_LOCATIONS;
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (locationRef.current && !locationRef.current.contains(e.target)) {
+                setShowSuggestions(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleLocationSelect = (loc) => {
+        setLocationInput(loc);
+        setFilters(prev => ({ ...prev, region: loc }));
+        setShowSuggestions(false);
+    };
+
+    const handleLocationInputChange = (e) => {
+        const val = e.target.value;
+        setLocationInput(val);
+        setFilters(prev => ({ ...prev, region: val }));
+        setShowSuggestions(true);
+    };
+
+    const clearLocation = () => {
+        setLocationInput('');
+        setFilters(prev => ({ ...prev, region: '' }));
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -48,23 +102,50 @@ export default function HeroSection({ onSearch }) {
                             <div className="bg-white/50 backdrop-blur-sm border border-gray-100 rounded-2xl relative">
                                 <form onSubmit={handleSubmit} className="flex flex-col gap-3">
 
-                                    {/* Location */}
-                                    <div className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-xl border border-transparent hover:border-gray-200 transition-colors">
-                                        <MapPin className="w-4 h-4 text-[#D4AF37]" />
-                                        <div className="flex-1">
-                                            <CustomDropdown
-                                                value={filters.region}
-                                                onChange={(val) => setFilters({ ...filters, region: val })}
-                                                placeholder="Select Location"
-                                                options={[
-                                                    { value: '', label: 'All Locations' },
-                                                    { value: 'Vasundhara', label: 'Vasundhara' },
-                                                    { value: 'Indirapuram', label: 'Indirapuram' },
-                                                    { value: 'Sector 63', label: 'Sector 63' }
-                                                ]}
-                                                className="w-full bg-transparent border-none p-0 text-sm text-slate-800 font-semibold focus:ring-0"
+                                    {/* Location - Searchable Input */}
+                                    <div className="relative" ref={locationRef}>
+                                        <div className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-xl border border-transparent hover:border-gray-200 focus-within:border-[#D4AF37] focus-within:ring-2 focus-within:ring-[#D4AF37]/20 transition-all">
+                                            <MapPin className="w-4 h-4 text-[#D4AF37] flex-shrink-0" />
+                                            <input
+                                                type="text"
+                                                value={locationInput}
+                                                onChange={handleLocationInputChange}
+                                                onFocus={() => setShowSuggestions(true)}
+                                                placeholder="Search any location..."
+                                                className="flex-1 bg-transparent border-none outline-none text-sm text-slate-800 font-semibold placeholder:text-slate-400 placeholder:font-normal"
                                             />
+                                            {locationInput && (
+                                                <button type="button" onClick={clearLocation} className="text-slate-400 hover:text-slate-600">
+                                                    <X className="w-3.5 h-3.5" />
+                                                </button>
+                                            )}
                                         </div>
+
+                                        {/* Suggestions Dropdown */}
+                                        {showSuggestions && (
+                                            <div className="absolute top-full left-0 w-full mt-1 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-50 max-h-52 overflow-y-auto">
+                                                {filteredLocations.length > 0 ? (
+                                                    filteredLocations.map((loc) => (
+                                                        <div
+                                                            key={loc}
+                                                            onMouseDown={() => handleLocationSelect(loc)}
+                                                            className="px-4 py-2.5 cursor-pointer flex items-center gap-2 hover:bg-[#FFFDF0] hover:text-[#D4AF37] transition-colors text-sm text-slate-600"
+                                                        >
+                                                            <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-slate-400" />
+                                                            {loc}
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div
+                                                        onMouseDown={() => { setShowSuggestions(false); }}
+                                                        className="px-4 py-2.5 flex items-center gap-2 text-sm text-slate-500 cursor-pointer hover:bg-gray-50"
+                                                    >
+                                                        <Search className="w-3.5 h-3.5 text-[#D4AF37]" />
+                                                        Search for "<span className="font-semibold text-slate-700">{locationInput}</span>"
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Type & Budget - Compact Row */}

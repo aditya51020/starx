@@ -9,11 +9,14 @@ export const getProperties = async (req, res) => {
     const where = {};
 
     if (region) {
-      const regions = region.split(',');
+      const regions = region.split(',').map(r => r.trim()).filter(Boolean);
       if (regions.length > 1) {
-        where.region = { [Op.in]: regions };
+        where[Op.or] = [
+          ...(where[Op.or] || []),
+          ...regions.map(r => ({ region: { [Op.like]: `%${r}%` } }))
+        ];
       } else {
-        where.region = region;
+        where.region = { [Op.like]: `%${regions[0]}%` };
       }
     }
     if (transactionType) where.transactionType = transactionType;
