@@ -35,15 +35,40 @@ export default function MapSection({ allProperties, nearbyCategories }) {
 
         setIsSearching(true);
         try {
-            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`);
-            const data = await response.json();
+            const fetchNominatim = async (q) => {
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`);
+                return await response.json();
+            };
+
+            let data = await fetchNominatim(searchQuery);
+
+            if (!data || data.length === 0) {
+                // Fallback 1: Check for known localities
+                const knownLocalities = [
+                    'vasundhara', 'indirapuram', 'sector 63', 'vaishali', 'noida extension',
+                    'sahibabad', 'siddharth vihar', 'crossings republik', 'raj nagar extension',
+                    'govindpuram', 'noida', 'ghaziabad', 'delhi'
+                ];
+                const lowerQuery = searchQuery.toLowerCase();
+                const foundLocality = knownLocalities.find(loc => lowerQuery.includes(loc));
+
+                if (foundLocality) {
+                    data = await fetchNominatim(foundLocality);
+                } else {
+                    // Fallback 2: Try the last 2-3 words
+                    const words = searchQuery.trim().split(/[\s,]+/);
+                    if (words.length > 2) {
+                        data = await fetchNominatim(words.slice(-2).join(' '));
+                    }
+                }
+            }
 
             if (data && data.length > 0) {
                 const { lat, lon } = data[0];
                 setMapCenter([parseFloat(lat), parseFloat(lon)]);
                 toast.success(`Found: ${data[0].display_name.split(',')[0]}`);
             } else {
-                toast.error('Location not found');
+                toast.error('Location not found. Try a broader area.');
             }
         } catch (error) {
             console.error('Search error:', error);

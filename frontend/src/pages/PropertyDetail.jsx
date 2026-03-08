@@ -17,6 +17,7 @@ import Meta from '../components/Meta'; // Import Meta component
 // eslint-disable-next-line no-unused-vars
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
+import { formatPrice } from '../utils/formatPrice';
 
 // Fix Leaflet icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -138,7 +139,7 @@ export default function PropertyDetail() {
     if (navigator.share) {
       navigator.share({
         title: property.title,
-        text: `Check out this property: ₹${property.price?.toLocaleString('en-IN')}`,
+        text: `Check out this property: ${formatPrice(property.price)}`,
         url: window.location.href
       });
     } else {
@@ -331,7 +332,7 @@ export default function PropertyDetail() {
                       <Popup>
                         <div className="text-center p-2">
                           <h3 className="font-bold">{property.title}</h3>
-                          <p className="text-[#D4AF37] font-semibold">₹{property.price?.toLocaleString('en-IN')}</p>
+                          <p className="text-[#D4AF37] font-semibold">{formatPrice(property.price)}</p>
                         </div>
                       </Popup>
                     </Marker>
@@ -418,7 +419,7 @@ export default function PropertyDetail() {
                   </p>
                   <div className="flex items-baseline gap-2">
                     <span className="text-4xl font-extrabold text-gray-900 tracking-tight">
-                      ₹{property.price?.toLocaleString('en-IN')}
+                      {formatPrice(property.price)}
                     </span>
                     {property.transactionType === 'Rent' && (
                       <span className="text-lg text-gray-400 font-medium">/mo</span>
@@ -544,7 +545,7 @@ export default function PropertyDetail() {
                   <div className="p-6">
                     <h3 className="font-bold text-xl mb-2 line-clamp-1">{p.title}</h3>
                     <p className="text-3xl font-bold text-[#D4AF37] mb-2">
-                      ₹{p.price?.toLocaleString('en-IN')}
+                      {formatPrice(p.price)}
                     </p>
                     <div className="flex items-center gap-2 text-gray-600 mb-3">
                       <MapPin className="w-4 h-4" />

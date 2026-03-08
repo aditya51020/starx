@@ -58,25 +58,30 @@ export default function Navbar() {
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                to={link.path}
-                                className={`font-bold text-sm uppercase tracking-wide transition-colors hover:text-[#D4AF37] ${location.pathname === '/' && !scrolled
-                                        ? 'text-slate-900' // Dark text even when not scrolled properties page might need check
-                                        : location.pathname === link.path
+                        {navLinks.map((link) => {
+                            const isHomeTop = location.pathname === '/' && !scrolled;
+                            const isActive = location.pathname === link.path;
+
+                            return (
+                                <Link
+                                    key={link.name}
+                                    to={link.path}
+                                    className={`font-bold text-sm uppercase tracking-wide transition-colors hover:text-[#D4AF37] ${isActive
                                             ? 'text-[#D4AF37]'
-                                            : 'text-slate-900'
-                                    }`}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                                            : isHomeTop
+                                                ? 'text-white'
+                                                : 'text-slate-900'
+                                        }`}
+                                >
+                                    {link.name}
+                                </Link>
+                            );
+                        })}
 
                         {/* Auth Buttons */}
                         {user ? (
-                            <div className="flex items-center gap-4 pl-4 border-l border-gray-300">
-                                <span className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                            <div className={`flex items-center gap-4 pl-4 border-l ${location.pathname === '/' && !scrolled ? 'border-white/30' : 'border-gray-300'}`}>
+                                <span className={`text-sm font-bold flex items-center gap-2 ${location.pathname === '/' && !scrolled ? 'text-white' : 'text-slate-900'}`}>
                                     <div className="w-8 h-8 bg-[#FFFDF0] rounded-full flex items-center justify-center text-[#D4AF37] border border-[#D4AF37]/20">
                                         <User className="w-4 h-4" />
                                     </div>
@@ -84,23 +89,23 @@ export default function Navbar() {
                                 </span>
                                 <button
                                     onClick={handleLogout}
-                                    className="text-slate-500 hover:text-red-600 transition"
+                                    className={`${location.pathname === '/' && !scrolled ? 'text-white/80 hover:text-red-400' : 'text-slate-500 hover:text-red-600'} transition`}
                                     title="Logout"
                                 >
                                     <LogOut className="w-5 h-5" />
                                 </button>
                             </div>
                         ) : (
-                            <div className="flex items-center gap-4 pl-4 border-l border-gray-300">
+                            <div className={`flex items-center gap-4 pl-4 border-l ${location.pathname === '/' && !scrolled ? 'border-white/30' : 'border-gray-300'}`}>
                                 <Link
                                     to="/login"
-                                    className="text-slate-900 font-bold hover:text-[#D4AF37] transition-colors"
+                                    className={`font-bold hover:text-[#D4AF37] transition-colors ${location.pathname === '/' && !scrolled ? 'text-white' : 'text-slate-900'}`}
                                 >
                                     Log In
                                 </Link>
                                 <Link
                                     to="/signup"
-                                    className="bg-slate-900 text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#D4AF37] transition-all shadow-lg hover:shadow-[#D4AF37]/25"
+                                    className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg hover:shadow-[#D4AF37]/25 ${location.pathname === '/' && !scrolled ? 'bg-white text-slate-900 hover:bg-[#D4AF37] hover:text-white' : 'bg-slate-900 text-white hover:bg-[#D4AF37]'}`}
                                 >
                                     Sign Up
                                 </Link>
@@ -111,7 +116,7 @@ export default function Navbar() {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="md:hidden p-2 text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+                        className={`md:hidden p-2 rounded-lg transition-colors ${location.pathname === '/' && !scrolled ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-slate-100'}`}
                     >
                         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>

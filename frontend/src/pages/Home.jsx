@@ -241,6 +241,36 @@ export default function HomePage() {
         nearbyCategories={nearbyCategories}
       />
 
+      {/* "Have a property to sell?" Banner (Housing.com Style) */}
+      <section className="py-16 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="w-full bg-slate-900 rounded-3xl p-8 md:p-12 relative flex flex-col md:flex-row items-center justify-between shadow-xl overflow-hidden border border-gray-800">
+            {/* Background flair */}
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#D4AF37]/10 rounded-full blur-[80px] pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-white/5 rounded-full blur-[60px] pointer-events-none -translate-x-1/2 translate-y-1/2"></div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between w-full gap-8">
+              <div className="text-center md:text-left">
+                <h2 className="text-sm font-bold text-[#D4AF37] tracking-widest uppercase mb-2">For Property Owners</h2>
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                  Have a property to sell or rent?
+                </h3>
+                <p className="text-slate-400 text-lg">List your property & connect with clients faster!</p>
+              </div>
+
+              <a
+                href="https://wa.me/919212153683?text=Hi, I want to sell my property via StarX."
+                target="_blank"
+                rel="noreferrer"
+                className="bg-[#D4AF37] text-slate-900 px-8 py-4 rounded-xl font-bold hover:bg-[#C5A059] transition-colors whitespace-nowrap shadow-lg text-lg flex-shrink-0"
+              >
+                Sell your property
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Collage Section */}
       <section className="py-24 bg-gray-50 overflow-hidden">
         <div className="container mx-auto px-4">

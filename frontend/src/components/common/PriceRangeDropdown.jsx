@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CreditCard, ChevronDown } from 'lucide-react';
+import { formatPrice } from '../../utils/formatPrice';
 
 // Price Range Dropdown Component by StarX
 const PriceRangeDropdown = ({ filters, setFilters, updateUrl }) => {
@@ -33,15 +34,6 @@ const PriceRangeDropdown = ({ filters, setFilters, updateUrl }) => {
     ];
 
     const options = isRent ? rentOptions : sellOptions;
-
-    // Helper to format display value
-    const formatPrice = (val) => {
-        if (!val) return '';
-        if (val >= 10000000) return `₹${val / 10000000} Cr`;
-        if (val >= 100000) return `₹${val / 100000} L`;
-        if (val >= 1000) return `₹${val / 1000} K`;
-        return `₹${val}`;
-    };
 
     const displayText = filters.minPrice || filters.maxPrice
         ? `${formatPrice(filters.minPrice) || 'Min'} - ${formatPrice(filters.maxPrice) || 'Max'}`

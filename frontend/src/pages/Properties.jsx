@@ -18,6 +18,7 @@ import PropertyCardSkeleton from '../components/common/PropertyCardSkeleton'; //
 
 import LoginModal from '../components/common/LoginModal'; // Import LoginModal
 import PriceRangeDropdown from '../components/common/PriceRangeDropdown'; // Import PriceRangeDropdown
+import { formatPrice } from '../utils/formatPrice'; // Standard format format
 
 // Fix Leaflet icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -217,15 +218,6 @@ export default function Properties() {
     ];
 
     const options = isRent ? rentOptions : sellOptions;
-
-    // Helper to format display value
-    const formatPrice = (val) => {
-      if (!val) return '';
-      if (val >= 10000000) return `₹${val / 10000000} Cr`;
-      if (val >= 100000) return `₹${val / 100000} L`;
-      if (val >= 1000) return `₹${val / 1000} K`;
-      return `₹${val}`;
-    };
 
     const displayText = filters.minPrice || filters.maxPrice
       ? `${formatPrice(filters.minPrice) || 'Min'} - ${formatPrice(filters.maxPrice) || 'Max'}`
@@ -632,7 +624,7 @@ export default function Properties() {
                           <div className="w-48">
                             <img src={property.images?.[0]} alt={property.title} className="w-full h-24 object-cover rounded mb-2" />
                             <h4 className="font-bold text-sm truncate">{property.title}</h4>
-                            <p className="text-[#D4AF37] font-bold">₹{property.price?.toLocaleString('en-IN')}</p>
+                            <p className="text-[#D4AF37] font-bold">{formatPrice(property.price)}</p>
                             <Link to={`/property/${property.id}`} className="block mt-2 text-center bg-[#D4AF37] text-white py-1 rounded text-xs">View Details</Link>
                           </div>
                         </Popup>
@@ -709,7 +701,7 @@ export default function Properties() {
                       <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
                         <div className="flex items-baseline">
                           <span className="text-xl font-extrabold text-gray-900">
-                            ₹{property.price?.toLocaleString('en-IN') || 'N/A'}
+                            {formatPrice(property.price) || 'N/A'}
                           </span>
                           {property.transactionType === 'Rent' && (
                             <span className="text-gray-400 text-xs ml-1 font-medium">/month</span>
