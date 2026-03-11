@@ -263,7 +263,11 @@ export default function AddProperty() {
       navigate('/admin/dashboard');
     } catch (err) {
       console.error('Submit error:', err);
-      toast.error(err.response?.data?.message || 'Failed to save property. Please try again.');
+      if (err.response?.data?.errors && Array.isArray(err.response.data.errors)) {
+        toast.error(`Validation Error: ${err.response.data.errors.join(', ')}`, { duration: 6000 });
+      } else {
+        toast.error(err.response?.data?.message || 'Failed to save property. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }

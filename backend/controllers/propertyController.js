@@ -100,6 +100,7 @@ export const getProperty = async (req, res) => {
 export const createProperty = async (req, res) => {
   try {
     const data = req.body;
+    console.log("Creating Property with data:", JSON.stringify(data, null, 2));
 
     // Generate slug from title
     if (data.title) {
@@ -118,7 +119,11 @@ export const createProperty = async (req, res) => {
     const prop = await Property.create(data);
     res.status(201).json(prop);
   } catch (error) {
-    console.error("Create Property Error", error);
+    console.error("Create Property Error:", error);
+    if (error.name === 'SequelizeValidationError') {
+      const messages = error.errors.map(e => e.message);
+      return res.status(400).json({ message: 'Validation Error', errors: messages });
+    }
     res.status(400).json({ message: 'Validation Error', error: error.message });
   }
 };
@@ -170,6 +175,11 @@ export const updateProperty = async (req, res) => {
 
     res.json(prop);
   } catch (error) {
+    console.error("Update Property Error:", error);
+    if (error.name === 'SequelizeValidationError') {
+      const messages = error.errors.map(e => e.message);
+      return res.status(400).json({ message: 'Update Failed', errors: messages });
+    }
     res.status(400).json({ message: 'Update Failed', error: error.message });
   }
 };

@@ -72,10 +72,23 @@ export default function LocationPicker({ form, setForm }) {
         setIsSearching(true);
         setSearchResults([]);
         try {
-            // Helper function for Nominatim search
+            // Helper function for Nominatim search with timeout
             const fetchResults = async (query) => {
-                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(query)}&limit=5`);
-                return await response.json();
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+
+                try {
+                    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(query)}&limit=5`, {
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
+                    return await response.json();
+                } catch (err) {
+                    if (err.name === 'AbortError') {
+                        throw new Error('Search timed out. OpenStreetMap might be busy.');
+                    }
+                    throw err;
+                }
             };
 
             let data = await fetchResults(searchQuery);
@@ -104,11 +117,11 @@ export default function LocationPicker({ form, setForm }) {
                     toast.success(`Found ${data.length} matches. Please select one.`, { id: 'search-fallback' });
                 }
             } else {
-                toast.error('Location not found. Please try a broader area or manual pinning.', { duration: 5000 });
+                toast.error('Location not found. Please try a broader area or manual pinning.', { duration: 5000, id: 'search-fallback' });
             }
         } catch (error) {
             console.error('Search error:', error);
-            toast.error('Search failed');
+            toast.error(error.message || 'Search failed', { id: 'search-fallback' });
         } finally {
             setIsSearching(false);
         }
