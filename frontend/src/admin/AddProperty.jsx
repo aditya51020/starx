@@ -245,10 +245,10 @@ export default function AddProperty() {
     try {
       const payload = {
         ...form,
-        bhk: parseInt(form.bhk),
-        area: parseInt(form.area),
-        price: parseInt(form.price),
-        bathrooms: form.bathrooms ? parseInt(form.bathrooms) : form.bhk,
+        bhk: parseInt(form.bhk) || 0,
+        area: parseInt(form.area) || 0,
+        price: parseInt(form.price) || 0,
+        bathrooms: form.bathrooms ? parseInt(form.bathrooms) : (parseInt(form.bhk) || 0),
         lat: form.lat ? parseFloat(form.lat) : undefined,
         lng: form.lng ? parseFloat(form.lng) : undefined
       };
