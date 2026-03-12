@@ -15,7 +15,15 @@ L.Icon.Default.mergeOptions({
 });
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || '';
-const geocodingClient = mbxGeocoding({ accessToken: MAPBOX_TOKEN });
+// Initialize geocodingClient lazily to avoid top-level crashes if token is empty
+const getGeocodingClient = () => {
+    if (!MAPBOX_TOKEN) return null;
+    try {
+        return mbxGeocoding({ accessToken: MAPBOX_TOKEN });
+    } catch (e) {
+        return null;
+    }
+};
 
 // Nominatim Fallback for Search
 const searchWithNominatim = async (query) => {
@@ -93,8 +101,16 @@ export default function LocationPicker({ form, setForm }) {
 
     // Reverse geocoding function
     const performReverseGeocode = useCallback(async (lat, lng) => {
+        const client = getGeocodingClient();
+        if (!client) {
+            const fallbackAddress = await reverseWithNominatim(lat, lng);
+            setForm(prev => ({ ...prev, address: fallbackAddress, lat, lng }));
+            setSearchQuery(fallbackAddress.split(',')[0]);
+            return;
+        }
+
         try {
-            const response = await geocodingClient.reverseGeocode({
+            const response = await client.reverseGeocode({
                 query: [lng, lat],
                 limit: 1
             }).send();
@@ -138,8 +154,21 @@ export default function LocationPicker({ form, setForm }) {
 
         setIsSearching(true);
         setSuggestions([]);
+        const client = getGeocodingClient();
+
+        if (!client) {
+            const fallbackResults = await searchWithNominatim(query);
+            if (fallbackResults.length === 0) {
+                toast.error('Location not found');
+            } else {
+                setSuggestions(fallbackResults);
+            }
+            setIsSearching(false);
+            return;
+        }
+
         try {
-            const response = await geocodingClient.forwardGeocode({
+            const response = await client.forwardGeocode({
                 query: query,
                 limit: 5,
                 autocomplete: true,
