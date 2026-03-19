@@ -182,7 +182,7 @@ export default function HeroSection({ onSearch }) {
                             }}
                             className="bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 text-white px-4 py-1.5 rounded-md text-sm transition font-medium"
                         >
-                            {loc} &gt;
+                            {loc}
                         </button>
                     ))}
                 </div>
