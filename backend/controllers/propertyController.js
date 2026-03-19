@@ -116,17 +116,24 @@ export const createProperty = async (req, res) => {
       data.slug = slug;
     }
 
-    // Explicitly stringify JSON fields for SQLite compatibility if they are objects/arrays
+    /* 
+    // Redundant for Sequelize 6+ with SQLite and DataTypes.JSON
     if (data.images && typeof data.images !== 'string') data.images = JSON.stringify(data.images);
     if (data.amenities && typeof data.amenities !== 'string') data.amenities = JSON.stringify(data.amenities);
     if (data.nearbyPlaces && typeof data.nearbyPlaces !== 'string') data.nearbyPlaces = JSON.stringify(data.nearbyPlaces);
     if (data.keywords && typeof data.keywords !== 'string') data.keywords = JSON.stringify(data.keywords);
+    */
 
     const prop = await Property.create(data);
     res.status(201).json(prop);
   } catch (error) {
     console.error("Create Property Error:", error);
-    if (error.name === 'SequelizeValidationError') {
+    // Log detailed error for debugging
+    if (error.errors) {
+      console.error("Validation Details:", JSON.stringify(error.errors, null, 2));
+    }
+
+    if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
       const messages = error.errors.map(e => e.message);
       return res.status(400).json({ message: 'Validation Error', errors: messages });
     }
@@ -166,11 +173,13 @@ export const updateProperty = async (req, res) => {
       data.slug = slug;
     }
 
-    // Explicitly stringify JSON fields for SQLite compatibility if they are objects/arrays
+    /*
+    // Redundant for Sequelize 6+ with SQLite and DataTypes.JSON
     if (data.images && typeof data.images !== 'string') data.images = JSON.stringify(data.images);
     if (data.amenities && typeof data.amenities !== 'string') data.amenities = JSON.stringify(data.amenities);
     if (data.nearbyPlaces && typeof data.nearbyPlaces !== 'string') data.nearbyPlaces = JSON.stringify(data.nearbyPlaces);
     if (data.keywords && typeof data.keywords !== 'string') data.keywords = JSON.stringify(data.keywords);
+    */
 
     console.log('Update Property Body:', JSON.stringify(data, null, 2));
 
@@ -188,7 +197,11 @@ export const updateProperty = async (req, res) => {
     res.json(prop);
   } catch (error) {
     console.error("Update Property Error:", error);
-    if (error.name === 'SequelizeValidationError') {
+    if (error.errors) {
+      console.error("Update Validation Details:", JSON.stringify(error.errors, null, 2));
+    }
+
+    if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
       const messages = error.errors.map(e => e.message);
       return res.status(400).json({ message: 'Update Failed', errors: messages });
     }

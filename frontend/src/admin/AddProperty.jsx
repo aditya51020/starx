@@ -252,10 +252,10 @@ export default function AddProperty() {
         lat: form.lat && !isNaN(parseFloat(form.lat)) ? parseFloat(form.lat) : undefined,
         lng: form.lng && !isNaN(parseFloat(form.lng)) ? parseFloat(form.lng) : undefined,
         nearbyPlaces: {
-          metro: form.nearbyPlaces.metro ? parseFloat(form.nearbyPlaces.metro) : 0,
-          hospital: form.nearbyPlaces.hospital ? parseFloat(form.nearbyPlaces.hospital) : 0,
-          school: form.nearbyPlaces.school ? parseFloat(form.nearbyPlaces.school) : 0,
-          market: form.nearbyPlaces.market ? parseFloat(form.nearbyPlaces.market) : 0
+          metro: (form.nearbyPlaces.metro && !isNaN(parseFloat(form.nearbyPlaces.metro))) ? parseFloat(form.nearbyPlaces.metro) : 0,
+          hospital: (form.nearbyPlaces.hospital && !isNaN(parseFloat(form.nearbyPlaces.hospital))) ? parseFloat(form.nearbyPlaces.hospital) : 0,
+          school: (form.nearbyPlaces.school && !isNaN(parseFloat(form.nearbyPlaces.school))) ? parseFloat(form.nearbyPlaces.school) : 0,
+          market: (form.nearbyPlaces.market && !isNaN(parseFloat(form.nearbyPlaces.market))) ? parseFloat(form.nearbyPlaces.market) : 0
         }
       };
 
