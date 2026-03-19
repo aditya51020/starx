@@ -116,6 +116,12 @@ export const createProperty = async (req, res) => {
       data.slug = slug;
     }
 
+    // Explicitly stringify JSON fields for SQLite compatibility if they are objects/arrays
+    if (data.images && typeof data.images !== 'string') data.images = JSON.stringify(data.images);
+    if (data.amenities && typeof data.amenities !== 'string') data.amenities = JSON.stringify(data.amenities);
+    if (data.nearbyPlaces && typeof data.nearbyPlaces !== 'string') data.nearbyPlaces = JSON.stringify(data.nearbyPlaces);
+    if (data.keywords && typeof data.keywords !== 'string') data.keywords = JSON.stringify(data.keywords);
+
     const prop = await Property.create(data);
     res.status(201).json(prop);
   } catch (error) {
@@ -159,6 +165,12 @@ export const updateProperty = async (req, res) => {
       }
       data.slug = slug;
     }
+
+    // Explicitly stringify JSON fields for SQLite compatibility if they are objects/arrays
+    if (data.images && typeof data.images !== 'string') data.images = JSON.stringify(data.images);
+    if (data.amenities && typeof data.amenities !== 'string') data.amenities = JSON.stringify(data.amenities);
+    if (data.nearbyPlaces && typeof data.nearbyPlaces !== 'string') data.nearbyPlaces = JSON.stringify(data.nearbyPlaces);
+    if (data.keywords && typeof data.keywords !== 'string') data.keywords = JSON.stringify(data.keywords);
 
     console.log('Update Property Body:', JSON.stringify(data, null, 2));
 
