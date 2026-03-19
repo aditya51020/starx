@@ -58,6 +58,7 @@ export default function BasicDetails({ form, setForm, errors }) {
                     <option>Indirapuram</option>
                     <option>Sector 63</option>
                     <option>Vaishali</option>
+                    <option>Vaishali Nagar</option>
                     <option>Noida Extension</option>
                     <option>Sahibabad</option>
                     <option>Siddharth Vihar</option>

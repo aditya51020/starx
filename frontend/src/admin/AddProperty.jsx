@@ -249,8 +249,14 @@ export default function AddProperty() {
         area: parseInt(form.area) || 0,
         price: parseInt(form.price) || 0,
         bathrooms: form.bathrooms ? parseInt(form.bathrooms) : (parseInt(form.bhk) || 0),
-        lat: form.lat ? parseFloat(form.lat) : undefined,
-        lng: form.lng ? parseFloat(form.lng) : undefined
+        lat: form.lat && !isNaN(parseFloat(form.lat)) ? parseFloat(form.lat) : undefined,
+        lng: form.lng && !isNaN(parseFloat(form.lng)) ? parseFloat(form.lng) : undefined,
+        nearbyPlaces: {
+          metro: form.nearbyPlaces.metro ? parseFloat(form.nearbyPlaces.metro) : 0,
+          hospital: form.nearbyPlaces.hospital ? parseFloat(form.nearbyPlaces.hospital) : 0,
+          school: form.nearbyPlaces.school ? parseFloat(form.nearbyPlaces.school) : 0,
+          market: form.nearbyPlaces.market ? parseFloat(form.nearbyPlaces.market) : 0
+        }
       };
 
       if (isEdit) {
