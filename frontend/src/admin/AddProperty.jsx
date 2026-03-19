@@ -272,7 +272,9 @@ export default function AddProperty() {
       if (err.response?.data?.errors && Array.isArray(err.response.data.errors)) {
         toast.error(`Validation Error: ${err.response.data.errors.join(', ')}`, { duration: 6000 });
       } else {
-        toast.error(err.response?.data?.message || 'Failed to save property. Please try again.');
+        const msg = err.response?.data?.message || 'Failed to save property';
+        const detail = err.response?.data?.error || err.response?.data?.msg || '';
+        toast.error(`${msg}${detail ? ': ' + detail : ''}. Please try again.`, { duration: 8000 });
       }
     } finally {
       setSubmitting(false);
