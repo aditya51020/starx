@@ -2,6 +2,28 @@ import Property from '../models/Property.js';
 import { slugify } from '../utils/slugify.js';
 import { Op } from 'sequelize';
 
+// Allowed regions — keep in sync with frontend config/regions.js
+const ALLOWED_REGIONS = [
+  'Vasundhara', 'Indirapuram', 'Vaishali', 'Sector 63',
+  'Noida Extension', 'Sahibabad', 'Siddharth Vihar',
+  'Crossings Republik', 'Raj Nagar Extension', 'Govindpuram', 'Other'
+];
+
+/**
+ * Normalize a region string:
+ * 1. Trim whitespace
+ * 2. Case-insensitive match against ALLOWED_REGIONS
+ * 3. Return the canonical spelling, or the trimmed input if no match
+ */
+const normalizeRegion = (region) => {
+  if (!region) return region;
+  const trimmed = region.trim();
+  const match = ALLOWED_REGIONS.find(
+    r => r.toLowerCase() === trimmed.toLowerCase()
+  );
+  return match || trimmed;
+};
+
 // GET /api/properties
 export const getProperties = async (req, res) => {
   try {
@@ -124,6 +146,9 @@ export const createProperty = async (req, res) => {
     if (data.keywords && typeof data.keywords !== 'string') data.keywords = JSON.stringify(data.keywords);
     */
 
+    // Normalize region to canonical spelling
+    if (data.region) data.region = normalizeRegion(data.region);
+
     const prop = await Property.create(data);
     res.status(201).json(prop);
   } catch (error) {
@@ -180,6 +205,9 @@ export const updateProperty = async (req, res) => {
     if (data.nearbyPlaces && typeof data.nearbyPlaces !== 'string') data.nearbyPlaces = JSON.stringify(data.nearbyPlaces);
     if (data.keywords && typeof data.keywords !== 'string') data.keywords = JSON.stringify(data.keywords);
     */
+
+    // Normalize region to canonical spelling
+    if (data.region) data.region = normalizeRegion(data.region);
 
     console.log('Update Property Body:', JSON.stringify(data, null, 2));
 
