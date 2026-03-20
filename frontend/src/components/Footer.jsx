@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Building2, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import logo from '../assets/logo_new.png';
+import { POPULAR_REGIONS } from '../config/regions';
 
 export default function Footer() {
     return (
@@ -63,9 +64,9 @@ export default function Footer() {
                     <div>
                         <h4 className="text-lg font-bold mb-6">Properties</h4>
                         <ul className="space-y-4">
-                            <li><Link to="/properties?region=Vasundhara" className="text-slate-400 hover:text-[#D4AF37]">Vasundhara</Link></li>
-                            <li><Link to="/properties?region=Indirapuram" className="text-slate-400 hover:text-[#D4AF37]">Indirapuram</Link></li>
-                            <li><Link to="/properties?region=Sector 63" className="text-slate-400 hover:text-[#D4AF37]">Sector 63</Link></li>
+                            {POPULAR_REGIONS.map(r => (
+                                <li key={r}><Link to={`/properties?region=${r}`} className="text-slate-400 hover:text-[#D4AF37]">{r}</Link></li>
+                            ))}
                             <li><Link to="/properties?type=Rent" className="text-slate-400 hover:text-[#D4AF37]">For Rent</Link></li>
                             <li><Link to="/properties?type=Sell" className="text-slate-400 hover:text-[#D4AF37]">For Sale</Link></li>
                         </ul>

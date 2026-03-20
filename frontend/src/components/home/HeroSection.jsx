@@ -3,21 +3,9 @@ import { Search, MapPin, Home, DollarSign, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import CustomDropdown from '../common/CustomDropdown';
 import PriceRangeDropdown from '../common/PriceRangeDropdown';
+import { REGIONS, POPULAR_REGIONS } from '../../config/regions';
 
-const PREDEFINED_LOCATIONS = [
-    'Vasundhara',
-    'Indirapuram',
-    'Sector 63',
-    'Sector 62',
-    'Sector 61',
-    'Niti Khand',
-    'Raj Nagar Extension',
-    'Crossings Republik',
-    'Noida Extension',
-    'Greater Noida West',
-    'Siddharth Vihar',
-    'Govindpuram',
-];
+const PREDEFINED_LOCATIONS = REGIONS;
 
 export default function HeroSection({ onSearch }) {
     const [filters, setFilters] = useState({
@@ -73,8 +61,32 @@ export default function HeroSection({ onSearch }) {
         onSearch(filters);
     };
 
-    // Transaction Type Tabs for Housing Style
-    const transactionTabs = ['Buy', 'Rent', 'Commercial', 'PG/Co-living', 'Plots'];
+    // Tab definitions — each maps to the correct filter field
+    const heroTabs = [
+        { label: 'Buy',          filterKey: 'transactionType', filterValue: 'Sell' },
+        { label: 'Rent',         filterKey: 'transactionType', filterValue: 'Rent' },
+        { label: 'Commercial',   filterKey: 'propertyType',    filterValue: 'Commercial' },
+        { label: 'PG/Co-living', filterKey: 'propertyType',    filterValue: 'PG/Co-living' },
+        { label: 'Plots',        filterKey: 'propertyType',    filterValue: 'Plot' },
+    ];
+
+    const activeTab = (() => {
+        if (filters.propertyType === 'Commercial')   return 'Commercial';
+        if (filters.propertyType === 'PG/Co-living') return 'PG/Co-living';
+        if (filters.propertyType === 'Plot')         return 'Plots';
+        if (filters.transactionType === 'Rent')      return 'Rent';
+        return 'Buy'; // default
+    })();
+
+    const handleTabClick = (tab) => {
+        if (tab.filterKey === 'transactionType') {
+            // Buy / Rent → set transactionType, clear propertyType
+            setFilters(prev => ({ ...prev, transactionType: tab.filterValue, propertyType: '' }));
+        } else {
+            // Commercial / PG / Plots → set propertyType, clear transactionType
+            setFilters(prev => ({ ...prev, propertyType: tab.filterValue, transactionType: '' }));
+        }
+    };
 
     return (
         <section className="relative overflow-hidden pt-20 pb-16 lg:pt-24 lg:pb-20 bg-slate-900 border-b border-gray-800">
@@ -100,16 +112,16 @@ export default function HeroSection({ onSearch }) {
                 <div className="max-w-4xl mx-auto rounded-t-xl overflow-hidden bg-black/40 backdrop-blur-md">
                     {/* Tabs */}
                     <div className="flex overflow-x-auto no-scrollbar">
-                        {transactionTabs.map(tab => (
+                        {heroTabs.map(tab => (
                             <button
-                                key={tab}
-                                onClick={() => setFilters({ ...filters, transactionType: tab === 'Buy' ? 'Sell' : tab })}
-                                className={`px-6 py-3.5 text-sm font-bold transition-colors whitespace-nowrap ${(filters.transactionType === tab || (filters.transactionType === 'Sell' && tab === 'Buy') || (!filters.transactionType && tab === 'Buy'))
+                                key={tab.label}
+                                onClick={() => handleTabClick(tab)}
+                                className={`px-6 py-3.5 text-sm font-bold transition-colors whitespace-nowrap ${activeTab === tab.label
                                     ? 'text-white border-b-2 border-white'
                                     : 'text-white/70 hover:text-white hover:bg-white/10'
                                     }`}
                             >
-                                {tab.toUpperCase()}
+                                {tab.label.toUpperCase()}
                             </button>
                         ))}
                     </div>
@@ -173,7 +185,7 @@ export default function HeroSection({ onSearch }) {
                     <span className="text-white/90 text-sm font-medium flex items-center gap-1">
                         <MapPin className="w-4 h-4" /> Popular Localities
                     </span>
-                    {['Vasundhara', 'Indirapuram', 'Sector 63', 'Vaishali'].map((loc) => (
+                    {POPULAR_REGIONS.map((loc) => (
                         <button
                             key={loc}
                             onClick={() => {

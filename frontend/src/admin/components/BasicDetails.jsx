@@ -1,4 +1,5 @@
 import { Home, Star } from 'lucide-react';
+import { REGIONS } from '../../config/regions';
 
 export default function BasicDetails({ form, setForm, errors }) {
     return (
@@ -54,18 +55,9 @@ export default function BasicDetails({ form, setForm, errors }) {
                         }`}
                 >
                     <option value="">Select Region</option>
-                    <option>Vasundhara</option>
-                    <option>Indirapuram</option>
-                    <option>Sector 63</option>
-                    <option>Vaishali</option>
-                    <option>Vaishali Nagar</option>
-                    <option>Noida Extension</option>
-                    <option>Sahibabad</option>
-                    <option>Siddharth Vihar</option>
-                    <option>Crossings Republik</option>
-                    <option>Raj Nagar Extension</option>
-                    <option>Govindpuram</option>
-                    <option>Other</option>
+                    {REGIONS.map(r => (
+                        <option key={r} value={r}>{r}</option>
+                    ))}
                 </select>
                 {errors.region && <p className="text-red-500 text-xs mt-1">{errors.region}</p>}
             </div>

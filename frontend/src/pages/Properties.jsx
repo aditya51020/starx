@@ -19,6 +19,7 @@ import PropertyCardSkeleton from '../components/common/PropertyCardSkeleton'; //
 import LoginModal from '../components/common/LoginModal'; // Import LoginModal
 import PriceRangeDropdown from '../components/common/PriceRangeDropdown'; // Import PriceRangeDropdown
 import { formatPrice } from '../utils/formatPrice'; // Standard format format
+import { REGIONS } from '../config/regions';
 
 // Fix Leaflet icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -357,7 +358,7 @@ export default function Properties() {
       {/* Location */}
       <CheckboxGroup
         label="Location"
-        options={['Vasundhara', 'Indirapuram', 'Sector 63', 'Vaishali', 'Noida Extension', 'Sahibabad', 'Siddharth Vihar', 'Crossings Republik', 'Raj Nagar Extension', 'Govindpuram', 'Other']}
+        options={REGIONS}
         selected={filters.region}
         onChange={(val) => {
           setFilters({ ...filters, region: val });

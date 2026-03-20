@@ -5,11 +5,12 @@ import api from '../../axiosConfig';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { REGIONS } from '../../config/regions';
 
 const schema = z.object({
   title: z.string().min(5),
   description: z.string().min(20),
-  region: z.enum(['Vasundhara', 'Indirapuram', 'Sector 63', 'Vaishali', 'Noida Extension', 'Sahibabad', 'Siddharth Vihar', 'Crossings Republik', 'Raj Nagar Extension', 'Govindpuram', 'Other']),
+  region: z.enum(REGIONS),
   propertyType: z.string(),
   transactionType: z.enum(['Rent', 'Sell', 'Sold']),
   price: z.coerce.number().positive(),
