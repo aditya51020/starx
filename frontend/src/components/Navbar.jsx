@@ -34,7 +34,6 @@ export default function Navbar() {
     const navLinks = [
         { name: 'Home', path: '/', icon: Home },
         { name: 'Properties', path: '/properties', icon: Building2 },
-        { name: 'Career', path: '/career', icon: Briefcase },
         { name: 'Blog', path: '/blog', icon: LayoutDashboard },
         { name: 'About Us', path: '/about', icon: Info },
         { name: 'Contact', path: '/contact', icon: Phone },
@@ -78,39 +77,6 @@ export default function Navbar() {
                             );
                         })}
 
-                        {/* Auth Buttons */}
-                        {user ? (
-                            <div className={`flex items-center gap-4 pl-4 border-l ${location.pathname === '/' && !scrolled ? 'border-white/30' : 'border-gray-300'}`}>
-                                <span className={`text-sm font-bold flex items-center gap-2 ${location.pathname === '/' && !scrolled ? 'text-white' : 'text-slate-900'}`}>
-                                    <div className="w-8 h-8 bg-[#FFFDF0] rounded-full flex items-center justify-center text-[#D4AF37] border border-[#D4AF37]/20">
-                                        <User className="w-4 h-4" />
-                                    </div>
-                                    Hi, {user.name?.split(' ')[0] || 'User'}
-                                </span>
-                                <button
-                                    onClick={handleLogout}
-                                    className={`${location.pathname === '/' && !scrolled ? 'text-white/80 hover:text-red-400' : 'text-slate-500 hover:text-red-600'} transition`}
-                                    title="Logout"
-                                >
-                                    <LogOut className="w-5 h-5" />
-                                </button>
-                            </div>
-                        ) : (
-                            <div className={`flex items-center gap-4 pl-4 border-l ${location.pathname === '/' && !scrolled ? 'border-white/30' : 'border-gray-300'}`}>
-                                <Link
-                                    to="/login"
-                                    className={`font-bold hover:text-[#D4AF37] transition-colors ${location.pathname === '/' && !scrolled ? 'text-white' : 'text-slate-900'}`}
-                                >
-                                    Log In
-                                </Link>
-                                <Link
-                                    to="/signup"
-                                    className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg hover:shadow-[#D4AF37]/25 ${location.pathname === '/' && !scrolled ? 'bg-white text-slate-900 hover:bg-[#D4AF37] hover:text-white' : 'bg-slate-900 text-white hover:bg-[#D4AF37]'}`}
-                                >
-                                    Sign Up
-                                </Link>
-                            </div>
-                        )}
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -149,41 +115,6 @@ export default function Navbar() {
 
                             <div className="border-t border-gray-100 my-2"></div>
 
-                            {user ? (
-                                <>
-                                    <div className="flex items-center gap-3 p-4">
-                                        <div className="w-10 h-10 bg-[#FFFDF0] rounded-full flex items-center justify-center text-[#D4AF37]">
-                                            <User className="w-5 h-5" />
-                                        </div>
-                                        <div>
-                                            <p className="font-bold text-gray-900">{user.name}</p>
-                                            <p className="text-xs text-gray-500">{user.email}</p>
-                                        </div>
-                                    </div>
-                                    <button
-                                        onClick={handleLogout}
-                                        className="w-full flex items-center gap-3 p-4 rounded-xl text-red-600 hover:bg-red-50"
-                                    >
-                                        <LogOut className="w-5 h-5" />
-                                        <span className="font-medium">Logout</span>
-                                    </button>
-                                </>
-                            ) : (
-                                <div className="p-4 space-y-3">
-                                    <Link
-                                        to="/login"
-                                        className="block w-full text-center py-3 border border-gray-200 rounded-xl font-bold text-gray-900 hover:bg-gray-50"
-                                    >
-                                        Log In
-                                    </Link>
-                                    <Link
-                                        to="/signup"
-                                        className="block w-full text-center py-3 bg-[#D4AF37] text-white rounded-xl font-bold hover:bg-[#C5A059]"
-                                    >
-                                        Sign Up
-                                    </Link>
-                                </div>
-                            )}
                         </div>
                     </motion.div>
                 )}

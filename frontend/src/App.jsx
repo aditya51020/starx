@@ -9,7 +9,6 @@ const PropertyDetail = lazy(() => import('./pages/PropertyDetail'));
 const Wishlist = lazy(() => import('./pages/Wishlist'));
 const Contact = lazy(() => import('./pages/Contact'));
 const About = lazy(() => import('./pages/About'));
-const Career = lazy(() => import('./pages/Career'));
 const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/Signup'));
 const Compare = lazy(() => import('./pages/Compare'));
@@ -56,14 +55,13 @@ function App() {
           <Suspense fallback={<div className="flex justify-center items-center min-h-screen">Loading...</div>}>
             <Routes>
 
-              {/* ====================== PUBLIC ROUTES ====================== */}
+              {/* Public Routes */}
               <Route path="/" element={<HomePage />} />
               <Route path="/properties" element={<Properties />} />
               <Route path="/property/:id" element={<PropertyDetail />} />
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
-              <Route path="/career" element={<Career />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/compare" element={<Compare />} />
@@ -73,7 +71,7 @@ function App() {
               {/* Optional region pages (agar use kar rahe ho) */}
               {/* <Route path="/vasundhara" element={<RegionPage region="Vasundhara" />} /> */}
 
-              {/* ====================== ADMIN ROUTES ====================== */}
+              {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
 
               {/* Protected Admin Area */}

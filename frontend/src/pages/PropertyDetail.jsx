@@ -1,4 +1,4 @@
-// src/pages/PropertyDetail.jsx - ENHANCED AIRBNB STYLE
+// src/pages/PropertyDetail.jsx
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../axiosConfig';
@@ -397,18 +397,18 @@ export default function PropertyDetail() {
                 {/* Key Stats Row */}
                 <div className="flex justify-between items-center py-4 border-t border-b border-gray-100 mb-4">
                   <div className="text-center">
+                    <span className="text-[10px] text-gray-500 font-bold uppercase">Bedroom</span>
                     <span className="block text-xl font-bold text-gray-900">{property.bhk}</span>
-                    <span className="text-[10px] text-gray-500 font-bold uppercase">Beds</span>
                   </div>
                   <div className="w-px h-8 bg-gray-200"></div>
                   <div className="text-center">
+                    <span className="text-[10px] text-gray-500 font-bold uppercase">Bathrooms</span>
                     <span className="block text-xl font-bold text-gray-900">{property.bathrooms || property.bhk}</span>
-                    <span className="text-[10px] text-gray-500 font-bold uppercase">Baths</span>
                   </div>
                   <div className="w-px h-8 bg-gray-200"></div>
                   <div className="text-center">
-                    <span className="block text-xl font-bold text-gray-900">{property.area}</span>
-                    <span className="text-[10px] text-gray-500 font-bold uppercase">Sqft</span>
+                    <span className="text-[10px] text-gray-500 font-bold uppercase">Size</span>
+                    <span className="block text-xl font-bold text-gray-900">{property.area} sqft</span>
                   </div>
                 </div>
 

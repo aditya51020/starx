@@ -11,7 +11,6 @@ import HeroSection from '../components/home/HeroSection';
 import FeaturedProperties from '../components/home/FeaturedProperties';
 import LocationCards from '../components/home/LocationCards';
 import MapSection from '../components/home/MapSection';
-import EMICalculator from '../components/home/EMICalculator';
 
 export default function HomePage() {
   const [featured, setFeatured] = useState([]);
@@ -143,7 +142,7 @@ export default function HomePage() {
 
       <LocationCards locationData={locationData} />
 
-      {/* Why Choose Us - Modern Split Layout */}
+      {/* Why Choose Us Section */}
       <section className="py-24 bg-slate-900 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#D4AF37]/10 rounded-full blur-[120px] -mr-20 -mt-20"></div>
@@ -181,7 +180,7 @@ export default function HomePage() {
               </button>
             </motion.div>
 
-            {/* Right: Stats Grid (Bento Style) */}
+            {/* Right: Stats Grid */}
             <div className="grid grid-cols-2 gap-4">
               {/* Stat 1 */}
               <motion.div
@@ -241,7 +240,7 @@ export default function HomePage() {
         nearbyCategories={nearbyCategories}
       />
 
-      {/* "Have a property to sell?" Banner (Housing.com Style) */}
+      {/* Sell Property Banner */}
       <section className="py-16 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="w-full bg-slate-900 rounded-3xl p-8 md:p-12 relative flex flex-col md:flex-row items-center justify-between shadow-xl overflow-hidden border border-gray-800">
@@ -275,7 +274,7 @@ export default function HomePage() {
       <section className="py-24 bg-gray-50 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="text-[#D4AF37] font-bold tracking-widest uppercase text-sm">Real Stories</span>
+            <span className="text-[#D4AF37] font-bold tracking-widest uppercase text-sm">Reviews</span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mt-2">Loved by Families</h2>
           </div>
 
@@ -400,8 +399,6 @@ export default function HomePage() {
           </button>
         </div>
       </section>
-
-      <EMICalculator />
     </div>
   );
 }

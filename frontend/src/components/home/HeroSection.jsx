@@ -209,7 +209,7 @@ export default function HeroSection({ onSearch }) {
 
             </div>
 
-            {/* Decorative Side Image similar to Housing.com (Family in box) */}
+            {/* Decorative Side Image */}
             <div className="absolute right-0 top-10 lg:w-[400px] h-[500px] hidden xl:block pointer-events-none opacity-90 mix-blend-multiply">
                 {/* Simulated graphic using a CSS mask/clip-path for the card shape could be used, for now a rounded image */}
                 <img

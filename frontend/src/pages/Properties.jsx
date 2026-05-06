@@ -1,4 +1,4 @@
-// src/pages/Properties.jsx - ENHANCED WITH AIRBNB STYLE & MAP & COMPARE
+// src/pages/Properties.jsx
 import { useEffect, useState } from 'react';
 import api from '../axiosConfig';
 import { Link, useSearchParams } from 'react-router-dom';
