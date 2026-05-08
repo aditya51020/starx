@@ -325,8 +325,8 @@ export default function PropertyDetail() {
                 <div className="rounded-[1.5rem] overflow-hidden border border-gray-200 shadow-lg h-[300px]">
                   <MapContainer center={coordinates} zoom={15} style={{ height: '100%', width: '100%' }}>
                     <TileLayer
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      attribution='&copy; OpenStreetMap contributors'
+                      url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                      attribution='&copy; <a href="https://carto.com/">CartoDB</a>'
                     />
                     <Marker position={coordinates}>
                       <Popup>
