@@ -196,7 +196,7 @@ export default function AddProperty() {
 
     } catch (err) {
       console.error('Signature fetch failed:', err);
-      toast.error('Failed to initialize upload.');
+      toast.error(`Failed to initialize upload: ${err?.response?.data?.error || err?.message || 'Unknown error'}`);
     } finally {
       setLoading(false);
     }

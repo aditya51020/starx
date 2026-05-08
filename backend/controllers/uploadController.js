@@ -1,27 +1,31 @@
 
 import { v2 as cloudinary } from 'cloudinary';
 import multer from 'multer';
-
-export const getUploadSignature = (req, res) => {
-  const timestamp = Math.round((new Date).getTime() / 1000);
-  const signature = cloudinary.utils.api_sign_request({
-    timestamp: timestamp,
-    folder: 'ghaziabad_realestate', // Optional: Keep organized
-  }, process.env.CLOUDINARY_SECRET);
-
-  res.json({
-    signature,
-    timestamp,
-    cloudName: process.env.CLOUDINARY_CLOUD,
-    apiKey: process.env.CLOUDINARY_KEY
-  });
-};
-
 import {
   CLOUDINARY_CLOUD,
   CLOUDINARY_KEY,
   CLOUDINARY_SECRET,
 } from '../config.js';
+
+export const getUploadSignature = (req, res) => {
+  try {
+    const timestamp = Math.round((new Date).getTime() / 1000);
+    const signature = cloudinary.utils.api_sign_request({
+      timestamp: timestamp,
+      folder: 'ghaziabad_realestate', // Optional: Keep organized
+    }, CLOUDINARY_SECRET);
+
+    res.json({
+      signature,
+      timestamp,
+      cloudName: CLOUDINARY_CLOUD,
+      apiKey: CLOUDINARY_KEY
+    });
+  } catch (error) {
+    console.error('Signature generation error:', error);
+    res.status(500).json({ error: 'Failed to generate upload signature' });
+  }
+};
 
 if (!CLOUDINARY_CLOUD || !CLOUDINARY_KEY || !CLOUDINARY_SECRET) {
   console.error('❌ Cloudinary config missing! Please check your .env file.');
