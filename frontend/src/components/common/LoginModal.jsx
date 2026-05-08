@@ -39,7 +39,7 @@ export default function LoginModal({ isOpen, onClose }) {
                     </button>
 
                     <div className="inline-flex items-center gap-2 group mb-4">
-                        <img src={logo} alt="StarX Buildtech" className="h-16 w-auto object-contain" />
+                        <img src={logo} alt="StarX Properties" className="h-16 w-auto object-contain" />
                     </div>
                     <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
                     <p className="text-gray-600 mt-1">Sign in to view more properties</p>

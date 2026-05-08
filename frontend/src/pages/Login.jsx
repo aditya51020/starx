@@ -37,7 +37,7 @@ export default function Login() {
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-3xl shadow-xl">
                 <div className="text-center">
                     <Link to="/" className="inline-flex items-center gap-2 group mb-6">
-                        <img src={logo} alt="StarX Buildtech" className="h-16 w-auto object-contain" />
+                        <img src={logo} alt="StarX Properties" className="h-16 w-auto object-contain" />
                     </Link>
                     <h2 className="text-3xl font-bold text-gray-900">
                         {isAdmin ? 'Admin Portal' : 'Welcome Back'}

@@ -11,7 +11,7 @@ export default function Footer() {
                     {/* Brand Info */}
                     <div>
                         <Link to="/" className="flex items-center gap-2 mb-6">
-                            <img src={logo} alt="StarX Buildtech" className="h-12 w-auto object-contain bg-white rounded-lg p-1" />
+                            <img src={logo} alt="StarX Properties" className="h-12 w-auto object-contain bg-white rounded-lg p-1" />
                         </Link>
                         <p className="text-slate-400 mb-6 leading-relaxed">
                             Your trusted partner in finding the perfect property. We make real estate simple, transparent, and efficient.

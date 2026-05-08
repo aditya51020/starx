@@ -6,18 +6,18 @@ const About = () => {
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <Meta
         title="About StarX Properties | Real Estate Consultant in Ghaziabad"
-        description="StarX Properties (StarX Buildtech) is a trusted real estate agent in Ghaziabad offering property buying, selling & investment services in Indirapuram, Vaishali & Vasundhara."
-        keywords="starx properties, starx buildtech, star x properties, property dealer in ghaziabad, real estate agent indirapuram, property consultant ghaziabad, property in vasundhara"
+        description="StarX Properties is a trusted real estate agent in Ghaziabad offering property buying, selling & investment services in Indirapuram, Vaishali & Vasundhara."
+        keywords="starx properties, star x properties, property dealer in ghaziabad, real estate agent indirapuram, property consultant ghaziabad, property in vasundhara"
       />
 
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-8">
-          About StarX Properties (StarX Buildtech)
+          About StarX Properties
         </h1>
 
         <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
-            <span className="font-bold text-[#D4AF37]">StarX Properties</span>, operating under <span className="font-bold text-gray-900">StarX Buildtech</span>, is a trusted real estate and property consultancy firm based in Ghaziabad, Uttar Pradesh. We are widely searched and recognized as <strong>Starx</strong>, <strong>Star X</strong>, and <strong>Starx Properties</strong> by our clients.
+            <span className="font-bold text-[#D4AF37]">StarX Properties</span> is a trusted real estate and property consultancy firm based in Ghaziabad, Uttar Pradesh. We are widely searched and recognized as <strong>Starx</strong>, <strong>Star X</strong>, and <strong>Starx Properties</strong> by our clients.
           </p>
 
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
@@ -25,7 +25,7 @@ const About = () => {
           </p>
 
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
-            Over the years, <strong>StarX Buildtech / StarX Properties</strong> has helped hundreds of clients find the right homes, plots, and commercial spaces with complete legal clarity and professional guidance. Our experienced team ensures smooth documentation, site visits, and end-to-end support throughout the property transaction.
+            Over the years, <strong>StarX Properties</strong> has helped hundreds of clients find the right homes, plots, and commercial spaces with complete legal clarity and professional guidance. Our experienced team ensures smooth documentation, site visits, and end-to-end support throughout the property transaction.
           </p>
 
 
