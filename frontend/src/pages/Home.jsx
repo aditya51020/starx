@@ -9,7 +9,9 @@ import { motion } from 'framer-motion';
 // Components
 import HeroSection from '../components/home/HeroSection';
 import FeaturedProperties from '../components/home/FeaturedProperties';
-import LocationCards from '../components/home/LocationCards';
+import IndirapuramLocalities from '../components/home/IndirapuramLocalities';
+import TrustSection from '../components/home/TrustSection';
+import StickySearch from '../components/home/StickySearch';
 import MapSection from '../components/home/MapSection';
 
 export default function HomePage() {
@@ -23,11 +25,8 @@ export default function HomePage() {
 
   const navigate = useNavigate();
 
-  const priceTrends = {
-    'Vasundhara': { trend: '+12%', avgPrice: '45L', demand: 'High' },
-    'Indirapuram': { trend: '+8%', avgPrice: '62L', demand: 'Very High' },
-    'Sector 63': { trend: '+15%', avgPrice: '52L', demand: 'Medium' }
-  };
+        // Set active tab logic
+        // eslint-disable-next-line no-unused-vars
 
   const nearbyCategories = [
     { icon: Train, label: 'Metro', color: 'blue' },
@@ -61,9 +60,12 @@ export default function HomePage() {
         const allData = allRes.data?.data || allRes.data || [];
         const recentData = recentRes ? (recentRes.data?.data || recentRes.data || []) : [];
 
-        setFeatured(Array.isArray(featuredData) ? featuredData : []);
-        setAllProperties(Array.isArray(allData) ? allData : []);
-        setRecentProps(Array.isArray(recentData) ? recentData : []);
+        // Filter properties for Indirapuram
+        const filterForIndirapuram = (arr) => arr.filter(p => p.region && p.region.toLowerCase().includes('indirapuram'));
+
+        setFeatured(filterForIndirapuram(Array.isArray(featuredData) ? featuredData : []));
+        setAllProperties(filterForIndirapuram(Array.isArray(allData) ? allData : []));
+        setRecentProps(filterForIndirapuram(Array.isArray(recentData) ? recentData : []));
         setLoading(false);
       })
       .catch(err => {
@@ -98,35 +100,61 @@ export default function HomePage() {
 
 
 
-  const locationData = [
-    {
-      name: 'Vasundhara',
-      image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
-      count: allProperties.filter(p => p.region === 'Vasundhara').length,
-      ...priceTrends['Vasundhara']
-    },
-    {
-      name: 'Indirapuram',
-      image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
-      count: allProperties.filter(p => p.region === 'Indirapuram').length,
-      ...priceTrends['Indirapuram']
-    },
-    {
-      name: 'Sector 63',
-      image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800',
-      count: allProperties.filter(p => p.region === 'Sector 63').length,
-      ...priceTrends['Sector 63']
-    }
-  ];
+
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden">
       <Helmet>
-        <title>StarX Properties – Real Estate & Property Development Company</title>
-        <meta name="description" content="StarX Properties (also known as Star X) is a trusted real estate and construction company in Ghaziabad, offering premium properties in Vasundhara, Indirapuram, and Sector 63." />
-        <meta name="keywords" content="starx properties, star x properties, starx real estate, starx property dealer, starx properties ghaziabad, property dealer in ghaziabad, real estate agent in indirapuram, property consultant in ghaziabad, real estate agent in vasundhara, buy property in indirapuram, commercial property in ghaziabad" />
-        <link rel="canonical" href="https://www.starxbuildtech.co.in/" />
+        <title>StarX Properties – Premium Real Estate in Indirapuram, Ghaziabad</title>
+        <meta name="description" content="Find premium properties for sale and rent in Indirapuram, Ghaziabad. StarX Properties is your trusted real estate partner in Nyay Khand, Ahinsa Khand, and Vaibhav Khand." />
+        <meta name="keywords" content="starx properties, real estate agent in indirapuram, buy property in indirapuram, flats in indirapuram, rent property in indirapuram, property dealer in ghaziabad" />
+        <link rel="canonical" href="https://www.starxproperties.in/" />
+        {/* Structured Data for RealEstateAgent */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "RealEstateAgent",
+              "name": "StarX Properties",
+              "image": "https://www.starxproperties.in/logo.png",
+              "description": "Premium real estate agency specializing in Indirapuram, Ghaziabad.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Indirapuram",
+                "addressRegion": "Uttar Pradesh",
+                "addressCountry": "IN"
+              },
+              "telephone": "+919212153683"
+            }
+          `}
+        </script>
+        {/* Structured Data for FAQ */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [{
+                "@type": "Question",
+                "name": "Why invest in Indirapuram?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Indirapuram offers excellent metro connectivity, premium schools, hospitals, and high rental yields, making it the best real estate investment hub in Ghaziabad."
+                }
+              }, {
+                "@type": "Question",
+                "name": "What are the top localities in Indirapuram?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The top premium localities include Nyay Khand, Ahinsa Khand, Vaibhav Khand, and Shipra Suncity."
+                }
+              }]
+            }
+          `}
+        </script>
       </Helmet>
+
+      <StickySearch />
 
       <HeroSection onSearch={handleSearch} />
 
@@ -140,100 +168,9 @@ export default function HomePage() {
         toggleWishlist={toggleWishlist}
       />
 
-      <LocationCards locationData={locationData} />
+      <IndirapuramLocalities />
 
-      {/* Why Choose Us Section */}
-      <section className="py-24 bg-slate-900 relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#D4AF37]/10 rounded-full blur-[120px] -mr-20 -mt-20"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px] -ml-10 -mb-10"></div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-            {/* Left: Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-[1px] bg-[#D4AF37]"></div>
-                <span className="text-[#D4AF37] font-bold tracking-widest uppercase text-xs">The StarX Advantage</span>
-              </div>
-              <h2 className="text-4xl lg:text-5xl font-extrabold text-white mb-6 leading-tight">
-                Not just an Agency, <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB]">
-                  We are Your Partners.
-                </span>
-              </h2>
-              <p className="text-slate-400 text-lg leading-relaxed mb-8 max-w-lg">
-                Experience real estate with clarity. From verified listings to seamless paperwork, we redefine how Ghaziabad lives.
-              </p>
-              <button
-                onClick={() => navigate('/about')}
-                className="px-8 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/10 rounded-full text-white font-bold transition-all flex items-center gap-2 group"
-              >
-                More About Us
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </button>
-            </motion.div>
-
-            {/* Right: Stats Grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {/* Stat 1 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="bg-white/5 backdrop-blur-md p-6 rounded-3xl border border-white/10 hover:border-[#D4AF37]/30 transition-colors group"
-              >
-                <div className="w-12 h-12 bg-[#D4AF37]/20 rounded-2xl flex items-center justify-center text-[#D4AF37] mb-4 group-hover:scale-110 transition-transform">
-                  <CheckCircle className="w-6 h-6" />
-                </div>
-                <h3 className="text-3xl font-bold text-white mb-1">100%</h3>
-                <p className="text-slate-400 text-sm">Verified Listings</p>
-              </motion.div>
-
-              {/* Stat 2 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="bg-[#D4AF37] p-6 rounded-3xl flex flex-col justify-between text-slate-900"
-              >
-                <div className="flex justify-end">
-                  <Star className="w-8 h-8 opacity-20" />
-                </div>
-                <div>
-                  <h3 className="text-3xl font-bold mb-1">5k+</h3>
-                  <p className="text-slate-800/70 text-sm font-medium">Happy Families</p>
-                </div>
-              </motion.div>
-
-              {/* Stat 3 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="col-span-2 bg-gradient-to-r from-slate-800 to-slate-900 p-6 rounded-3xl border border-white/5 flex items-center gap-6"
-              >
-                <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Quote className="w-8 h-8 text-[#D4AF37]" />
-                </div>
-                <div>
-                  <h4 className="text-white font-bold text-lg mb-1">Transparent Deals</h4>
-                  <p className="text-slate-400 text-sm">No hidden charges. Complete clarity.</p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TrustSection />
 
       <MapSection
         allProperties={allProperties}

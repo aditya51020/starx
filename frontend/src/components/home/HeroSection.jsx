@@ -100,11 +100,11 @@ export default function HeroSection({ onSearch }) {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-8"
                 >
-                    <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold text-white mb-2 tracking-tight drop-shadow-sm">
-                        Properties for rent in Ghaziabad
+                    <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold text-white mb-4 tracking-tight drop-shadow-sm">
+                        Find Premium Properties in <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB]">Indirapuram</span>
                     </h1>
-                    <p className="text-white/90 font-medium text-lg drop-shadow-sm">
-                        <span className="font-bold">7K+</span> listings added daily and <span className="font-bold">73K+</span> total verified
+                    <p className="text-white/90 font-medium text-lg drop-shadow-sm max-w-2xl mx-auto">
+                        Your trusted partner for buying, selling, and renting properties in Nyay Khand, Ahinsa Khand, Vaibhav Khand, and Shipra Suncity.
                     </p>
                 </motion.div>
 
@@ -136,7 +136,7 @@ export default function HeroSection({ onSearch }) {
                                 value={locationInput}
                                 onChange={handleLocationInputChange}
                                 onFocus={() => setShowSuggestions(true)}
-                                placeholder="Search for locality, landmark, project, or builder"
+                                placeholder="Search for locality in Indirapuram (e.g. Nyay Khand)"
                                 className="w-full bg-transparent border-none outline-none px-3 py-3.5 text-gray-800 placeholder:text-gray-400 text-base font-medium"
                             />
                             {locationInput && (
@@ -181,11 +181,11 @@ export default function HeroSection({ onSearch }) {
                 </div>
 
                 {/* Popular Localities Quick Links */}
-                <div className="max-w-4xl mx-auto mt-6 flex flex-wrap items-center gap-3">
+                <div className="max-w-4xl mx-auto mt-6 flex flex-wrap items-center justify-center gap-3">
                     <span className="text-white/90 text-sm font-medium flex items-center gap-1">
-                        <MapPin className="w-4 h-4" /> Popular Localities
+                        <MapPin className="w-4 h-4" /> Top Areas:
                     </span>
-                    {POPULAR_REGIONS.map((loc) => (
+                    {['Nyay Khand', 'Ahinsa Khand', 'Vaibhav Khand', 'Shipra Suncity'].map((loc) => (
                         <button
                             key={loc}
                             onClick={() => {

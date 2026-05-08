@@ -36,8 +36,8 @@ export default function FeaturedProperties({
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h3 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">Newly-added properties</h3>
-                        <p className="text-slate-500 text-lg">Fresh listings to check out</p>
+                        <h3 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">Indirapuram Hot Projects</h3>
+                        <p className="text-slate-500 text-lg">Premium listings handpicked for you</p>
                     </motion.div>
 
                     <div className="inline-flex gap-2 bg-white p-1.5 rounded-2xl shadow-sm border border-gray-100">

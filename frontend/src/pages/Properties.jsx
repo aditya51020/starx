@@ -623,7 +623,7 @@ export default function Properties() {
                       >
                         <Popup>
                           <div className="w-48">
-                            <img src={property.images?.[0]} alt={property.title} className="w-full h-24 object-cover rounded mb-2" />
+                            <img src={property.images?.[0]} alt={property.title} loading="lazy" className="w-full h-24 object-cover rounded mb-2" />
                             <h4 className="font-bold text-sm truncate">{property.title}</h4>
                             <p className="text-[#D4AF37] font-bold">{formatPrice(property.price)}</p>
                             <Link to={`/property/${property.id}`} className="block mt-2 text-center bg-[#D4AF37] text-white py-1 rounded text-xs">View Details</Link>
