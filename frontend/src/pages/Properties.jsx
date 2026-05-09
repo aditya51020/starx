@@ -1,7 +1,7 @@
 // src/pages/Properties.jsx
 import { useEffect, useState } from 'react';
 import api from '../axiosConfig';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useParams, useNavigate } from 'react-router-dom';
 import {
   Search, Filter, Grid, List, ChevronDown, X, Heart,
   MapPin, Bed, Bath, Maximize, TrendingUp, Home as HomeIcon,
@@ -33,6 +33,8 @@ export default function Properties() {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { localitySlug } = useParams();
+  const navigate = useNavigate();
   const [total, setTotal] = useState(0);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false); // Login Modal State
@@ -42,8 +44,15 @@ export default function Properties() {
   const { addToCompare, compareList } = useCompare();
   const { user } = useAuth(); // If we want server-side wishlist later
 
+  const unslugify = (slug) => {
+    if (!slug) return '';
+    return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
+
+  const initialRegion = searchParams.get('region') || (localitySlug ? unslugify(localitySlug) : '');
+
   const [filters, setFilters] = useState({
-    region: searchParams.get('region') || '',
+    region: initialRegion,
     transactionType: searchParams.get('transactionType') || '',
     propertyType: searchParams.get('propertyType') || '',
     bhk: searchParams.get('bhk') || '',
@@ -112,7 +121,13 @@ export default function Properties() {
     Object.entries(filters).forEach(([key, value]) => {
       if (value) newParams.set(key, value);
     });
-    setSearchParams(newParams);
+    
+    // If we are on a locality slug route and the region changed to something else, navigate to the base properties route
+    if (localitySlug && filters.region && filters.region !== unslugify(localitySlug)) {
+      navigate(`/properties?${newParams.toString()}`);
+    } else {
+      setSearchParams(newParams);
+    }
   };
 
   const clearFilters = () => {
@@ -441,11 +456,53 @@ export default function Properties() {
     </div>
   );
 
+  const locationName = localitySlug ? unslugify(localitySlug) : (filters.region || 'Ghaziabad');
+  const seoTitle = localitySlug 
+    ? `Properties in ${locationName} Indirapuram | Buy, Sell & Rent | StarX Properties` 
+    : `All Properties | StarX Properties - Buy, Sell, Rent in ${locationName}`;
+  const seoDescription = localitySlug
+    ? `Find premium flats, builder floors and commercial properties in ${locationName}, Indirapuram. Explore StarX Properties today.`
+    : `Browse our extensive list of properties in ${locationName}. Find your perfect home or investment opportunity.`;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>All Properties | StartxProperties - Buy, Sell, Rent in Ghaziabad</title>
-        <meta name="description" content="Browse our extensive list of properties in Vasundhara, Indirapuram, and Sector 63. Find your perfect home or investment opportunity." />
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription} />
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://www.starxproperties.in/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Properties",
+                  "item": "https://www.starxproperties.in/properties"
+                }${localitySlug ? `,
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Indirapuram",
+                  "item": "https://www.starxproperties.in/properties?region=Indirapuram"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "${unslugify(localitySlug)}",
+                  "item": "https://www.starxproperties.in/properties/indirapuram/${localitySlug}"
+                }` : ''}
+              ]
+            }
+          `}
+        </script>
       </Helmet>
       {/* Hero Section - Redesigned Light Theme */}
       <div className="bg-white pt-24 pb-12 border-b border-gray-100">

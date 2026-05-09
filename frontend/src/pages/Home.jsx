@@ -88,14 +88,21 @@ export default function HomePage() {
 
   const handleSearch = (filters) => {
     const params = new URLSearchParams();
-    if (filters.region) params.append('region', filters.region);
     if (filters.transactionType) params.append('transactionType', filters.transactionType);
     if (filters.propertyType) params.append('propertyType', filters.propertyType);
     if (filters.bhk) params.append('bhk', filters.bhk);
     if (filters.minPrice) params.append('minPrice', filters.minPrice);
     if (filters.maxPrice) params.append('maxPrice', filters.maxPrice);
 
-    navigate(`/properties?${params.toString()}`);
+    const seoLocalities = ['Nyay Khand', 'Ahinsa Khand', 'Vaibhav Khand', 'Shipra Suncity', 'Kala Patthar', 'Vasundhara', 'Kaushambi'];
+    
+    if (filters.region && seoLocalities.includes(filters.region)) {
+      const slug = filters.region.toLowerCase().replace(/\s+/g, '-');
+      navigate(`/properties/indirapuram/${slug}?${params.toString()}`);
+    } else {
+      if (filters.region) params.append('region', filters.region);
+      navigate(`/properties?${params.toString()}`);
+    }
   };
 
 

@@ -6,6 +6,7 @@ export default function IndirapuramLocalities() {
     const localities = [
         {
             name: 'Nyay Khand',
+            slug: 'nyay-khand',
             image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
             trend: '+12%',
             demand: 'High',
@@ -13,6 +14,7 @@ export default function IndirapuramLocalities() {
         },
         {
             name: 'Ahinsa Khand',
+            slug: 'ahinsa-khand',
             image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
             trend: '+15%',
             demand: 'Very High',
@@ -20,6 +22,7 @@ export default function IndirapuramLocalities() {
         },
         {
             name: 'Vaibhav Khand',
+            slug: 'vaibhav-khand',
             image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800',
             trend: '+10%',
             demand: 'Medium',
@@ -27,6 +30,7 @@ export default function IndirapuramLocalities() {
         },
         {
             name: 'Shipra Suncity',
+            slug: 'shipra-suncity',
             image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800',
             trend: '+8%',
             demand: 'High',
@@ -61,7 +65,7 @@ export default function IndirapuramLocalities() {
                             transition={{ delay: index * 0.1 }}
                         >
                             <Link
-                                to={`/properties?region=${encodeURIComponent('Indirapuram')}`}
+                                to={`/properties/indirapuram/${area.slug}`}
                                 className="group relative h-[400px] block rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
                             >
                                 <img

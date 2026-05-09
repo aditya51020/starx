@@ -58,6 +58,7 @@ function App() {
               {/* Public Routes */}
               <Route path="/" element={<HomePage />} />
               <Route path="/properties" element={<Properties />} />
+              <Route path="/properties/indirapuram/:localitySlug" element={<Properties />} />
               <Route path="/property/:id" element={<PropertyDetail />} />
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/contact" element={<Contact />} />
