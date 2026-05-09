@@ -9,6 +9,8 @@ const Contact = () => {
     name: '',
     email: '',
     phone: '',
+    propertyInterest: 'Buy',
+    location: '',
     message: ''
   });
   const [loading, setLoading] = useState(false);
@@ -23,7 +25,7 @@ const Contact = () => {
     try {
       await api.post('/api/inquiries', formData);
       toast.success('Message sent successfully! We will contact you soon.');
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', propertyInterest: 'Buy', location: '', message: '' });
     } catch (error) {
       console.error(error);
       toast.error('Failed to send message. Please try again.');
@@ -116,6 +118,34 @@ const Contact = () => {
                   className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition outline-none"
                   placeholder="+91 98765 43210"
                 />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">I want to</label>
+                  <select
+                    name="propertyInterest"
+                    value={formData.propertyInterest}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-white rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition outline-none appearance-none"
+                  >
+                    <option value="Buy">Buy a Property</option>
+                    <option value="Rent">Rent a Property</option>
+                    <option value="Sell">Sell my Property</option>
+                    <option value="Commercial">Commercial/Investment</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Preferred Location</label>
+                  <input
+                    type="text"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition outline-none"
+                    placeholder="e.g. Indirapuram"
+                  />
+                </div>
               </div>
 
               <div>

@@ -60,7 +60,9 @@ export default function PropertyDetail() {
     try {
       await api.post('/api/inquiries', {
         ...inquiryForm,
-        propertyId: id
+        propertyId: id,
+        propertyInterest: property?.transactionType === 'Rent' ? 'Rent' : 'Buy',
+        location: property?.region || ''
       });
       toast.success('Inquiry sent successfully! We will contact you soon.');
       setInquiryForm({ name: user?.name || '', email: user?.email || '', phone: '', message: '' });

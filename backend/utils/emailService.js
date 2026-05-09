@@ -28,7 +28,10 @@ export const sendInquiryEmail = async (inquiry) => {
             <p><strong>Name:</strong> ${inquiry.name}</p>
             <p><strong>Email:</strong> ${inquiry.email}</p>
             <p><strong>Phone:</strong> ${inquiry.phone}</p>
-            <p><strong>Property ID:</strong> ${inquiry.propertyId}</p>
+            ${inquiry.propertyInterest ? `<p><strong>Interest:</strong> ${inquiry.propertyInterest}</p>` : ''}
+            ${inquiry.location ? `<p><strong>Location:</strong> ${inquiry.location}</p>` : ''}
+            ${inquiry.propertyId ? `<p><strong>Property ID:</strong> ${inquiry.propertyId}</p>` : ''}
+            ${inquiry.propertyTitle ? `<p><strong>Property Title:</strong> ${inquiry.propertyTitle}</p>` : ''}
           </div>
           
           <h3>Message:</h3>

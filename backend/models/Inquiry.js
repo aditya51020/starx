@@ -30,6 +30,14 @@ const Inquiry = sequelize.define('Inquiry', {
         type: DataTypes.INTEGER,
         allowNull: true // Optional
     },
+    propertyInterest: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    location: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     status: {
         type: DataTypes.STRING,
         defaultValue: 'New',

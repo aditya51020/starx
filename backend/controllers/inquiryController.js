@@ -5,7 +5,7 @@ import { sendInquiryEmail } from '../utils/emailService.js';
 // POST /api/inquiries
 export const createInquiry = async (req, res) => {
     try {
-        const { name, email, phone, message, propertyId } = req.body;
+        const { name, email, phone, message, propertyId, propertyInterest, location } = req.body;
 
         // Basic validation
         if (!name || !email || !phone || !message) {
@@ -17,8 +17,20 @@ export const createInquiry = async (req, res) => {
             email,
             phone,
             message,
-            propertyId
+            propertyId,
+            propertyInterest,
+            location
         });
+
+        // Optionally fetch property title if propertyId exists
+        let propertyTitle = null;
+        if (propertyId) {
+            const prop = await Property.findByPk(propertyId);
+            if (prop) propertyTitle = prop.title;
+        }
+
+        // Attach to the object passed to email service without saving it to DB column
+        inquiry.propertyTitle = propertyTitle;
 
         // Send email notification (async, don't block response)
         sendInquiryEmail(inquiry).catch(err => console.error('Email sending failed:', err));
