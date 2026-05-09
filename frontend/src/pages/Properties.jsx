@@ -645,10 +645,10 @@ export default function Properties() {
                   >
                     <Link to={`/property/${property.id}`} className="absolute inset-0 z-10"></Link>
 
-                    {/* Full Background Image */}
                     <img
                       src={property.images?.[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'}
                       alt={property.title}
+                      loading="lazy"
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
 

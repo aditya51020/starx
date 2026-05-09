@@ -606,6 +606,7 @@ export default function PropertyDetail() {
                       <img
                         src={img}
                         alt={`Photo ${i + 1}`}
+                        loading="lazy"
                         className="max-w-full max-h-full w-auto h-auto rounded-xl shadow-2xl mx-auto object-contain"
                       />
                     )}
@@ -619,6 +620,16 @@ export default function PropertyDetail() {
           </div>
         </div>
       )}
+
+      {/* Sticky Mobile Action Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 flex gap-3 z-[100] md:hidden shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.15)]">
+        <a href={`tel:${phone}`} className="flex-1 bg-white border-2 border-[#D4AF37] text-[#D4AF37] py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-base active:bg-[#D4AF37]/10 transition-colors">
+          <Phone className="w-5 h-5" /> Call
+        </a>
+        <a href={`https://wa.me/91${phone.replace(/\D/g, '')}?text=Hi, I am interested in ${property.title}`} className="flex-1 bg-[#25D366] text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-base active:bg-[#20bd5a] transition-colors shadow-lg shadow-[#25D366]/30">
+          <MessageCircle className="w-5 h-5" /> WhatsApp
+        </a>
+      </div>
     </div>
   );
 }
