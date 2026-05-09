@@ -62,15 +62,39 @@ export default function Properties() {
     setWishlist(savedWishlist);
   }, [user]);
 
+  // Sync filters state when URL parameters change
+  useEffect(() => {
+    setFilters({
+      region: searchParams.get('region') || '',
+      transactionType: searchParams.get('transactionType') || '',
+      propertyType: searchParams.get('propertyType') || '',
+      bhk: searchParams.get('bhk') || '',
+      minPrice: searchParams.get('minPrice') || '',
+      maxPrice: searchParams.get('maxPrice') || '',
+      furnishing: searchParams.get('furnishing') || '',
+      amenities: searchParams.get('amenities') || '',
+      search: searchParams.get('search') || '',
+      sort: searchParams.get('sort') || 'latest'
+    });
+  }, [searchParams]);
+
   useEffect(() => {
     const fetchProperties = async () => {
       setLoading(true);
       try {
         const params = new URLSearchParams();
 
-        Object.entries(filters).forEach(([key, value]) => {
-          if (value) params.set(key, value);
+        // Read directly from searchParams to ensure latest values on navigation
+        const keys = ['region', 'transactionType', 'propertyType', 'bhk', 'minPrice', 'maxPrice', 'furnishing', 'amenities', 'search', 'sort'];
+        keys.forEach(key => {
+          const val = searchParams.get(key);
+          if (val) params.set(key, val);
         });
+        
+        // Also support sort default if not in URL
+        if (!params.has('sort')) {
+           params.set('sort', 'latest');
+        }
 
         const res = await api.get(`/api/properties?${params.toString()}`);
 
