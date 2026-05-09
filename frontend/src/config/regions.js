@@ -6,6 +6,10 @@
  */
 
 export const REGIONS = [
+  'Nyay Khand',
+  'Ahinsa Khand',
+  'Vaibhav Khand',
+  'Shipra Suncity',
   'Vasundhara',
   'Indirapuram',
   'Vaishali',

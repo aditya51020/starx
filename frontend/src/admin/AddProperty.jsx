@@ -155,8 +155,9 @@ export default function AddProperty() {
         formData.append('folder', 'ghaziabad_realestate');
 
         try {
-          // Determine resource type (image or video)
-          const resourceType = file.type.startsWith('video/') ? 'video' : 'image';
+          // Determine resource type (image or video), handle iOS empty type bug
+          const fileType = file.type || '';
+          const resourceType = fileType.startsWith('video/') ? 'video' : 'image';
 
           const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
             method: 'POST',

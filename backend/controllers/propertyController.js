@@ -4,6 +4,7 @@ import { Op } from 'sequelize';
 
 // Allowed regions — keep in sync with frontend config/regions.js
 const ALLOWED_REGIONS = [
+  'Nyay Khand', 'Ahinsa Khand', 'Vaibhav Khand', 'Shipra Suncity',
   'Vasundhara', 'Indirapuram', 'Vaishali', 'Sector 63',
   'Noida Extension', 'Sahibabad', 'Siddharth Vihar',
   'Crossings Republik', 'Raj Nagar Extension', 'Govindpuram', 'Other'
