@@ -8,6 +8,8 @@ import api from '../axiosConfig';
 export default function AdminDashboard() {
   const [properties, setProperties] = useState([]);
   const [inquiries, setInquiries] = useState([]);
+  const [propertiesLimit, setPropertiesLimit] = useState(8);
+  const [inquiriesLimit, setInquiriesLimit] = useState(10);
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -117,53 +119,65 @@ export default function AdminDashboard() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {properties.map(p => (
-              <div
-                key={p.id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-              >
-                <div className="relative h-64 bg-gray-100">
-                  <img
-                    src={p.images?.[0] || '/placeholder.jpg'}
-                    alt={p.title || 'Property'}
-                    className="w-full h-full object-cover"
-                  />
-                  {p.featured && (
-                    <div className="absolute top-4 left-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                      Featured
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {properties.slice(0, propertiesLimit).map(p => (
+                <div
+                  key={p.id}
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                >
+                  <div className="relative h-64 bg-gray-100">
+                    <img
+                      src={p.images?.[0] || '/placeholder.jpg'}
+                      alt={p.title || 'Property'}
+                      className="w-full h-full object-cover"
+                    />
+                    {p.featured && (
+                      <div className="absolute top-4 left-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                        Featured
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                      {p.title || 'Untitled Property'}
+                    </h3>
+                    <p className="text-3xl font-bold text-[#D4AF37] mb-3">
+                      ₹{p.price?.toLocaleString('en-IN') || 'N/A'}
+                    </p>
+                    <p className="text-gray-600 text-sm mb-4">
+                      {p.region || 'Unknown'} • {p.bhk || '?'} BHK • {p.area || '?'} sqft
+                    </p>
+
+                    <div className="flex gap-3">
+                      <Link
+                        to={`/admin/edit/${p.id}`}
+                        className="flex-1 bg-[#D4AF37] text-white py-3 rounded-lg font-semibold text-center hover:bg-[#C5A059] transition flex items-center justify-center gap-2"
+                      >
+                        <Edit className="w-5 h-5" /> Edit
+                      </Link>
+                      <button
+                        onClick={() => deleteProperty(p.id)}
+                        className="flex-1 bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition flex items-center justify-center gap-2"
+                      >
+                        <Trash2 className="w-5 h-5" /> Delete
+                      </button>
                     </div>
-                  )}
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
-                    {p.title || 'Untitled Property'}
-                  </h3>
-                  <p className="text-3xl font-bold text-[#D4AF37] mb-3">
-                    ₹{p.price?.toLocaleString('en-IN') || 'N/A'}
-                  </p>
-                  <p className="text-gray-600 text-sm mb-4">
-                    {p.region || 'Unknown'} • {p.bhk || '?'} BHK • {p.area || '?'} sqft
-                  </p>
-
-                  <div className="flex gap-3">
-                    <Link
-                      to={`/admin/edit/${p.id}`}
-                      className="flex-1 bg-[#D4AF37] text-white py-3 rounded-lg font-semibold text-center hover:bg-[#C5A059] transition flex items-center justify-center gap-2"
-                    >
-                      <Edit className="w-5 h-5" /> Edit
-                    </Link>
-                    <button
-                      onClick={() => deleteProperty(p.id)}
-                      className="flex-1 bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition flex items-center justify-center gap-2"
-                    >
-                      <Trash2 className="w-5 h-5" /> Delete
-                    </button>
                   </div>
                 </div>
+              ))}
+            </div>
+            {propertiesLimit < properties.length && (
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={() => setPropertiesLimit(prev => prev + 8)}
+                  className="bg-white text-[#D4AF37] border-2 border-[#D4AF37] px-8 py-3 rounded-xl font-bold hover:bg-[#D4AF37] hover:text-white transition shadow-sm"
+                >
+                  Load More Properties
+                </button>
               </div>
-            ))}
+            )}
           </div>
         )}
 
@@ -196,7 +210,7 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
-                    {inquiries.map(inq => (
+                    {inquiries.slice(0, inquiriesLimit).map(inq => (
                       <tr key={inq.id} className="hover:bg-gray-50 transition">
                         <td className="px-6 py-4">
                           <p className="font-bold text-gray-900">{inq.name}</p>
@@ -236,6 +250,16 @@ export default function AdminDashboard() {
                   </tbody>
                 </table>
               </div>
+              {inquiriesLimit < inquiries.length && (
+                <div className="flex justify-center p-6 border-t border-gray-100 bg-gray-50">
+                  <button
+                    onClick={() => setInquiriesLimit(prev => prev + 10)}
+                    className="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition"
+                  >
+                    Load More Leads
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

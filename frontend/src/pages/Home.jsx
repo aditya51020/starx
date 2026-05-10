@@ -207,111 +207,110 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials Collage Section */}
-      <section className="py-24 bg-gray-50 overflow-hidden">
-        <div className="container mx-auto px-4">
+      {/* Client Reviews Section */}
+      <section className="py-24 bg-gray-50 relative overflow-hidden">
+        {/* Background glow effects */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <span className="text-[#D4AF37] font-bold tracking-widest uppercase text-sm">Reviews</span>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mt-2">Loved by Families</h2>
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-[#D4AF37] font-bold tracking-widest uppercase text-sm mb-2 block"
+            >
+              Testimonials
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-5xl font-extrabold text-slate-900"
+            >
+              What Our Clients Say
+            </motion.h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[600px]">
-            {/* Card 1: Large Testimonial */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="md:col-span-2 md:row-span-2 bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100 flex flex-col justify-between relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4AF37]/10 rounded-bl-[100px] -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
-              <Quote className="w-12 h-12 text-[#D4AF37] relative z-10 mb-6" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {[
+              {
+                name: "Deepak Rai",
+                initials: "DR",
+                role: "Customer",
+                text: "They understood exactly what I was looking for and presented options that perfectly fit my budget and requirements in Indirapuram. Their market knowledge is outstanding. The paperwork, negotiations, and legal formalities were handled with utmost professionalism."
+              },
+              {
+                name: "Razia Chaudhary",
+                initials: "RC",
+                role: "Customer",
+                text: "Great full experience for purchased of 2bhk in Vaishali thank you so much Mr Raju sir."
+              },
+              {
+                name: "Dharmendra Kumar",
+                initials: "DK",
+                role: "Customer",
+                text: "Supub experience for purchase property i think best property dealer in Indirapuram."
+              },
+              {
+                name: "Shubham Singh",
+                initials: "SS",
+                role: "Customer",
+                text: "Service was friendly and they have all the options in your budget."
+              },
+              {
+                name: "Inderjeet Singh",
+                initials: "IS",
+                role: "Customer",
+                text: "Excellent experience with starx property. Good behaviour. Helping nature for all staff. Great management by Mr. RAJU SIR."
+              },
+              {
+                name: "Rahul Thakur",
+                initials: "RT",
+                role: "Customer",
+                text: "Best property consultant in ghaziabad. Thank you Starxproperties for providing me my dream home within my budget."
+              }
+            ].map((review, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white border border-gray-100 rounded-[20px] p-8 relative group hover:-translate-y-2 hover:shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] hover:border-[#D4AF37]/30 transition-all duration-500 overflow-hidden flex flex-col"
+              >
+                {/* Subtle gradient background on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-              <p className="text-2xl font-serif text-slate-800 leading-relaxed relative z-10">
-                "StarX made the impossible possible. We were looking for a specific vastu-compliant home in Vasundhara, and they found it within a week! truly exceptional service."
-              </p>
+                {/* Avatar top right */}
+                <div className="absolute top-8 right-8 w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center font-bold text-slate-600 border border-gray-100 group-hover:text-[#D4AF37] group-hover:border-[#D4AF37]/50 transition-colors shadow-sm">
+                  {review.initials}
+                </div>
 
-              <div className="flex items-center gap-4 mt-8">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="User" className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md" />
-                <div>
-                  <h4 className="font-bold text-lg text-slate-900">Rajesh Kumar</h4>
-                  <p className="text-slate-500 text-sm">Homeowner • Vasundhara</p>
-                  <div className="flex gap-0.5 text-[#D4AF37] mt-1">
-                    {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-3 h-3 fill-current" />)}
+                <div className="relative z-10 flex flex-col flex-grow">
+                  {/* Name */}
+                  <h4 className="text-xl font-bold text-slate-900 mb-1 pr-14">{review.name}</h4>
+                  
+                  {/* Stars */}
+                  <div className="flex gap-1 text-[#D4AF37] mb-5">
+                    {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+                  </div>
+
+                  {/* Review Text */}
+                  <p className="text-gray-600 leading-relaxed mb-6 flex-grow font-medium">
+                    "{review.text}"
+                  </p>
+
+                  {/* Role */}
+                  <div className="mt-auto">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-slate-500 transition-colors">
+                      {review.role}
+                    </p>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-
-            {/* Card 2: Image Card */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="md:col-span-1 md:row-span-1 bg-black rounded-[2rem] overflow-hidden relative group"
-            >
-              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" alt="Happy Family" className="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
-                <p className="text-white font-bold text-lg">500+ Families</p>
-                <p className="text-gray-300 text-xs">Settled this year</p>
-              </div>
-            </motion.div>
-
-            {/* Card 3: Compact Testimonial */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="md:col-span-1 md:row-span-1 bg-[#D4AF37] p-6 rounded-[2rem] text-slate-900 flex flex-col justify-center relative hover:-translate-y-1 transition-transform"
-            >
-              <Quote className="w-8 h-8 text-slate-800/40 mb-4" />
-              <p className="font-medium text-lg mb-4">"Best ROI on my Indirapuram investment. Highly recommended!"</p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-900/10 rounded-full flex items-center justify-center font-bold text-slate-800">PS</div>
-                <div>
-                  <p className="font-bold text-sm">Priya Sharma</p>
-                  <p className="text-slate-800/70 text-xs">Investor</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Card 4: Stat Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="md:col-span-1 md:row-span-1 bg-white p-6 rounded-[2rem] shadow-lg border border-gray-100 flex flex-col justify-center items-center text-center hover:shadow-xl transition-shadow"
-            >
-              <div className="text-3xl font-extrabold text-[#D4AF37] mb-2">Top Rated</div>
-              <div className="flex gap-1 justify-center mb-2 text-[#D4AF37]">
-                {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-4 h-4 fill-current" />)}
-              </div>
-              <p className="text-slate-500 font-medium">Real Estate Agency</p>
-              <p className="text-xs text-slate-400 mt-1">Trusted by hundreds</p>
-            </motion.div>
-
-            {/* Card 5: Medium Testimonial */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="md:col-span-1 md:row-span-1 bg-slate-900 p-6 rounded-[2rem] text-white flex flex-col justify-between relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-20 h-20 bg-white/5 rounded-full blur-2xl -mr-10 -mt-10"></div>
-              <p className="text-gray-300 italic leading-relaxed relative z-10">
-                "Seamless rental process in Sector 63. Professional team."
-              </p>
-              <div className="flex items-center gap-3 mt-4">
-                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" alt="User" className="w-10 h-10 rounded-full border border-white/20" />
-                <div>
-                  <p className="font-bold text-white text-sm">Amit Verma</p>
-                  <p className="text-gray-500 text-xs">Tenant</p>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
