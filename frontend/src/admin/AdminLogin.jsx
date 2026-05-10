@@ -92,7 +92,7 @@ export default function AdminLogin() {
 
         <div className="mt-8 text-center">
           <p className="text-xs text-slate-400">
-            Protected by StarX Security Systems &copy; {new Date().getFullYear()}
+            Protected by StarX Properties Security Systems &copy; {new Date().getFullYear()}
           </p>
         </div>
       </div>

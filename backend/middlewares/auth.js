@@ -2,7 +2,12 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config.js';
 
 export const protect = (req, res, next) => {
-  const token = req.cookies.token;
+  let token = req.cookies.token;
+
+  if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
   if (!token) return res.status(401).json({ msg: 'No token found' });
 
   try {

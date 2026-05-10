@@ -50,7 +50,7 @@ export default function Navbar() {
                     <Link to="/" className="flex items-center group">
                         <img
                             src={logo}
-                            alt="StarX Logo"
+                            alt="StarX Properties Logo"
                             className="h-16 md:h-20 w-auto object-contain transition-transform group-hover:scale-105"
                         />
                     </Link>

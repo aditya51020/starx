@@ -65,7 +65,7 @@ export default function Footer() {
                         <h4 className="text-lg font-bold mb-6">Properties</h4>
                         <ul className="space-y-4">
                             {POPULAR_REGIONS.map(r => (
-                                <li key={r}><Link to={`/properties?region=${r}`} className="text-slate-400 hover:text-[#D4AF37]">{r}</Link></li>
+                                <li key={r}><Link to={`/properties?region=${encodeURIComponent(r)}`} className="text-slate-400 hover:text-[#D4AF37]">{r}</Link></li>
                             ))}
                             <li><Link to="/properties?type=Rent" className="text-slate-400 hover:text-[#D4AF37]">For Rent</Link></li>
                             <li><Link to="/properties?type=Sell" className="text-slate-400 hover:text-[#D4AF37]">For Sale</Link></li>

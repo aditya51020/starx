@@ -7,7 +7,7 @@ const About = () => {
       <Meta
         title="About StarX Properties | Real Estate Consultant in Ghaziabad"
         description="StarX Properties is a trusted real estate agent in Ghaziabad offering property buying, selling & investment services in Indirapuram, Vaishali & Vasundhara."
-        keywords="starx properties, star x properties, property dealer in ghaziabad, real estate agent indirapuram, property consultant ghaziabad, property in vasundhara"
+        keywords="starx properties, property dealer in ghaziabad, real estate agent indirapuram, property consultant ghaziabad, property in vasundhara"
       />
 
       <div className="max-w-4xl mx-auto">
@@ -17,7 +17,7 @@ const About = () => {
 
         <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
-            <span className="font-bold text-[#D4AF37]">StarX Properties</span> is a trusted real estate and property consultancy firm based in Ghaziabad, Uttar Pradesh. We are widely searched and recognized as <strong>Starx</strong>, <strong>Star X</strong>, and <strong>Starx Properties</strong> by our clients.
+            <span className="font-bold text-[#D4AF37]">StarX Properties</span> is a trusted real estate and property consultancy firm based in Ghaziabad, Uttar Pradesh.
           </p>
 
           <p className="text-lg text-gray-700 leading-relaxed mb-6">

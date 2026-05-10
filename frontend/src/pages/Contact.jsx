@@ -38,8 +38,8 @@ const Contact = () => {
     <div className="min-h-screen bg-gray-50 py-16">
       <Meta
         title="Contact Us"
-        description="Get in touch with StarX Realty. Visit our office in Indirapuram, call us, or send an email for all your real estate needs in Ghaziabad."
-        keywords="Contact StarX Realty, Real Estate Office Address, Property Inquiry, Real Estate Contact Number"
+        description="Get in touch with StarX Properties. Visit our office in Indirapuram, call us, or send an email for all your real estate needs in Ghaziabad."
+        keywords="Contact StarX Properties, Real Estate Office Address, Property Inquiry, Real Estate Contact Number"
       />
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">

@@ -29,9 +29,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    // Try user login first
     try {
       const res = await axios.post('/api/auth/login/user', { email, password });
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+      }
       setUser(res.data.user);
       return { success: true };
     } catch (err) {
@@ -41,12 +43,18 @@ export const AuthProvider = ({ children }) => {
 
   const adminLogin = async (email, password) => {
     const res = await axios.post('/api/auth/login', { email, password });
+    if (res.data.token) {
+      localStorage.setItem('token', res.data.token);
+    }
     setUser(res.data.user);
     return { success: true };
   };
 
   const signup = async (name, email, password) => {
     const res = await axios.post('/api/auth/signup', { name, email, password });
+    if (res.data.token) {
+      localStorage.setItem('token', res.data.token);
+    }
     setUser(res.data.user);
     return { success: true };
   };
@@ -56,6 +64,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     // Clear local storage items that might depend on user
     localStorage.removeItem('wishlist');
+    localStorage.removeItem('token');
   };
 
   return (

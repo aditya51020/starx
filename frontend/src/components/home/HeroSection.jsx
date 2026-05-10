@@ -202,7 +202,7 @@ export default function HeroSection({ onSearch }) {
                 {/* Floating Banner (Are you a Property Owner) */}
                 <div className="max-w-2xl mx-auto mt-12 bg-black/40 backdrop-blur-md rounded-full px-6 py-2 border border-white/20 flex items-center justify-center gap-2 hover:bg-black/50 transition cursor-pointer">
                     <span className="text-white/90 font-medium text-sm">✨ Are you a Property Owner?</span>
-                    <a href={`https://wa.me/919212153683?text=Hi, I want to list my property on StarX.`} target="_blank" rel="noreferrer" className="text-white font-bold text-sm underline-offset-4 hover:underline">
+                    <a href={`https://wa.me/919212153683?text=Hi, I want to list my property on StarX Properties.`} target="_blank" rel="noreferrer" className="text-white font-bold text-sm underline-offset-4 hover:underline">
                         Sell / Rent
                     </a>
                 </div>

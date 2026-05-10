@@ -1,20 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Plus, Edit, Trash2, LogOut, Building2, Briefcase, MessageSquare, Phone, Mail } from 'lucide-react';
+import { Plus, Edit, Trash2, LogOut, Building2, MessageSquare, Phone, Mail } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import api from '../axiosConfig';
 
 export default function AdminDashboard() {
   const [properties, setProperties] = useState([]);
-  const [jobs, setJobs] = useState([]);
   const [inquiries, setInquiries] = useState([]);
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchProperties();
-    fetchJobs();
     fetchInquiries();
   }, []);
 
@@ -29,14 +27,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const fetchJobs = async () => {
-    try {
-      const res = await api.get('/api/jobs');
-      setJobs(res.data.data || []);
-    } catch (err) {
-      console.error('Failed to fetch jobs:', err);
-    }
-  };
+
 
   const fetchInquiries = async () => {
     try {
@@ -60,18 +51,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const deleteJob = async (id) => {
-    if (!confirm('Are you sure you want to delete this job?')) return;
-    try {
-      await api.delete(`/api/jobs/${id}`);
-      setJobs(prev => prev.filter(j => j.id !== id));
-      setJobs(prev => prev.filter(j => j.id !== id));
-      toast.success('Job deleted successfully!');
-    } catch (err) {
-      console.error(err);
-      toast.error('Failed to delete job');
-    }
-  };
+
 
   const deleteInquiry = async (id) => {
     if (!confirm('Delete this inquiry?')) return;
@@ -187,53 +167,6 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* Jobs Section */}
-        <div className="mt-20 border-t border-gray-200 pt-10">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-6">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900">
-                Job Openings
-                <span className="text-2xl text-gray-600 ml-3">({jobs.length})</span>
-              </h2>
-            </div>
-            <Link
-              to="/admin/add-job"
-              className="bg-emerald-600 text-white px-7 py-4 rounded-xl font-bold flex items-center gap-3 hover:bg-emerald-700 shadow-lg hover:shadow-xl transition transform hover:scale-105"
-            >
-              <Plus className="w-6 h-6" /> Post New Job
-            </Link>
-          </div>
-
-          {jobs.length === 0 ? (
-            <div className="text-center py-10 bg-white rounded-2xl shadow-sm border border-gray-100">
-              <Briefcase className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">No active job postings</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {jobs.map(job => (
-                <div key={job.id} className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition border border-gray-100">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">{job.title}</h3>
-                      <p className="text-sm text-gray-500">{job.department} • {job.location}</p>
-                    </div>
-                    <span className="bg-[#FFFDF0] text-[#D4AF37] px-3 py-1 rounded-full text-xs font-bold">
-                      {job.type}
-                    </span>
-                  </div>
-                  <p className="text-gray-600 text-sm mb-6 line-clamp-2">{job.description}</p>
-                  <button
-                    onClick={() => deleteJob(job.id)}
-                    className="w-full bg-red-50 text-red-600 py-2 rounded-lg font-semibold hover:bg-red-100 transition flex items-center justify-center gap-2"
-                  >
-                    <Trash2 className="w-4 h-4" /> Delete Job
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
 
         {/* Inquiries Section */}
         <div className="mt-20 border-t border-gray-200 pt-10 pb-20">

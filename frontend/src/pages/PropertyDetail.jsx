@@ -201,7 +201,7 @@ export default function PropertyDetail() {
     <div className="min-h-screen bg-white pt-24">
       <Meta
         title={property.title}
-        description={property.description || `Beautiful ${property.bhk} BHK property via StarX Realty.`}
+        description={property.description || `Beautiful ${property.bhk} BHK property via StarX Properties.`}
         image={property.images?.[0]}
         url={window.location.href}
       />
@@ -389,11 +389,7 @@ export default function PropertyDetail() {
                 <div className="mb-4">
                   <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">{property.region}, Ghaziabad</p>
                   <h1 className="text-2xl font-extrabold text-gray-900 leading-tight mb-1">{property.title}</h1>
-                  <div className="flex items-center gap-1.5 text-[#D4AF37]">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="font-bold text-base">4.9</span>
-                    <span className="text-gray-400 text-xs">(120 reviews)</span>
-                  </div>
+
                 </div>
 
                 {/* Key Stats Row */}

@@ -59,7 +59,7 @@ export default function StickySearch() {
                     <div className="container mx-auto">
                         <form onSubmit={handleSearch} className="flex items-center gap-3 max-w-5xl mx-auto">
                             <div className="flex items-center gap-2 font-bold text-gray-900 mr-4">
-                                <span className="text-[#D4AF37]">StarX</span> Indirapuram
+                                <span className="text-[#D4AF37]">StarX Properties</span> Indirapuram
                             </div>
 
                             <div className="flex-1 flex bg-gray-50 rounded-lg border border-gray-200 overflow-hidden focus-within:border-[#D4AF37] transition-colors">

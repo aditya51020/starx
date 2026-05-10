@@ -46,7 +46,7 @@ export default function Wishlist() {
       <div className="min-h-screen bg-gray-50 py-20">
         <Meta
           title="My Wishlist"
-          description="View your saved properties on StarX Realty."
+          description="View your saved properties on StarX Properties."
         />
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-md mx-auto">
@@ -72,7 +72,7 @@ export default function Wishlist() {
     <div className="min-h-screen bg-gray-50 py-16">
       <Meta
         title="My Wishlist"
-        description="View all your saved properties in one place on StarX Realty."
+        description="View all your saved properties in one place on StarX Properties."
       />
       <div className="container mx-auto px-4">
         {/* Header */}

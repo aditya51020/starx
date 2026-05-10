@@ -52,7 +52,7 @@ export const blogPosts = [
 
             <p><strong>Key Takeaway:</strong> Don't look for perfect houses. Look for good bones and bad presentation.</p>
         `,
-        author: "StarX Research Team",
+        author: "StarX Properties Research Team",
         date: "Jan 15, 2026",
         image: "https://images.unsplash.com/photo-1484154218962-a1c002085aac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
         tags: ["Case Study", "Flipping", "ROI"]

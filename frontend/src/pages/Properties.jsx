@@ -1,7 +1,7 @@
 // src/pages/Properties.jsx
 import { useEffect, useState } from 'react';
 import api from '../axiosConfig';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import {
   Search, Filter, Grid, List, ChevronDown, X, Heart,
   MapPin, Bed, Bath, Maximize, TrendingUp, Home as HomeIcon,
@@ -33,6 +33,7 @@ export default function Properties() {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [total, setTotal] = useState(0);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false); // Login Modal State
@@ -136,7 +137,8 @@ export default function Properties() {
     Object.entries(filters).forEach(([key, value]) => {
       if (value) newParams.set(key, value);
     });
-    setSearchParams(newParams);
+    const searchStr = newParams.toString().replace(/\+/g, '%20');
+    navigate(`?${searchStr}`, { replace: true });
   };
 
   const clearFilters = () => {
@@ -734,8 +736,6 @@ export default function Properties() {
                         </div>
 
                         <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                          <span className="text-sm font-bold text-gray-700">4.8</span>
                         </div>
                       </div>
                     </div>

@@ -32,7 +32,7 @@ export default function Login() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <Meta
                 title={isAdmin ? "Admin Login" : "Login"}
-                description="Securely access your StarX Realty account to manage properties, view wishlists, and more."
+                description="Securely access your StarX Properties account to manage properties, view wishlists, and more."
             />
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-3xl shadow-xl">
                 <div className="text-center">

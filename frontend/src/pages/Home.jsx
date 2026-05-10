@@ -195,7 +195,7 @@ export default function HomePage() {
               </div>
 
               <a
-                href="https://wa.me/919212153683?text=Hi, I want to sell my property via StarX."
+                href="https://wa.me/919212153683?text=Hi, I want to sell my property via StarX Properties."
                 target="_blank"
                 rel="noreferrer"
                 className="bg-[#D4AF37] text-slate-900 px-8 py-4 rounded-xl font-bold hover:bg-[#C5A059] transition-colors whitespace-nowrap shadow-lg text-lg flex-shrink-0"
@@ -284,12 +284,12 @@ export default function HomePage() {
               transition={{ delay: 0.4 }}
               className="md:col-span-1 md:row-span-1 bg-white p-6 rounded-[2rem] shadow-lg border border-gray-100 flex flex-col justify-center items-center text-center hover:shadow-xl transition-shadow"
             >
-              <div className="text-4xl font-extrabold text-[#D4AF37] mb-2">4.9/5</div>
+              <div className="text-3xl font-extrabold text-[#D4AF37] mb-2">Top Rated</div>
               <div className="flex gap-1 justify-center mb-2 text-[#D4AF37]">
                 {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-4 h-4 fill-current" />)}
               </div>
-              <p className="text-slate-500 font-medium">Average User Rating</p>
-              <p className="text-xs text-slate-400 mt-1">Based on 1200+ reviews</p>
+              <p className="text-slate-500 font-medium">Real Estate Agency</p>
+              <p className="text-xs text-slate-400 mt-1">Trusted by hundreds</p>
             </motion.div>
 
             {/* Card 5: Medium Testimonial */}
@@ -326,7 +326,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h2 className="text-5xl md:text-6xl font-extrabold mb-8 tracking-tight">Ready to find your new home?</h2>
           <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-            Join thousands of satisfied customers who found their perfect property with StarX.
+            Join thousands of satisfied customers who found their perfect property with StarX Properties.
           </p>
           <button
             onClick={() => navigate('/properties')}

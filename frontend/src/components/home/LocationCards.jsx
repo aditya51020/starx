@@ -26,7 +26,7 @@ export default function LocationCards({ locationData }) {
                             transition={{ delay: index * 0.1 }}
                         >
                             <Link
-                                to={`/properties?region=${area.name}`}
+                                to={`/properties?region=${encodeURIComponent(area.name).replace(/%20/g, '%20')}`}
                                 className="group relative h-[450px] block rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500"
                             >
                                 <img
