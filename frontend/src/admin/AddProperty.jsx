@@ -192,12 +192,18 @@ export default function AddProperty() {
           toast.success('All files uploaded successfully!');
         }
       } else {
-        toast.error('All uploads failed.');
+        toast.error('All uploads failed. Please try again.');
       }
 
     } catch (err) {
-      console.error('Signature fetch failed:', err);
-      toast.error(`Failed to initialize upload: ${err?.response?.data?.error || err?.message || 'Unknown error'}`);
+      console.error('Upload Initialization Failed:');
+      console.error('- Message:', err.message);
+      console.error('- Status:', err.response?.status);
+      console.error('- Data:', err.response?.data);
+      console.error('- Headers:', err.config?.headers);
+      
+      const errorDetail = err.response?.data?.msg || err.response?.data?.error || err.message;
+      toast.error(`Upload failed (${err.response?.status || 'Network Error'}): ${errorDetail}`);
     } finally {
       setLoading(false);
     }
