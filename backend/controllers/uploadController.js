@@ -15,6 +15,9 @@ export const getUploadSignature = (req, res) => {
       folder: 'ghaziabad_realestate', // Optional: Keep organized
     }, CLOUDINARY_SECRET);
 
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     res.json({
       signature,
       timestamp,

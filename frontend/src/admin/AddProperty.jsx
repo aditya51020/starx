@@ -142,7 +142,7 @@ export default function AddProperty() {
 
     try {
       // 1. Get Signature from Backend
-      const signRes = await api.get('/api/admin/sign-upload');
+      const signRes = await api.get(`/api/admin/sign-upload?t=${Date.now()}`);
       const { signature, timestamp, cloudName, apiKey } = signRes.data;
 
       // 2. Upload each file directly to Cloudinary
