@@ -44,7 +44,8 @@ router.get("/check-auth", (req, res) => {
     // You could also fetch full user here if needed, or rely on 'me' endpoint
     return res.json({
       isAuthenticated: true,
-      user: { id: decoded.id, role: decoded.role || 'user' }
+      user: { id: decoded.id, role: decoded.role || 'user' },
+      token: token
     });
   } catch (err) {
     return res.status(401).json({ isAuthenticated: false });

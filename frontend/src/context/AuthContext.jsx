@@ -16,6 +16,9 @@ export const AuthProvider = ({ children }) => {
         const res = await axios.get('/api/auth/check-auth');
         if (res.data.isAuthenticated) {
           setUser(res.data.user);
+          if (res.data.token) {
+            localStorage.setItem('token', res.data.token);
+          }
         } else {
           setUser(null);
         }
