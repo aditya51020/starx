@@ -5,6 +5,7 @@ import { Phone, MessageCircle, Heart, Star, Clock, TrendingUp, MapPin, ArrowRigh
 import { motion } from 'framer-motion';
 import PropertyCardSkeleton from '../common/PropertyCardSkeleton';
 import { formatPrice } from '../../utils/formatPrice';
+import { optimizeCloudinaryUrl } from '../../utils/cloudinary';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -89,7 +90,7 @@ export default function FeaturedProperties({
                                 <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-200 h-full flex flex-col group p-3">
                                     <Link to={`/property/${property.id}`} className="block relative aspect-[4/3] overflow-hidden rounded-xl">
                                         <img
-                                            src={property.images?.[0] || 'https://via.placeholder.com/400x300?text=No+Image'}
+                                            src={optimizeCloudinaryUrl(property.images?.[0]) || 'https://via.placeholder.com/400x300?text=No+Image'}
                                             alt={property.title}
                                             loading="lazy"
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

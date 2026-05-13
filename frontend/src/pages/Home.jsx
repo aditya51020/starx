@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Train, Hospital, School, ShoppingCart, Coffee, CheckCircle, Star, Quote } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
+import { slugify } from '../utils/slugify';
 
 // Components
 import HeroSection from '../components/home/HeroSection';
@@ -88,14 +89,17 @@ export default function HomePage() {
 
   const handleSearch = (filters) => {
     const params = new URLSearchParams();
-    if (filters.region) params.append('region', filters.region);
     if (filters.transactionType) params.append('transactionType', filters.transactionType);
     if (filters.propertyType) params.append('propertyType', filters.propertyType);
     if (filters.bhk) params.append('bhk', filters.bhk);
     if (filters.minPrice) params.append('minPrice', filters.minPrice);
     if (filters.maxPrice) params.append('maxPrice', filters.maxPrice);
 
-    navigate(`/properties?${params.toString()}`);
+    if (filters.region) {
+      navigate(`/locality/${slugify(filters.region)}?${params.toString()}`);
+    } else {
+      navigate(`/properties?${params.toString()}`);
+    }
   };
 
 

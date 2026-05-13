@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useCompare } from '../context/CompareContext';
 import { X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 export default function CompareFloat() {
     const { compareList, removeFromCompare, clearCompare } = useCompare();
@@ -26,7 +27,7 @@ export default function CompareFloat() {
                                 <div key={property.id} className="relative group">
                                     <div className="w-16 h-12 rounded-lg overflow-hidden border border-gray-200">
                                         <img
-                                            src={property.images?.[0]}
+                                            src={optimizeCloudinaryUrl(property.images?.[0])}
                                             alt={property.title}
                                             className="w-full h-full object-cover"
                                         />

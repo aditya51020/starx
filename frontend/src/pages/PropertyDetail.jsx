@@ -18,6 +18,7 @@ import Meta from '../components/Meta'; // Import Meta component
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { formatPrice } from '../utils/formatPrice';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 // Fix Leaflet icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -224,7 +225,7 @@ export default function PropertyDetail() {
                 />
               ) : (
                 <img
-                  src={property.images?.[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200'}
+                  src={optimizeCloudinaryUrl(property.images?.[0], 1200) || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200'}
                   alt={property.title}
                   className="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-700"
                   onClick={() => setShowAllPhotos(true)}
@@ -532,7 +533,7 @@ export default function PropertyDetail() {
                 >
                   <div className="relative h-64 overflow-hidden">
                     <img
-                      src={p.images?.[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'}
+                      src={optimizeCloudinaryUrl(p.images?.[0]) || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'}
                       alt={p.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
@@ -600,7 +601,7 @@ export default function PropertyDetail() {
                       />
                     ) : (
                       <img
-                        src={img}
+                        src={optimizeCloudinaryUrl(img, 1920)}
                         alt={`Photo ${i + 1}`}
                         loading="lazy"
                         className="max-w-full max-h-full w-auto h-auto rounded-xl shadow-2xl mx-auto object-contain"

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import { formatPrice } from '../utils/formatPrice';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 export default function PropertyCard({ property, view }) {
   const badgeColor = property.transactionType === 'Rent' ? 'bg-green-100 text-green-800' :
@@ -9,7 +10,7 @@ export default function PropertyCard({ property, view }) {
 
   return (
     <Link to={`/property/${property.id}`} className={`block bg-white rounded-lg shadow hover:shadow-lg transition ${view === 'list' ? 'flex' : ''}`}>
-      <img src={property.images[0]} alt={property.title} loading="lazy" className={`object-cover ${view === 'grid' ? 'w-full h-48' : 'w-48 h-32'}`} />
+      <img src={optimizeCloudinaryUrl(property.images[0])} alt={property.title} loading="lazy" className={`object-cover ${view === 'grid' ? 'w-full h-48' : 'w-48 h-32'}`} />
       <div className="p-4 flex-1">
         <h3 className="font-medium text-lg">{property.title}</h3>
         <p className="text-indigo-600 font-bold">{formatPrice(property.price)}</p>

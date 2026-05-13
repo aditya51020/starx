@@ -4,6 +4,7 @@ import { Plus, Edit, Trash2, LogOut, Building2, MessageSquare, Phone, Mail } fro
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import api from '../axiosConfig';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 export default function AdminDashboard() {
   const [properties, setProperties] = useState([]);
@@ -128,7 +129,7 @@ export default function AdminDashboard() {
                 >
                   <div className="relative h-64 bg-gray-100">
                     <img
-                      src={p.images?.[0] || '/placeholder.jpg'}
+                      src={optimizeCloudinaryUrl(p.images?.[0]) || '/placeholder.jpg'}
                       alt={p.title || 'Property'}
                       className="w-full h-full object-cover"
                     />

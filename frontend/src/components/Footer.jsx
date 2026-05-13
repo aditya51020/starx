@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Building2, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Building2, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, Youtube, Globe } from 'lucide-react';
 import logo from '../assets/logo_new.png';
 import { POPULAR_REGIONS } from '../config/regions';
+import { slugify } from '../utils/slugify';
 
 export default function Footer() {
     return (
@@ -18,22 +19,41 @@ export default function Footer() {
                         </p>
                         <div className="flex gap-4">
                             <a
-                                href="https://www.facebook.com/starx.investors/"
+                                href="https://www.facebook.com/share/1E8E9LYkjH/?mibextid=wwXIfr"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-slate-800 p-2 rounded-full hover:bg-[#D4AF37] transition-colors"
+                                className="bg-slate-800 p-2 rounded-full hover:bg-[#D4AF37] transition-colors flex items-center justify-center"
+                                aria-label="Facebook"
                             >
                                 <Facebook className="w-4 h-4" />
                             </a>
-                            {[Twitter, Instagram, Linkedin].map((Icon, i) => (
-                                <a
-                                    key={i}
-                                    href="#"
-                                    className="bg-slate-800 p-2 rounded-full hover:bg-[#D4AF37] transition-colors"
-                                >
-                                    <Icon className="w-4 h-4" />
-                                </a>
-                            ))}
+                            <a
+                                href="https://www.instagram.com/starx_investors001?igsh=MWRhcnhidTk4bGppOA%3D%3D&utm_source=qr"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-slate-800 p-2 rounded-full hover:bg-[#D4AF37] transition-colors flex items-center justify-center"
+                                aria-label="Instagram"
+                            >
+                                <Instagram className="w-4 h-4" />
+                            </a>
+                            <a
+                                href="https://youtube.com/@starxproperties?si=cEd1BZcHkoUDsrNK"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-slate-800 p-2 rounded-full hover:bg-[#D4AF37] transition-colors flex items-center justify-center"
+                                aria-label="YouTube"
+                            >
+                                <Youtube className="w-4 h-4" />
+                            </a>
+                            <a
+                                href="https://www.google.com/search?sca_esv=e0b8aa947882bce5&rlz=1CDGOYI_enIN1204IN1204&hl=en-GB&sxsrf=ANbL-n446aDvBiFQiOI8FRwTkkHdOxBXQg%3A1778479529748&kgmid=%2Fg%2F11qq33qlwh&q=Starx%20Properties&shem=rimspwouoe&shndl=30&source=sh%2Fx%2Floc%2Fact%2Fm1%2F3&kgs=504bf14d8864393d"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-slate-800 p-2 rounded-full hover:bg-[#D4AF37] transition-colors flex items-center justify-center"
+                                aria-label="Google Profile"
+                            >
+                                <Globe className="w-4 h-4" />
+                            </a>
                         </div>
                     </div>
 
@@ -65,7 +85,7 @@ export default function Footer() {
                         <h4 className="text-lg font-bold mb-6">Properties</h4>
                         <ul className="space-y-4">
                             {POPULAR_REGIONS.map(r => (
-                                <li key={r}><Link to={`/properties?region=${encodeURIComponent(r)}`} className="text-slate-400 hover:text-[#D4AF37]">{r}</Link></li>
+                                <li key={r}><Link to={`/locality/${slugify(r)}`} className="text-slate-400 hover:text-[#D4AF37]">{r}</Link></li>
                             ))}
                             <li><Link to="/properties?type=Rent" className="text-slate-400 hover:text-[#D4AF37]">For Rent</Link></li>
                             <li><Link to="/properties?type=Sell" className="text-slate-400 hover:text-[#D4AF37]">For Sale</Link></li>

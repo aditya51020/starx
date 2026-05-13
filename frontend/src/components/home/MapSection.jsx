@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { MapPin, Home, Search as SearchIcon, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { optimizeCloudinaryUrl } from '../../utils/cloudinary';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -158,7 +159,7 @@ export default function MapSection({ allProperties, nearbyCategories }) {
                                             <Popup className="custom-popup">
                                                 <div className="text-center p-2 min-w-[200px]">
                                                     <img
-                                                        src={property.images?.[0] || '/placeholder.jpg'}
+                                                        src={optimizeCloudinaryUrl(property.images?.[0]) || '/placeholder.jpg'}
                                                         alt={property.title}
                                                         className="w-full h-32 object-cover rounded-lg mb-3"
                                                     />

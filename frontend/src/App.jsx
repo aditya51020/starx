@@ -14,6 +14,7 @@ const Signup = lazy(() => import('./pages/Signup'));
 const Compare = lazy(() => import('./pages/Compare'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+const LocalityPage = lazy(() => import('./pages/LocalityPage'));
 
 // Lazy Load Admin Pages
 const AdminLogin = lazy(() => import('./admin/AdminLogin'));
@@ -68,8 +69,8 @@ function App() {
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
 
-              {/* Optional region pages (agar use kar rahe ho) */}
-              {/* <Route path="/vasundhara" element={<RegionPage region="Vasundhara" />} /> */}
+              {/* Dynamic Locality SEO Pages */}
+              <Route path="/locality/:regionSlug" element={<LocalityPage />} />
 
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />

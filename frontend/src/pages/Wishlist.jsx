@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, X, Home, MapPin, Bed, Bath, Maximize } from 'lucide-react';
 import Meta from '../components/Meta';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
@@ -102,7 +103,7 @@ export default function Wishlist() {
               <Link to={`/property/${property.id}`} className="block">
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={property.images?.[0] || '/placeholder.jpg'}
+                    src={optimizeCloudinaryUrl(property.images?.[0]) || '/placeholder.jpg'}
                     alt={property.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />

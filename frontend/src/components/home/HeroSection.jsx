@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { Search, MapPin, Home, DollarSign, X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import CustomDropdown from '../common/CustomDropdown';
 import PriceRangeDropdown from '../common/PriceRangeDropdown';
 import { REGIONS, POPULAR_REGIONS } from '../../config/regions';
+import { slugify } from '../../utils/slugify';
 
 const PREDEFINED_LOCATIONS = REGIONS;
 
@@ -16,6 +18,7 @@ export default function HeroSection({ onSearch }) {
         minPrice: '',
         maxPrice: ''
     });
+    const navigate = useNavigate();
 
     // Location search state
     const [locationInput, setLocationInput] = useState('');
@@ -58,7 +61,14 @@ export default function HeroSection({ onSearch }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSearch(filters);
+        if (filters.region) {
+            const params = new URLSearchParams();
+            if (filters.transactionType) params.append('transactionType', filters.transactionType);
+            if (filters.propertyType) params.append('propertyType', filters.propertyType);
+            navigate(`/locality/${slugify(filters.region)}?${params.toString()}`);
+        } else {
+            onSearch(filters);
+        }
     };
 
     // Tab definitions — each maps to the correct filter field
@@ -188,10 +198,7 @@ export default function HeroSection({ onSearch }) {
                     {['Nyay Khand', 'Ahinsa Khand', 'Vaibhav Khand', 'Shipra Suncity'].map((loc) => (
                         <button
                             key={loc}
-                            onClick={() => {
-                                setFilters({ ...filters, region: loc });
-                                setTimeout(() => onSearch({ ...filters, region: loc }), 100);
-                            }}
+                            onClick={() => navigate(`/locality/${slugify(loc)}`)}
                             className="bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 text-white px-4 py-1.5 rounded-md text-sm transition font-medium"
                         >
                             {loc}

@@ -2,6 +2,7 @@ import { useCompare } from '../context/CompareContext';
 import { Link } from 'react-router-dom';
 import { Check, X, ArrowLeft, Trash2 } from 'lucide-react';
 import Meta from '../components/Meta';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 export default function Compare() {
     const { compareList, removeFromCompare, clearCompare } = useCompare();
@@ -76,7 +77,7 @@ export default function Compare() {
                                             </button>
                                             <Link to={`/property/${property.id}`} className="block">
                                                 <img
-                                                    src={property.images?.[0]}
+                                                    src={optimizeCloudinaryUrl(property.images?.[0])}
                                                     alt={property.title}
                                                     className="w-full h-48 object-cover rounded-xl mb-4 hover:shadow-md transition"
                                                 />

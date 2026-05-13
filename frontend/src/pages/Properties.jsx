@@ -19,6 +19,7 @@ import PropertyCardSkeleton from '../components/common/PropertyCardSkeleton'; //
 import LoginModal from '../components/common/LoginModal'; // Import LoginModal
 import PriceRangeDropdown from '../components/common/PriceRangeDropdown'; // Import PriceRangeDropdown
 import { formatPrice } from '../utils/formatPrice'; // Standard format format
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 import { REGIONS } from '../config/regions';
 
 // Fix Leaflet icons
@@ -29,7 +30,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-export default function Properties() {
+export default function Properties({ regionOverride }) {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,7 +45,7 @@ export default function Properties() {
   const { user } = useAuth(); // If we want server-side wishlist later
 
   const [filters, setFilters] = useState({
-    region: searchParams.get('region') || '',
+    region: regionOverride || searchParams.get('region') || '',
     transactionType: searchParams.get('transactionType') || '',
     propertyType: searchParams.get('propertyType') || '',
     bhk: searchParams.get('bhk') || '',
@@ -63,10 +64,9 @@ export default function Properties() {
     setWishlist(savedWishlist);
   }, [user]);
 
-  // Sync filters state when URL parameters change
   useEffect(() => {
     setFilters({
-      region: searchParams.get('region') || '',
+      region: regionOverride || searchParams.get('region') || '',
       transactionType: searchParams.get('transactionType') || '',
       propertyType: searchParams.get('propertyType') || '',
       bhk: searchParams.get('bhk') || '',
@@ -91,6 +91,10 @@ export default function Properties() {
           const val = searchParams.get(key);
           if (val) params.set(key, val);
         });
+
+        if (regionOverride) {
+          params.set('region', regionOverride);
+        }
         
         // Also support sort default if not in URL
         if (!params.has('sort')) {
@@ -382,15 +386,17 @@ export default function Properties() {
       </div>
 
       {/* Location */}
-      <CheckboxGroup
-        label="Location"
-        options={REGIONS}
-        selected={filters.region}
-        onChange={(val) => {
-          setFilters({ ...filters, region: val });
-          setTimeout(updateUrl, 100);
-        }}
-      />
+      {!regionOverride && (
+        <CheckboxGroup
+          label="Location"
+          options={REGIONS}
+          selected={filters.region}
+          onChange={(val) => {
+            setFilters({ ...filters, region: val });
+            setTimeout(updateUrl, 100);
+          }}
+        />
+      )}
 
       {/* Price Range */}
       <div>
@@ -470,8 +476,8 @@ export default function Properties() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>All Properties | StartxProperties - Buy, Sell, Rent in Ghaziabad</title>
-        <meta name="description" content="Browse our extensive list of properties in Vasundhara, Indirapuram, and Sector 63. Find your perfect home or investment opportunity." />
+        <title>{regionOverride ? `Properties in ${regionOverride} | StarX Properties` : 'All Properties | StarX Properties - Buy, Sell, Rent in Ghaziabad'}</title>
+        <meta name="description" content={regionOverride ? `Find the best properties for sale and rent in ${regionOverride}, Ghaziabad. Explore flats, villas, and commercial spaces.` : "Browse our extensive list of properties in Vasundhara, Indirapuram, and Sector 63. Find your perfect home or investment opportunity."} />
       </Helmet>
       {/* Hero Section - Redesigned Light Theme */}
       <div className="bg-white pt-24 pb-12 border-b border-gray-100">
@@ -482,7 +488,7 @@ export default function Properties() {
           </div>
 
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
-            Find Your Dream Home <br className="hidden md:block" /> in <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#B5952F]">Ghaziabad</span>
+            Find Your Dream Home <br className="hidden md:block" /> in <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#B5952F]">{regionOverride || 'Ghaziabad'}</span>
           </h1>
 
           <p className="text-lg text-gray-500 max-w-2xl mx-auto mb-8">
@@ -649,7 +655,7 @@ export default function Properties() {
                       >
                         <Popup>
                           <div className="w-48">
-                            <img src={property.images?.[0]} alt={property.title} loading="lazy" className="w-full h-24 object-cover rounded mb-2" />
+                            <img src={optimizeCloudinaryUrl(property.images?.[0])} alt={property.title} loading="lazy" className="w-full h-24 object-cover rounded mb-2" />
                             <h4 className="font-bold text-sm truncate">{property.title}</h4>
                             <p className="text-[#D4AF37] font-bold">{formatPrice(property.price)}</p>
                             <Link to={`/property/${property.id}`} className="block mt-2 text-center bg-[#D4AF37] text-white py-1 rounded text-xs">View Details</Link>
@@ -672,7 +678,7 @@ export default function Properties() {
                     <Link to={`/property/${property.id}`} className="absolute inset-0 z-10"></Link>
 
                     <img
-                      src={property.images?.[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'}
+                      src={optimizeCloudinaryUrl(property.images?.[0]) || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'}
                       alt={property.title}
                       loading="lazy"
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
