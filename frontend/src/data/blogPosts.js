@@ -22,7 +22,7 @@ export const blogPosts = [
 
             <blockquote>"The best time to buy in Ghaziabad was 5 years ago. The second best time is now."</blockquote>
         `,
-        author: "Aditya (Founder)",
+        author: "Raju Panday",
         date: "Feb 8, 2026",
         image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
         tags: ["Investment", "Guide", "Ghaziabad"]
@@ -76,7 +76,7 @@ export const blogPosts = [
             
             <p>Choosing the right location can save you up to ₹1 Lakh annually in rent and commute costs.</p>
         `,
-        author: "Aditya (Founder)",
+        author: "Raju Panday",
         date: "Dec 22, 2025",
         image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
         tags: ["Lifestyle", "Rentals", "Commute"]
