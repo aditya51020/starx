@@ -3,7 +3,7 @@ import axios from "axios";
 
 const getBaseUrl = () => {
   if (import.meta.env.MODE === 'development') {
-    return "http://localhost:5000";
+    return "";
   }
   const url = "https://api.starxproperties.in";
 
