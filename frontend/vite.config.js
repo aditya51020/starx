@@ -24,7 +24,16 @@ export default defineConfig({
       },
     },
   },
+  esbuild: {
+    target: 'safari14'
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'safari14'
+    }
+  },
   build: {
+    target: 'safari14',
     rollupOptions: {
       output: {
         manualChunks: {
