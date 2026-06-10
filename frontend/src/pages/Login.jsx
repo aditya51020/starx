@@ -15,11 +15,12 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const normalizedEmail = formData.email ? formData.email.toLowerCase().trim() : '';
             if (isAdmin) {
-                await adminLogin(formData.email, formData.password);
+                await adminLogin(normalizedEmail, formData.password);
                 navigate('/admin/dashboard');
             } else {
-                await login(formData.email, formData.password);
+                await login(normalizedEmail, formData.password);
                 navigate('/');
             }
             toast.success('Welcome back!');

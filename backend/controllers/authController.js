@@ -6,7 +6,8 @@ import { JWT_SECRET } from '../config.js';
 
 // --- ADMIN AUTH ---
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
+  email = email ? email.toLowerCase().trim() : '';
 
   // 1. Secure Fallback (requires ENV variable)
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
@@ -56,7 +57,8 @@ export const me = async (req, res) => {
 // --- USER AUTH ---
 export const signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    let { name, email, password } = req.body;
+    email = email ? email.toLowerCase().trim() : '';
 
     // Check if user exists
     const existing = await User.findOne({ where: { email } });
@@ -95,7 +97,8 @@ export const signup = async (req, res) => {
 
 export const userLogin = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    email = email ? email.toLowerCase().trim() : '';
 
     const user = await User.findOne({ where: { email } });
     if (!user) return res.status(400).json({ msg: 'Invalid credentials' });

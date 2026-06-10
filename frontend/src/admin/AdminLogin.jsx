@@ -17,7 +17,8 @@ export default function AdminLogin() {
     setIsLoading(true);
 
     try {
-      await adminLogin(email, password); // Call adminLogin
+      const normalizedEmail = email ? email.toLowerCase().trim() : '';
+      await adminLogin(normalizedEmail, password); // Call adminLogin
       toast.success('Welcome back, Admin!');
       navigate('/admin/dashboard');
     } catch (err) {
