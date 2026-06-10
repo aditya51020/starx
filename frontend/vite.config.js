@@ -25,15 +25,15 @@ export default defineConfig({
     },
   },
   esbuild: {
-    target: 'safari14'
+    target: 'es2015'
   },
   optimizeDeps: {
     esbuildOptions: {
-      target: 'safari14'
+      target: 'es2015'
     }
   },
   build: {
-    target: 'safari14',
+    target: 'es2015',
     rollupOptions: {
       output: {
         manualChunks: {
