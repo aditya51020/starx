@@ -23,7 +23,12 @@ export default function AdminLogin() {
       toast.success('Welcome back, Admin!');
       navigate('/admin/dashboard');
     } catch (err) {
-      const errorMsg = err.response?.data?.msg || err.message || "Invalid credentials";
+      let errorMsg = "Invalid credentials";
+      if (err.response && err.response.data && err.response.data.msg) {
+        errorMsg = err.response.data.msg;
+      } else if (err.message) {
+        errorMsg = err.message;
+      }
       toast.error(errorMsg);
     } finally {
       setIsLoading(false);
