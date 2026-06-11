@@ -9,7 +9,8 @@ export default defineConfig({
     react(), 
     tailwindcss(),
     legacy({
-      targets: ['defaults', 'not IE 11', 'iOS >= 12']
+      targets: ['defaults', 'not IE 11', 'iOS >= 12'],
+      modernPolyfills: true
     })
   ],
   server: {
