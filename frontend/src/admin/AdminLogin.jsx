@@ -18,11 +18,13 @@ export default function AdminLogin() {
 
     try {
       const normalizedEmail = email ? email.toLowerCase().trim() : '';
-      await adminLogin(normalizedEmail, password); // Call adminLogin
+      const normalizedPassword = password ? password.trim() : '';
+      await adminLogin(normalizedEmail, normalizedPassword); // Call adminLogin
       toast.success('Welcome back, Admin!');
       navigate('/admin/dashboard');
     } catch (err) {
-      toast.error("Invalid credentials. Please try again.");
+      const errorMsg = err.response?.data?.msg || err.message || "Invalid credentials";
+      toast.error(errorMsg);
     } finally {
       setIsLoading(false);
     }
