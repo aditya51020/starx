@@ -2,12 +2,7 @@
 import axios from "axios";
 
 const getBaseUrl = () => {
-  if (import.meta.env.MODE === 'development') {
-    return "";
-  }
-  const url = "https://api.starxproperties.in";
-
-  return url;
+  return "";
 };
 
 const api = axios.create({
