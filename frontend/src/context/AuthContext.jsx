@@ -7,6 +7,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Check if user is logged in
@@ -19,11 +20,25 @@ export const AuthProvider = ({ children }) => {
           if (res.data.token) {
             localStorage.setItem('token', res.data.token);
           }
+          // Fetch full user details to get wishlist if role is user
+          if (res.data.user.role === 'user') {
+            const meRes = await axios.get('/api/auth/me');
+            const dbWishlist = meRes.data.user?.wishlist || [];
+            setWishlist(dbWishlist);
+            localStorage.setItem('wishlist', JSON.stringify(dbWishlist));
+          } else {
+            setWishlist([]);
+          }
         } else {
           setUser(null);
+          // Load local wishlist for guest
+          const saved = JSON.parse(localStorage.getItem('wishlist') || '[]');
+          setWishlist(saved);
         }
       } catch (err) {
         setUser(null);
+        const saved = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        setWishlist(saved);
       } finally {
         setLoading(false);
       }
@@ -38,6 +53,9 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.token);
       }
       setUser(res.data.user);
+      const dbWishlist = res.data.user?.wishlist || [];
+      setWishlist(dbWishlist);
+      localStorage.setItem('wishlist', JSON.stringify(dbWishlist));
       return { success: true };
     } catch (err) {
       throw err;
@@ -50,6 +68,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', res.data.token);
     }
     setUser(res.data.user);
+    setWishlist([]);
     return { success: true };
   };
 
@@ -59,19 +78,52 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', res.data.token);
     }
     setUser(res.data.user);
+    const dbWishlist = res.data.user?.wishlist || [];
+    setWishlist(dbWishlist);
+    localStorage.setItem('wishlist', JSON.stringify(dbWishlist));
     return { success: true };
   };
 
   const logout = async () => {
     await axios.post('/api/auth/logout');
     setUser(null);
-    // Clear local storage items that might depend on user
+    setWishlist([]);
     localStorage.removeItem('wishlist');
     localStorage.removeItem('token');
   };
 
+  const toggleWishlist = async (propertyId) => {
+    const isSaved = wishlist.includes(propertyId);
+    const newWishlist = isSaved
+      ? wishlist.filter(id => id !== propertyId)
+      : [...wishlist, propertyId];
+
+    setWishlist(newWishlist);
+    localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+
+    if (user && user.role === 'user') {
+      try {
+        await axios.post('/api/auth/wishlist', { wishlist: newWishlist });
+      } catch (err) {
+        console.error('Failed to sync wishlist with server:', err);
+      }
+    }
+  };
+
+  const clearWishlist = async () => {
+    setWishlist([]);
+    localStorage.removeItem('wishlist');
+    if (user && user.role === 'user') {
+      try {
+        await axios.post('/api/auth/wishlist', { wishlist: [] });
+      } catch (err) {
+        console.error('Failed to clear wishlist on server:', err);
+      }
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, adminLogin, signup, logout, loading }}>
+    <AuthContext.Provider value={{ user, wishlist, toggleWishlist, clearWishlist, login, adminLogin, signup, logout, loading }}>
       {loading ? (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
           <div className="w-12 h-12 border-4 border-[#D4AF37] border-t-transparent rounded-full animate-spin"></div>

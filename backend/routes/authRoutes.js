@@ -1,7 +1,8 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config.js";
-import { login, signup, userLogin, me } from "../controllers/authController.js";
+import { login, signup, userLogin, me, updateWishlist } from "../controllers/authController.js";
+import { protect } from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -64,5 +65,10 @@ router.post("/logout", (req, res) => {
 
   return res.json({ message: "Logged out" });
 });
+
+// ------------------------
+//        WISHLIST
+// ------------------------
+router.post("/wishlist", protect, updateWishlist);
 
 export default router;

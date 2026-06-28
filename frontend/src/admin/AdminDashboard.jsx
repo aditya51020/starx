@@ -215,9 +215,9 @@ export default function AdminDashboard() {
                       <tr key={inq.id} className="hover:bg-gray-50 transition">
                         <td className="px-6 py-4">
                           <p className="font-bold text-gray-900">{inq.name}</p>
-                          {inq.propertyId?.title && (
+                          {inq.propertyInterest && (
                             <span className="text-xs bg-[#FFFDF0] text-[#D4AF37] px-2 py-1 rounded mt-1 inline-block">
-                              Ref: {inq.propertyId.title}
+                              Ref: {inq.propertyInterest}
                             </span>
                           )}
                         </td>

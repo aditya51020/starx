@@ -39,10 +39,9 @@ export default function Properties({ regionOverride }) {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false); // Login Modal State
   const [viewMode, setViewMode] = useState('grid'); // grid, list, map
-  const [wishlist, setWishlist] = useState([]);
 
   const { addToCompare, compareList } = useCompare();
-  const { user } = useAuth(); // If we want server-side wishlist later
+  const { user, wishlist, toggleWishlist } = useAuth();
 
   const [filters, setFilters] = useState({
     region: regionOverride || searchParams.get('region') || '',
@@ -56,13 +55,6 @@ export default function Properties({ regionOverride }) {
     search: searchParams.get('search') || '',
     sort: searchParams.get('sort') || 'latest'
   });
-
-  useEffect(() => {
-    // Load wishlist from localStorage (Legacy)
-    const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    // Ideally merge with user.wishlist if logged in
-    setWishlist(savedWishlist);
-  }, [user]);
 
   useEffect(() => {
     setFilters({
@@ -99,7 +91,7 @@ export default function Properties({ regionOverride }) {
         // Also support sort default if not in URL
         if (!params.has('sort')) {
            params.set('sort', 'latest');
-        }
+         }
 
         const res = await api.get(`/api/properties?${params.toString()}`);
 
@@ -120,20 +112,11 @@ export default function Properties({ regionOverride }) {
     fetchProperties();
   }, [searchParams]);
 
-  const toggleWishlist = (propertyId, e) => {
+  const handleToggleWishlist = (propertyId, e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    const newWishlist = wishlist.includes(propertyId)
-      ? wishlist.filter(id => id !== propertyId)
-      : [...wishlist, propertyId];
-
-    setWishlist(newWishlist);
-    localStorage.setItem('wishlist', JSON.stringify(newWishlist));
-    // TODO: Sync with backend if user is logged in
-    if (user) {
-      toast.success(wishlist.includes(propertyId) ? 'Removed from Wishlist' : 'Added to Wishlist');
-    }
+    toggleWishlist(propertyId);
+    toast.success(wishlist.includes(propertyId) ? 'Removed from Wishlist' : 'Added to Wishlist');
   };
 
   const updateUrl = () => {
@@ -611,13 +594,11 @@ export default function Properties({ regionOverride }) {
                     <span className="bg-white text-[#D4AF37] px-2 py-0.5 rounded-full text-xs font-bold">
                       {activeFilterCount}
                     </span>
-                  )}
                 </button>
               </div>
             </div>
 
-            {/* Property Grid/List/Map */}
-            {loading ? (
+            {loading && properties.length === 0 ? (
               <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'} gap-6`}>
                 {[1, 2, 3, 4, 5, 6].map(i => (
                   <PropertyCardSkeleton key={i} />
@@ -635,137 +616,129 @@ export default function Properties({ regionOverride }) {
                   Clear All Filters
                 </button>
               </div>
-            ) : viewMode === 'map' ? (
-              // MAP VIEW
-              <div className="h-[600px] rounded-2xl overflow-hidden shadow-lg border border-gray-200 relative z-0">
-                <MapContainer
-                  center={[28.6692, 77.4538]}
-                  zoom={12}
-                  style={{ height: '100%', width: '100%' }}
-                >
-                  <TileLayer
-                    url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-                    attribution='&copy; <a href="https://carto.com/">CartoDB</a>'
-                  />
-                  {properties.map(property => (
-                    (property.lat && property.lng) ? (
-                      <Marker
-                        key={property.id}
-                        position={[property.lat, property.lng]}
-                      >
-                        <Popup>
-                          <div className="w-48">
-                            <img src={optimizeCloudinaryUrl(property.images?.[0])} alt={property.title} loading="lazy" className="w-full h-24 object-cover rounded mb-2" />
-                            <h4 className="font-bold text-sm truncate">{property.title}</h4>
-                            <p className="text-[#D4AF37] font-bold">{formatPrice(property.price)}</p>
-                            <Link to={`/property/${property.id}`} className="block mt-2 text-center bg-[#D4AF37] text-white py-1 rounded text-xs">View Details</Link>
-                          </div>
-                        </Popup>
-                      </Marker>
-                    ) : null
-                  ))}
-                </MapContainer>
-              </div>
             ) : (
-              // GRID / LIST VIEW
-              <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'} gap-6`}>
-                {properties.map(property => (
-                  <div
-                    key={property.id}
-                    className={`group relative rounded-[2rem] overflow-hidden transition-all duration-300 ${viewMode === 'list' ? 'flex flex-row h-64' : 'aspect-[4/5] w-full'
-                      }`}
-                  >
-                    <Link to={`/property/${property.id}`} className="absolute inset-0 z-10"></Link>
+              <div className={`transition-opacity duration-200 ${loading ? 'opacity-60 pointer-events-none' : 'opacity-100'}`}>
+                {viewMode === 'map' ? (
+                  // MAP VIEW
+                  <div className="h-[600px] rounded-2xl overflow-hidden shadow-lg border border-gray-200 relative z-0">
+                    <MapContainer
+                      center={[28.6692, 77.4538]}
+                      zoom={12}
+                      style={{ height: '100%', width: '100%' }}
+                    >
+                      <TileLayer
+                        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                        attribution='&copy; <a href="https://carto.com/">CartoDB</a>'
+                      />
+                      {properties.map(property => (
+                        (property.lat && property.lng) ? (
+                          <Marker
+                            key={property.id}
+                            position={[property.lat, property.lng]}
+                          >
+                            <Popup>
+                              <div className="w-48">
+                                <img src={optimizeCloudinaryUrl(property.images?.[0])} alt={property.title} loading="lazy" className="w-full h-24 object-cover rounded mb-2" />
+                                <h4 className="font-bold text-sm truncate">{property.title}</h4>
+                                <p className="text-[#D4AF37] font-bold">{formatPrice(property.price)}</p>
+                                <Link to={`/property/${property.id}`} className="block mt-2 text-center bg-[#D4AF37] text-white py-1 rounded text-xs">View Details</Link>
+                              </div>
+                            </Popup>
+                          </Marker>
+                        ) : null
+                      ))}
+                    </MapContainer>
+                  </div>
+                ) : (
+                  // GRID / LIST VIEW
+                  <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'} gap-6`}>
+                    {properties.map(property => (
+                      <div
+                        key={property.id}
+                        className={`group relative rounded-[2rem] overflow-hidden transition-all duration-300 ${viewMode === 'list' ? 'flex flex-row h-64' : 'aspect-[4/5] w-full'
+                          }`}
+                      >
+                        <Link to={`/property/${property.id}`} className="absolute inset-0 z-10"></Link>
 
-                    <img
-                      src={optimizeCloudinaryUrl(property.images?.[0]) || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'}
-                      alt={property.title}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
+                        <img
+                          src={optimizeCloudinaryUrl(property.images?.[0]) || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'}
+                          alt={property.title}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
 
-                    {/* Gradient Overlay for visibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none"></div>
+                        {/* Gradient Overlay for visibility */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-                    {/* Top Badges */}
-                    <div className="absolute top-5 left-5 right-5 flex justify-between items-start z-20 pointer-events-none">
-                      {/* Type Badge */}
-                      {property.propertyType && (
-                        <span className="bg-white/95 backdrop-blur-md text-gray-900 px-4 py-1.5 rounded-full text-xs font-bold shadow-sm border border-gray-100">
-                          {property.propertyType}
-                        </span>
-                      )}
+                        {/* Badges */}
+                        <div className="absolute top-6 left-6 z-20 flex gap-2">
+                          <span className={`px-4 py-1.5 rounded-full text-xs font-bold text-white uppercase tracking-wider ${property.transactionType === 'Rent' ? 'bg-[#3B82F6]' : 'bg-[#D4AF37]'
+                            }`}>
+                            For {property.transactionType}
+                          </span>
+                        </div>
 
-                      {/* Status Badge */}
-                      <span className={`px-4 py-1.5 rounded-full text-xs font-bold text-white shadow-sm ${property.transactionType === 'Rent'
-                        ? 'bg-[#10B981]' // Green for Rent
-                        : property.transactionType === 'Sell'
-                          ? 'bg-[#3B82F6]' // Blue for Sell
-                          : 'bg-gray-500'
-                        }`}>
-                        {property.transactionType}
-                      </span>
-                    </div>
+                        {/* Property Details */}
+                        <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white flex flex-col justify-end">
+                          <p className="text-2xl font-black mb-1 tracking-tight text-white drop-shadow-md">
+                            {formatPrice(property.price)}
+                          </p>
 
-                    {/* Floating Bottom Info Card */}
-                    <div className="absolute bottom-4 left-4 right-4 bg-white rounded-[1.5rem] p-4 shadow-xl z-20 mx-auto border border-gray-100 pointer-events-none">
-                      <div className="flex justify-between items-start mb-2">
-                        <div className="flex-1 min-w-0 mr-2">
-                          <h3 className="font-bold text-lg text-gray-900 line-clamp-1 group-hover:text-blue-600 transition">
+                          <h3 className="font-bold text-lg leading-tight mb-2 line-clamp-1 group-hover:text-[#FFFDF0] transition-colors">
                             {property.title}
                           </h3>
-                          <div className="flex items-center text-gray-500 text-xs mt-1 font-medium">
-                            <MapPin className="w-3.5 h-3.5 mr-1 text-gray-400 flex-shrink-0" />
-                            <span className="truncate">{property.region}</span>
+
+                          {/* Info Rows */}
+                          <div className="flex items-center gap-3 text-xs text-gray-300 font-semibold mb-3">
+                            <span className="flex items-center gap-1">
+                              <Bed className="w-3.5 h-3.5 text-[#D4AF37]" /> {property.bhk} BHK
+                            </span>
+                            <span>•</span>
+                            <span className="flex items-center gap-1">
+                              <Maximize className="w-3.5 h-3.5 text-[#D4AF37]" /> {property.area} sqft
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-between gap-4 border-t border-white/15 pt-3 mt-1">
+                            <div className="flex items-center text-gray-500 text-xs mt-1 font-medium">
+                              <MapPin className="w-3.5 h-3.5 mr-1 text-gray-400 flex-shrink-0" />
+                              <span className="truncate">{property.region}</span>
+                            </div>
+
+                            {/* Bookmark Button */}
+                            <button
+                              onClick={(e) => handleToggleWishlist(property._id || property.id, e)}
+                              className="bg-blue-50 p-2.5 rounded-full hover:bg-blue-100 transition flex-shrink-0 group/btn shadow-sm pointer-events-auto"
+                            >
+                              <Heart
+                                className={`w-5 h-5 transition-colors ${wishlist.includes(property._id || property.id) ? 'fill-[#3B82F6] text-[#3B82F6]' : 'text-[#3B82F6]'}`}
+                              />
+                            </button>
                           </div>
                         </div>
+                      </div>
+                    ))}
 
-                        {/* Bookmark Button */}
+                    {/* Load More Button (Optional) */}
+                    {properties.length < total && viewMode !== 'map' && (
+                      <div className="text-center mt-12">
                         <button
-                          onClick={(e) => toggleWishlist(property._id || property.id, e)}
-                          className="bg-blue-50 p-2.5 rounded-full hover:bg-blue-100 transition flex-shrink-0 group/btn shadow-sm pointer-events-auto"
+                          onClick={() => {
+                            if (!user) {
+                              setShowLoginModal(true);
+                              window.scrollTo({ top: 0, behavior: 'smooth' }); // Optional: scroll up slightly or keep position
+                            } else {
+                              // Logic to load more properties (e.g., pagination)
+                              // For now just console log or toast that we would load more
+                              toast('Loading more properties...', { icon: '⏳' });
+                            }
+                          }}
+                          className="bg-white border-2 border-[#D4AF37] text-[#D4AF37] px-8 py-4 rounded-xl font-bold hover:bg-[#FFFDF0] transition"
                         >
-                          <Heart
-                            className={`w-5 h-5 transition-colors ${wishlist.includes(property._id || property.id) ? 'fill-[#3B82F6] text-[#3B82F6]' : 'text-[#3B82F6]'}`}
-                          />
+                          Load More Properties
                         </button>
                       </div>
-
-                      <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
-                        <div className="flex items-baseline">
-                          <span className="text-xl font-extrabold text-gray-900">
-                            {formatPrice(property.price) || 'N/A'}
-                          </span>
-                          {property.transactionType === 'Rent' && (
-                            <span className="text-gray-400 text-xs ml-1 font-medium">/month</span>
-                          )}
-                        </div>
-
-                        <div className="flex items-center gap-1">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-
-                {/* Load More Button (Optional) */}
-                {properties.length < total && viewMode !== 'map' && (
-                  <div className="text-center mt-12">
-                    <button
-                      onClick={() => {
-                        if (!user) {
-                          setShowLoginModal(true);
-                          window.scrollTo({ top: 0, behavior: 'smooth' }); // Optional: scroll up slightly or keep position
-                        } else {
-                          // Logic to load more properties (e.g., pagination)
-                          // For now just console log or toast that we would load more
-                          toast('Loading more properties...', { icon: '⏳' });
-                        }
-                      }}
-                      className="bg-white border-2 border-[#D4AF37] text-[#D4AF37] px-8 py-4 rounded-xl font-bold hover:bg-[#FFFDF0] transition"
-                    >
-                      Load More Properties
-                    </button>
+                    )}
                   </div>
                 )}
               </div>

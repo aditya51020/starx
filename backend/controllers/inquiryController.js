@@ -22,11 +22,17 @@ export const createInquiry = async (req, res) => {
             location
         });
 
-        // Optionally fetch property title if propertyId exists
+        // Fetch property and validate if propertyId exists
         let propertyTitle = null;
         if (propertyId) {
             const prop = await Property.findByPk(propertyId);
-            if (prop) propertyTitle = prop.title;
+            if (!prop) {
+                return res.status(404).json({ message: 'Property not found' });
+            }
+            if (prop.status === 'Inactive' || prop.transactionType === 'Sold') {
+                return res.status(400).json({ message: 'Inquiries are not allowed for this property as it is inactive or sold' });
+            }
+            propertyTitle = prop.title;
         }
 
         // Attach to the object passed to email service without saving it to DB column

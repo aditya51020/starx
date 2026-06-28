@@ -30,10 +30,9 @@ L.Icon.Default.mergeOptions({
 
 export default function PropertyDetail() {
   const { id } = useParams();
-  const { user } = useAuth(); // Get user from context
+  const { user, wishlist, toggleWishlist: toggleWishlistContext } = useAuth(); // Get user from context
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [wishlist, setWishlist] = useState([]);
   const [similar, setSimilar] = useState([]);
   const [showAllPhotos, setShowAllPhotos] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -92,10 +91,6 @@ export default function PropertyDetail() {
   };
 
   useEffect(() => {
-    // Load wishlist
-    const saved = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    setWishlist(saved);
-
     // Track recently viewed
     const viewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
     if (!viewed.includes(id)) {
@@ -131,11 +126,7 @@ export default function PropertyDetail() {
 
   const toggleWishlist = () => {
     if (!property) return;
-    const newWishlist = wishlist.includes(property.id)
-      ? wishlist.filter(w => w !== property.id)
-      : [...wishlist, property.id];
-    setWishlist(newWishlist);
-    localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+    toggleWishlistContext(property.id);
   };
 
   const shareProperty = () => {
@@ -345,9 +336,18 @@ export default function PropertyDetail() {
                 {/* Nearby Places Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
                   {(() => {
-                    const places = typeof property.nearbyPlaces === 'string'
-                      ? JSON.parse(property.nearbyPlaces)
-                      : (property.nearbyPlaces || {});
+                    let places = {};
+                    if (property.nearbyPlaces) {
+                      if (typeof property.nearbyPlaces === 'string') {
+                        try {
+                          places = JSON.parse(property.nearbyPlaces);
+                        } catch (e) {
+                          console.error("Failed to parse nearbyPlaces JSON:", e);
+                        }
+                      } else {
+                        places = property.nearbyPlaces;
+                      }
+                    }
 
                     return (
                       <>

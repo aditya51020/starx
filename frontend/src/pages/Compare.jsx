@@ -6,8 +6,9 @@ import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 export default function Compare() {
     const { compareList, removeFromCompare, clearCompare } = useCompare();
+    const activeCompareList = (compareList || []).filter(Boolean);
 
-    if (compareList.length === 0) {
+    if (activeCompareList.length === 0) {
         return (
             <div className="min-h-screen pt-24 px-4 bg-gray-50 flex items-center justify-center">
                 <Meta
@@ -60,12 +61,17 @@ export default function Compare() {
                     </button>
                 </div>
 
+                {/* Mobile Swipe Hint */}
+                <div className="block md:hidden text-center text-sm text-[#D4AF37] mb-4 animate-pulse font-bold">
+                    ← Swipe left/right to compare properties →
+                </div>
+
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden overflow-x-auto">
                     <table className="w-full min-w-[800px]">
                         <thead>
                             <tr className="border-b border-gray-100">
                                 <th className="p-6 text-left w-48 bg-gray-50/50 sticky left-0 z-10 font-bold text-gray-700">Features</th>
-                                {compareList.map((property) => (
+                                {activeCompareList.map((property) => (
                                     <th key={property.id} className="p-6 min-w-[300px] text-left">
                                         <div className="relative group">
                                             <button
@@ -93,7 +99,7 @@ export default function Compare() {
                             {features.map((feature) => (
                                 <tr key={feature.key} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition">
                                     <td className="p-6 font-semibold text-gray-600 bg-gray-50/30 sticky left-0 z-10">{feature.label}</td>
-                                    {compareList.map((property) => (
+                                    {activeCompareList.map((property) => (
                                         <td key={property.id} className="p-6 text-gray-900 font-medium">
                                             {feature.format ? feature.format(property[feature.key]) : (property[feature.key] || '-')}
                                         </td>
@@ -104,7 +110,7 @@ export default function Compare() {
                             {/* Amenities Comparison */}
                             <tr>
                                 <td className="p-6 font-semibold text-gray-600 bg-gray-50/30 sticky left-0 z-10 align-top">Amenities</td>
-                                {compareList.map((property) => (
+                                {activeCompareList.map((property) => (
                                     <td key={property.id} className="p-6 align-top">
                                         <div className="space-y-2">
                                             {amenitiesList.map(amenity => {
@@ -129,7 +135,7 @@ export default function Compare() {
 
                             <tr>
                                 <td className="p-6 bg-gray-50/30 sticky left-0"></td>
-                                {compareList.map((property) => (
+                                {activeCompareList.map((property) => (
                                     <td key={property.id} className="p-6">
                                         <Link to={`/property/${property.id}`} className="block w-full text-center bg-[#D4AF37] text-white py-3 rounded-xl font-bold hover:bg-[#C5A059] transition">
                                             View Details

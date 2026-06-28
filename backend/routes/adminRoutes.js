@@ -1,5 +1,5 @@
 import express from 'express';
-import { protect } from '../middlewares/auth.js';
+import { protect, requireAdmin } from '../middlewares/auth.js';
 import { createProperty, updateProperty, deleteProperty, bulkDelete, getStats, getProperty } from '../controllers/propertyController.js';
 import { uploadImages, handleUpload, getUploadSignature } from '../controllers/uploadController.js';
 import { getInquiries, deleteInquiry, updateInquiryStatus } from '../controllers/inquiryController.js';
@@ -7,6 +7,8 @@ import { getInquiries, deleteInquiry, updateInquiryStatus } from '../controllers
 const router = express.Router();
 
 router.use(protect);
+router.use(requireAdmin);
+
 
 router.get('/sign-upload', getUploadSignature);
 router.post('/properties', createProperty);

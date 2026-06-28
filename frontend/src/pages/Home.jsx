@@ -7,6 +7,8 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { slugify } from '../utils/slugify';
 
+import { useAuth } from '../context/AuthContext';
+
 // Components
 import HeroSection from '../components/home/HeroSection';
 import FeaturedProperties from '../components/home/FeaturedProperties';
@@ -20,8 +22,8 @@ export default function HomePage() {
   const [allProperties, setAllProperties] = useState([]);
   const [recentProps, setRecentProps] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [wishlist, setWishlist] = useState([]);
   const [activeView, setActiveView] = useState('featured');
+  const { wishlist, toggleWishlist } = useAuth();
 
 
   const navigate = useNavigate();
@@ -38,9 +40,7 @@ export default function HomePage() {
   ];
 
   useEffect(() => {
-    const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
     const savedViewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
-    setWishlist(savedWishlist);
 
     const fetchPromises = [
       api.get('/api/properties?featured=true&limit=10'),
@@ -77,15 +77,6 @@ export default function HomePage() {
         setLoading(false);
       });
   }, []);
-
-  const toggleWishlist = (propertyId) => {
-    const newWishlist = wishlist.includes(propertyId)
-      ? wishlist.filter(id => id !== propertyId)
-      : [...wishlist, propertyId];
-
-    setWishlist(newWishlist);
-    localStorage.setItem('wishlist', JSON.stringify(newWishlist));
-  };
 
   const handleSearch = (filters) => {
     const params = new URLSearchParams();

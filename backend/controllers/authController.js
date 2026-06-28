@@ -124,3 +124,19 @@ export const userLogin = async (req, res) => {
     res.status(500).json({ msg: 'Server error' });
   }
 };
+
+export const updateWishlist = async (req, res) => {
+  try {
+    const { wishlist } = req.body;
+    const user = await User.findByPk(req.user.id);
+    if (!user) return res.status(404).json({ msg: 'User not found' });
+
+    user.wishlist = wishlist;
+    await user.save();
+
+    res.json({ success: true, wishlist: user.wishlist });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+};

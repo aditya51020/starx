@@ -1,6 +1,8 @@
 import Property from '../models/Property.js';
 import { slugify } from '../utils/slugify.js';
 import { Op } from 'sequelize';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '../config.js';
 
 // Allowed regions — keep in sync with frontend config/regions.js
 const ALLOWED_REGIONS = [
@@ -29,7 +31,32 @@ const normalizeRegion = (region) => {
 export const getProperties = async (req, res) => {
   try {
     const { region, transactionType, propertyType, minPrice, maxPrice, bhk, featured, amenities, search, limit = 20, page = 1 } = req.query;
+    
+    // Check if requester is admin
+    let isAdmin = false;
+    let token;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
+    } else if (req.cookies && req.cookies.token) {
+      token = req.cookies.token;
+    }
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        if (decoded.role === 'admin') {
+          isAdmin = true;
+        }
+      } catch (err) {
+        // Ignore invalid token, treat as public
+      }
+    }
+
     const where = {};
+    if (!isAdmin) {
+      where.status = 'Active';
+    } else if (req.query.status && req.query.status !== 'all') {
+      where.status = req.query.status;
+    }
 
     if (region) {
       const regions = region.split(',').map(r => r.trim()).filter(Boolean);
@@ -125,16 +152,19 @@ export const createProperty = async (req, res) => {
     const data = req.body;
     console.log("Creating Property with data:", JSON.stringify(data, null, 2));
 
-    // Generate slug from title
+    // Generate slug from title and region
     if (data.title) {
-      let slug = slugify(data.title);
+      let baseSlug = slugify(data.title);
+      let slug = baseSlug;
+      if (data.region) {
+        slug = `${baseSlug}-${slugify(data.region)}`;
+      }
       // Check for duplicate slug
       let existing = await Property.findOne({ where: { slug } });
-      let counter = 1;
-      while (existing) {
-        slug = `${slugify(data.title)}-${counter}`;
-        existing = await Property.findOne({ where: { slug } });
-        counter++;
+      if (existing) {
+        // If still collides, append a short random string
+        const randomSuffix = Math.random().toString(36).substring(2, 6);
+        slug = `${slug}-${randomSuffix}`;
       }
       data.slug = slug;
     }
@@ -175,9 +205,14 @@ export const updateProperty = async (req, res) => {
 
     if (!prop) return res.status(404).json({ message: 'Property not found' });
 
-    // Update slug if title changes
-    if (data.title && data.title !== prop.title) {
-      let slug = slugify(data.title);
+    // Update slug if title or region changes
+    if (data.title && (data.title !== prop.title || (data.region && data.region !== prop.region))) {
+      let baseSlug = slugify(data.title);
+      let slug = baseSlug;
+      const targetRegion = data.region || prop.region;
+      if (targetRegion) {
+        slug = `${baseSlug}-${slugify(targetRegion)}`;
+      }
       // Ensure unique slug (excluding current doc)
       let existing = await Property.findOne({
         where: {
@@ -185,16 +220,9 @@ export const updateProperty = async (req, res) => {
           id: { [Op.ne]: req.params.id }
         }
       });
-      let counter = 1;
-      while (existing) {
-        slug = `${slugify(data.title)}-${counter}`;
-        existing = await Property.findOne({
-          where: {
-            slug,
-            id: { [Op.ne]: req.params.id }
-          }
-        });
-        counter++;
+      if (existing) {
+        const randomSuffix = Math.random().toString(36).substring(2, 6);
+        slug = `${slug}-${randomSuffix}`;
       }
       data.slug = slug;
     }

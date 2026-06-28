@@ -1,22 +1,18 @@
-// src/pages/Wishlist.jsx
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, X, Home, MapPin, Bed, Bath, Maximize } from 'lucide-react';
 import Meta from '../components/Meta';
 import { optimizeCloudinaryUrl } from '../utils/cloudinary';
+import { useAuth } from '../context/AuthContext';
 
 export default function Wishlist() {
-  const [wishlist, setWishlist] = useState([]);
+  const { wishlist, toggleWishlist, clearWishlist } = useAuth();
   const [properties, setProperties] = useState([]);
 
   useEffect(() => {
-    // Load wishlist IDs from localStorage
-    const saved = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    setWishlist(saved);
-
     // Fetch full property details
-    if (saved.length > 0) {
-      fetch(`/api/properties?ids=${saved.join(',')}`)
+    if (wishlist && wishlist.length > 0) {
+      fetch(`/api/properties?ids=${wishlist.join(',')}`)
         .then(res => res.json())
         .then(data => {
           const props = data.data || data || [];
@@ -26,20 +22,17 @@ export default function Wishlist() {
           console.error('Failed to load wishlist properties', err);
           setProperties([]);
         });
+    } else {
+      setProperties([]);
     }
-  }, []);
+  }, [wishlist]);
 
   const removeFromWishlist = (propertyId) => {
-    const newWishlist = wishlist.filter(id => id !== propertyId);
-    setWishlist(newWishlist);
-    localStorage.setItem('wishlist', JSON.stringify(newWishlist));
-    setProperties(prev => prev.filter(p => p.id !== propertyId));
+    toggleWishlist(propertyId);
   };
 
   const clearAll = () => {
-    setWishlist([]);
-    setProperties([]);
-    localStorage.removeItem('wishlist');
+    clearWishlist();
   };
 
   if (wishlist.length === 0) {
